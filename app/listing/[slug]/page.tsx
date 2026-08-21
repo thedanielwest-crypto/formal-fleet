@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { getListingBySlug, listings } from "@/lib/listings";
 
 export function generateStaticParams() {
@@ -132,6 +133,8 @@ export default async function ListingDetail({
           </div>
         </div>
       </div>
+
+      <Footer />
     </div>
   );
 }

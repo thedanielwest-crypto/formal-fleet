@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import Badge from "@/components/Badge";
 import { listings } from "@/lib/listings";
 
@@ -123,6 +124,8 @@ export default function Home() {
           </div>
         </main>
       </div>
+
+      <Footer />
     </div>
   );
 }

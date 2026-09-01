@@ -3,6 +3,7 @@ import "./globals.css";
 import RegisterServiceWorker from "@/components/RegisterServiceWorker";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://fleetformal.westeffects.com"),
   title: "Formal Fleet — Verified Rides for Formal Night",
   description:
     "Connecting classic and show car owners with students who want an unforgettable, verified ride to formal.",

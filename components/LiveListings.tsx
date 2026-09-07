@@ -31,6 +31,10 @@ function initials(name: string) {
 }
 
 function photoUrl(path: string) {
+  // A handful of early rows were backfilled from raw form submissions and
+  // store a full URL directly instead of a Storage object key - pass those
+  // through unchanged rather than trying to resolve them as storage paths.
+  if (/^https?:\/\//i.test(path)) return path;
   return supabase.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
 }
 

@@ -36,6 +36,15 @@ export default function Footer() {
               <Link href="/log-in" className="hover:text-white">Log In / Early Access</Link>
             </div>
           </div>
+          <div>
+            <h4 className="text-white text-[12.5px] uppercase tracking-wide font-bold mb-3">
+              Portals
+            </h4>
+            <div className="flex flex-col gap-2 text-[13.5px]">
+              <Link href="/school" className="hover:text-white">School / P&amp;C Portal</Link>
+              <Link href="/founders" className="hover:text-white">Founders Login</Link>
+            </div>
+          </div>
         </div>
       </div>
       <div className="border-t border-white/10 mt-8 pt-5 text-[12px] text-slate-500">

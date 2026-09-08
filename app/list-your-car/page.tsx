@@ -14,8 +14,8 @@ export default function ListYourCar() {
     <div>
       <Header />
 
-      <section className="bg-gradient-to-b from-navy-deep to-navy text-white px-14 pt-10 pb-9">
-        <h1 className="font-serif font-bold text-4xl max-w-2xl leading-tight">
+      <section className="bg-gradient-to-b from-navy-deep to-navy text-white px-6 md:px-14 pt-10 pb-9">
+        <h1 className="font-serif font-bold text-3xl md:text-4xl max-w-2xl leading-tight">
           List your car on <span className="text-gold-light">Formal Fleet</span>
         </h1>
         <p className="mt-3 text-slate-300 max-w-xl">
@@ -24,10 +24,10 @@ export default function ListYourCar() {
         </p>
       </section>
 
-      <div className="px-14 py-10 flex gap-10 items-start">
+      <div className="px-6 md:px-14 py-10 flex flex-col lg:flex-row gap-10 items-start">
         <ListYourCarForm />
 
-        <aside className="w-[300px] shrink-0 flex flex-col gap-5">
+        <aside className="w-full lg:w-[300px] shrink-0 flex flex-col gap-5">
           <div className="bg-cream border border-line rounded-2xl p-6">
             <h3 className="font-serif text-[17px] mb-3">Why owners list on Formal Fleet</h3>
             <ul className="text-[13.5px] text-[#454e60] leading-relaxed flex flex-col gap-2.5 list-disc pl-4">

@@ -19,7 +19,7 @@ export default function Footer() {
               Formal Fleet
             </h4>
             <div className="flex flex-col gap-2 text-[13.5px]">
-              <Link href="/" className="hover:text-white">Browse Cars</Link>
+              <Link href="/browse" className="hover:text-white">Browse Cars</Link>
               <Link href="/how-it-works" className="hover:text-white">How It Works</Link>
               <Link href="/verification-safety" className="hover:text-white">
                 Verification &amp; Safety
@@ -32,8 +32,9 @@ export default function Footer() {
               Get Started
             </h4>
             <div className="flex flex-col gap-2 text-[13.5px]">
+              <Link href="/get-started" className="hover:text-white">Create an Account</Link>
               <Link href="/list-your-car" className="hover:text-white">List Your Car</Link>
-              <Link href="/log-in" className="hover:text-white">Log In / Early Access</Link>
+              <Link href="/login" className="hover:text-white">Log In</Link>
             </div>
           </div>
           <div>

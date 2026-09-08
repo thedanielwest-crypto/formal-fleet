@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useAuth } from "@/lib/authContext";
 
 const navLinks = [
-  { href: "/", label: "Browse Cars" },
+  { href: "/browse", label: "Browse Cars" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/verification-safety", label: "Verification & Safety" },
   { href: "/for-schools", label: "For Schools" },
@@ -12,6 +13,8 @@ const navLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const router = useRouter();
+  const { session, profile, signOut } = useAuth();
 
   return (
     <header className="bg-navy text-white px-14 py-5 flex items-center justify-between">
@@ -42,15 +45,37 @@ export default function Header() {
         })}
       </nav>
       <div className="flex gap-3.5 items-center">
-        <Link href="/log-in" className="px-5 py-2.5 rounded-lg font-semibold text-sm border border-white/35">
-          Log In
-        </Link>
-        <Link
-          href="/list-your-car"
-          className="px-5 py-2.5 rounded-lg font-semibold text-sm text-navy-deep bg-gradient-to-br from-gold-light to-gold"
-        >
-          List Your Car
-        </Link>
+        {session && profile ? (
+          <>
+            <Link
+              href={`/dashboard/${profile.role}`}
+              className="px-5 py-2.5 rounded-lg font-semibold text-sm border border-white/35"
+            >
+              My Dashboard
+            </Link>
+            <button
+              onClick={async () => {
+                await signOut();
+                router.push("/");
+              }}
+              className="px-5 py-2.5 rounded-lg font-semibold text-sm text-navy-deep bg-gradient-to-br from-gold-light to-gold"
+            >
+              Log Out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className="px-5 py-2.5 rounded-lg font-semibold text-sm border border-white/35">
+              Log In
+            </Link>
+            <Link
+              href="/get-started"
+              className="px-5 py-2.5 rounded-lg font-semibold text-sm text-navy-deep bg-gradient-to-br from-gold-light to-gold"
+            >
+              Get Started
+            </Link>
+          </>
+        )}
       </div>
     </header>
   );

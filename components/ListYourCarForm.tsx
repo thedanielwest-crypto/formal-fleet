@@ -1,15 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
+import { useAuth } from "@/lib/authContext";
 
 const inputClass =
-  "w-full border border-line rounded-lg px-4 py-2.5 text-[14px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
+  "w-full border border-line rounded-lg px-4 py-3.5 text-[16px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
 const fileInputClass =
-  "w-full text-[13px] border border-line rounded-lg px-3 py-2.5 bg-white cursor-pointer file:mr-3 file:py-1.5 file:px-3 file:rounded-md file:border-0 file:bg-navy file:text-white file:text-[12.5px] file:font-semibold file:cursor-pointer";
-const labelClass = "block text-[13px] font-semibold mb-1.5";
-const hintClass = "text-[12px] text-muted mt-1.5 leading-relaxed";
+  "w-full text-[14.5px] border border-line rounded-lg px-3 py-3.5 bg-white cursor-pointer file:mr-3 file:py-2 file:px-3.5 file:rounded-md file:border-0 file:bg-navy file:text-white file:text-[13.5px] file:font-semibold file:cursor-pointer";
+const labelClass = "block text-[14.5px] font-semibold mb-2";
+const hintClass = "text-[12.5px] text-muted mt-1.5 leading-relaxed";
 
 const MAX_FILE_BYTES = 15 * 1024 * 1024; // generous per-file guardrail
 
@@ -28,8 +30,171 @@ async function uploadTo(bucket: string, file: File) {
   return path;
 }
 
+/** A file input that shows a thumbnail (for images) or filename once a file
+ * is picked, with a remove button to clear the selection and pick again. */
+function PhotoField({
+  id,
+  name,
+  label,
+  required,
+  hint,
+  onError,
+  error,
+}: {
+  id: string;
+  name: string;
+  label: string;
+  required?: boolean;
+  hint?: string;
+  onError: (msg: string) => void;
+  error?: string;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setPreview(null);
+      setFileName(null);
+      onError("");
+      return;
+    }
+    if (file.size > MAX_FILE_BYTES) {
+      onError(`That file is ${formatMB(file.size)}MB — please keep each file under 15MB.`);
+      if (inputRef.current) inputRef.current.value = "";
+      setPreview(null);
+      setFileName(null);
+      return;
+    }
+    onError("");
+    setFileName(file.name);
+    setPreview(URL.createObjectURL(file));
+  }
+
+  function handleRemove() {
+    if (inputRef.current) inputRef.current.value = "";
+    setPreview(null);
+    setFileName(null);
+    onError("");
+  }
+
+  return (
+    <div>
+      <label className={labelClass} htmlFor={id}>{label}</label>
+      {fileName ? (
+        <div className="flex items-center gap-3 border border-line rounded-lg px-3 py-2.5 bg-white">
+          {preview && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={preview} alt="" className="w-14 h-14 object-cover rounded-md shrink-0" />
+          )}
+          <span className="text-[13.5px] flex-1 truncate">{fileName}</span>
+          <button
+            type="button"
+            onClick={handleRemove}
+            aria-label={`Remove ${label}`}
+            className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-cream border border-line text-muted hover:text-red-600 hover:border-red-200 font-bold"
+          >
+            ✕
+          </button>
+        </div>
+      ) : (
+        <input
+          ref={inputRef}
+          className={fileInputClass}
+          id={id}
+          name={name}
+          type="file"
+          accept="image/*"
+          required={required}
+          onChange={handleChange}
+        />
+      )}
+      {error && <p className="text-[12px] text-red-600 mt-1">{error}</p>}
+      {hint && <p className={hintClass}>{hint}</p>}
+    </div>
+  );
+}
+
+/** Same remove-and-reselect pattern as PhotoField, but for non-image
+ * verification documents (licence, insurance, blue card — can be PDFs). */
+function DocField({
+  id,
+  name,
+  label,
+  required,
+  onError,
+  error,
+}: {
+  id: string;
+  name: string;
+  label: string;
+  required?: boolean;
+  onError: (msg: string) => void;
+  error?: string;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) {
+      setFileName(null);
+      onError("");
+      return;
+    }
+    if (file.size > MAX_FILE_BYTES) {
+      onError(`That file is ${formatMB(file.size)}MB — please keep each file under 15MB.`);
+      if (inputRef.current) inputRef.current.value = "";
+      setFileName(null);
+      return;
+    }
+    onError("");
+    setFileName(file.name);
+  }
+
+  function handleRemove() {
+    if (inputRef.current) inputRef.current.value = "";
+    setFileName(null);
+    onError("");
+  }
+
+  return (
+    <div>
+      <label className={labelClass} htmlFor={id}>{label}</label>
+      {fileName ? (
+        <div className="flex items-center gap-3 border border-line rounded-lg px-4 py-3.5 bg-white">
+          <span className="text-[13.5px] flex-1 truncate">📄 {fileName}</span>
+          <button
+            type="button"
+            onClick={handleRemove}
+            aria-label={`Remove ${label}`}
+            className="shrink-0 w-8 h-8 flex items-center justify-center rounded-full bg-cream border border-line text-muted hover:text-red-600 hover:border-red-200 font-bold"
+          >
+            ✕
+          </button>
+        </div>
+      ) : (
+        <input
+          ref={inputRef}
+          className={fileInputClass}
+          id={id}
+          name={name}
+          type="file"
+          accept="image/*,.pdf"
+          required={required}
+          onChange={handleChange}
+        />
+      )}
+      {error && <p className="text-[12px] text-red-600 mt-1">{error}</p>}
+    </div>
+  );
+}
+
 export default function ListYourCarForm() {
   const router = useRouter();
+  const { session, profile, loading } = useAuth();
   const [hasBlueCard, setHasBlueCard] = useState(true);
   const [priceMode, setPriceMode] = useState<"min" | "custom">("min");
   const [customPrice, setCustomPrice] = useState("");
@@ -46,24 +211,17 @@ export default function ListYourCarForm() {
     [fileErrors]
   );
 
-  function checkFile(field: string) {
-    return (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0];
-      if (file && file.size > MAX_FILE_BYTES) {
-        setFileErrors((prev) => ({
-          ...prev,
-          [field]: `That file is ${formatMB(file.size)}MB — please keep each file under 15MB.`,
-        }));
-        e.target.value = "";
-      } else {
-        setFileErrors((prev) => ({ ...prev, [field]: "" }));
-      }
-    };
+  function setFieldError(field: string) {
+    return (msg: string) => setFileErrors((prev) => ({ ...prev, [field]: msg }));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (hasBlockingFileError || submitting) return;
+    if (!session?.user?.id) {
+      setSubmitError("Please log in as a driver first.");
+      return;
+    }
     setSubmitError(null);
     setSubmitting(true);
 
@@ -90,6 +248,7 @@ export default function ListYourCarForm() {
           : null;
 
       const { error } = await supabase.from("car_submissions").insert({
+        driver_id: session.user.id,
         name: data.get("name"),
         email: data.get("email"),
         phone: data.get("phone"),
@@ -121,6 +280,41 @@ export default function ListYourCarForm() {
     }
   }
 
+  if (loading) {
+    return (
+      <div className="flex-1 max-w-xl bg-white border border-line rounded-2xl p-7 text-muted">
+        Loading…
+      </div>
+    );
+  }
+
+  if (!session || profile?.role !== "driver") {
+    return (
+      <div className="flex-1 max-w-xl bg-white border border-line rounded-2xl p-8 flex flex-col gap-4">
+        <h2 className="font-serif text-[20px]">Create a driver account to list your car</h2>
+        <p className="text-[14px] text-muted leading-relaxed">
+          {session
+            ? "You're logged in, but not as a driver. Log out and sign up as a driver to list a car."
+            : "Listing a car takes an account so schools and students can find and message you once you're confirmed for an event."}
+        </p>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link
+            href="/signup?role=driver"
+            className="bg-navy text-white rounded-xl py-3.5 px-6 font-bold text-[14.5px] text-center"
+          >
+            Create driver account
+          </Link>
+          <Link
+            href="/login"
+            className="bg-white text-navy border border-line rounded-xl py-3.5 px-6 font-bold text-[14.5px] text-center"
+          >
+            Log in
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -132,22 +326,22 @@ export default function ListYourCarForm() {
         <div className="flex flex-col gap-4">
           <div>
             <label className={labelClass} htmlFor="name">Your name</label>
-            <input className={inputClass} id="name" name="name" type="text" required />
+            <input className={inputClass} id="name" name="name" type="text" defaultValue={profile?.name ?? ""} required />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className={labelClass} htmlFor="email">Email</label>
-              <input className={inputClass} id="email" name="email" type="email" required />
+              <input className={inputClass} id="email" name="email" type="email" defaultValue={profile?.email ?? ""} required />
             </div>
             <div>
               <label className={labelClass} htmlFor="phone">Phone</label>
-              <input className={inputClass} id="phone" name="phone" type="tel" required />
+              <input className={inputClass} id="phone" name="phone" type="tel" defaultValue={profile?.phone ?? ""} required />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className={labelClass} htmlFor="suburb">Suburb</label>
-              <input className={inputClass} id="suburb" name="suburb" type="text" required />
+              <input className={inputClass} id="suburb" name="suburb" type="text" defaultValue={profile?.suburb ?? ""} required />
             </div>
             <div>
               <label className={labelClass} htmlFor="gender">Driver identification</label>
@@ -181,24 +375,30 @@ export default function ListYourCarForm() {
         <h2 className="font-serif text-[18px] mb-1">Photos</h2>
         <p className={`${hintClass} mb-3.5 mt-0`}>Two clear photos of the car are required. A third is optional.</p>
         <div className="flex flex-col gap-4">
-          <div>
-            <label className={labelClass} htmlFor="photo1">Photo 1 (required)</label>
-            <input className={fileInputClass} id="photo1" name="photo1" type="file" accept="image/*" required onChange={checkFile("photo1")} />
-            {fileErrors.photo1 && <p className="text-[12px] text-red-600 mt-1">{fileErrors.photo1}</p>}
-          </div>
-          <div>
-            <label className={labelClass} htmlFor="photo2">Photo 2 (required)</label>
-            <input className={fileInputClass} id="photo2" name="photo2" type="file" accept="image/*" required onChange={checkFile("photo2")} />
-            {fileErrors.photo2 && <p className="text-[12px] text-red-600 mt-1">{fileErrors.photo2}</p>}
-          </div>
-          <div>
-            <label className={labelClass} htmlFor="photo3">
-              Photo 3 — optional: proof you&rsquo;ve already driven a passenger to a formal
-            </label>
-            <input className={fileInputClass} id="photo3" name="photo3" type="file" accept="image/*" onChange={checkFile("photo3")} />
-            {fileErrors.photo3 && <p className="text-[12px] text-red-600 mt-1">{fileErrors.photo3}</p>}
-            <p className={hintClass}>No photo? No problem — we&rsquo;ll just use your first two.</p>
-          </div>
+          <PhotoField
+            id="photo1"
+            name="photo1"
+            label="Photo 1 (required)"
+            required
+            onError={setFieldError("photo1")}
+            error={fileErrors.photo1}
+          />
+          <PhotoField
+            id="photo2"
+            name="photo2"
+            label="Photo 2 (required)"
+            required
+            onError={setFieldError("photo2")}
+            error={fileErrors.photo2}
+          />
+          <PhotoField
+            id="photo3"
+            name="photo3"
+            label="Photo 3 — optional: proof you've already driven a passenger to a formal"
+            onError={setFieldError("photo3")}
+            error={fileErrors.photo3}
+            hint="No photo? No problem — we'll just use your first two."
+          />
         </div>
       </div>
 
@@ -211,34 +411,32 @@ export default function ListYourCarForm() {
         </p>
         <div className="flex flex-col gap-4">
           <div>
-            <label className={labelClass} htmlFor="blue_card">Blue Card (Working with Children Check)</label>
             {hasBlueCard ? (
-              <>
-                <input
-                  className={fileInputClass}
-                  id="blue_card"
-                  name="blue_card"
-                  type="file"
-                  accept="image/*,.pdf"
-                  required={hasBlueCard}
-                  onChange={checkFile("blue_card")}
-                />
-                {fileErrors.blue_card && <p className="text-[12px] text-red-600 mt-1">{fileErrors.blue_card}</p>}
-              </>
+              <DocField
+                id="blue_card"
+                name="blue_card"
+                label="Blue Card (Working with Children Check)"
+                required={hasBlueCard}
+                onError={setFieldError("blue_card")}
+                error={fileErrors.blue_card}
+              />
             ) : (
-              <div className="bg-amber-bg border border-amber/30 rounded-lg px-4 py-3.5 text-[13px] text-[#6b4a12] leading-relaxed">
-                No worries — a Blue Card is required before your listing can be marked verified.
-                You can apply for one directly with Queensland Blue Card Services:{" "}
-                <a
-                  href="https://www.qld.gov.au/law/laws-regulated-industries-and-accountability/queensland-laws-and-regulations/regulated-industries-and-licensing/blue-card/applications/apply"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline font-semibold"
-                >
-                  Apply for a Blue Card
-                </a>
-                . Submit this form now and send your Blue Card through once it arrives.
-              </div>
+              <>
+                <label className={labelClass} htmlFor="blue_card">Blue Card (Working with Children Check)</label>
+                <div className="bg-amber-bg border border-amber/30 rounded-lg px-4 py-3.5 text-[13px] text-[#6b4a12] leading-relaxed">
+                  No worries — a Blue Card is required before your listing can be marked verified.
+                  You can apply for one directly with Queensland Blue Card Services:{" "}
+                  <a
+                    href="https://www.qld.gov.au/law/laws-regulated-industries-and-accountability/queensland-laws-and-regulations/regulated-industries-and-licensing/blue-card/applications/apply"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline font-semibold"
+                  >
+                    Apply for a Blue Card
+                  </a>
+                  . Submit this form now and send your Blue Card through once it arrives.
+                </div>
+              </>
             )}
             <label className="flex items-center gap-2 mt-2 text-[12.5px] text-muted">
               <input
@@ -250,17 +448,23 @@ export default function ListYourCarForm() {
             </label>
           </div>
 
-          <div>
-            <label className={labelClass} htmlFor="licence">Driver&rsquo;s licence</label>
-            <input className={fileInputClass} id="licence" name="licence" type="file" accept="image/*,.pdf" required onChange={checkFile("licence")} />
-            {fileErrors.licence && <p className="text-[12px] text-red-600 mt-1">{fileErrors.licence}</p>}
-          </div>
+          <DocField
+            id="licence"
+            name="licence"
+            label="Driver's licence"
+            required
+            onError={setFieldError("licence")}
+            error={fileErrors.licence}
+          />
 
-          <div>
-            <label className={labelClass} htmlFor="insurance">Insurance (Certificate of Currency)</label>
-            <input className={fileInputClass} id="insurance" name="insurance" type="file" accept="image/*,.pdf" required onChange={checkFile("insurance")} />
-            {fileErrors.insurance && <p className="text-[12px] text-red-600 mt-1">{fileErrors.insurance}</p>}
-          </div>
+          <DocField
+            id="insurance"
+            name="insurance"
+            label="Insurance (Certificate of Currency)"
+            required
+            onError={setFieldError("insurance")}
+            error={fileErrors.insurance}
+          />
         </div>
       </div>
 
@@ -272,23 +476,23 @@ export default function ListYourCarForm() {
           can, but it&rsquo;s still an even 50/50 split.
         </p>
         <div className="flex flex-col gap-2.5">
-          <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
+          <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3.5 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
             <input
               type="radio"
               name="price_mode_radio"
               checked={priceMode === "min"}
               onChange={() => setPriceMode("min")}
             />
-            <span className="text-[14px] font-semibold">$100 minimum (recommended)</span>
+            <span className="text-[14.5px] font-semibold">$100 minimum (recommended)</span>
           </label>
-          <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
+          <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3.5 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
             <input
               type="radio"
               name="price_mode_radio"
               checked={priceMode === "custom"}
               onChange={() => setPriceMode("custom")}
             />
-            <span className="text-[14px] font-semibold">I&rsquo;d like to charge more</span>
+            <span className="text-[14.5px] font-semibold">I&rsquo;d like to charge more</span>
           </label>
           {priceMode === "custom" && (
             <input
@@ -328,7 +532,7 @@ export default function ListYourCarForm() {
       <button
         type="submit"
         disabled={hasBlockingFileError || submitting}
-        className="bg-navy text-white rounded-xl py-3.5 font-bold text-[14.5px] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="bg-navy text-white rounded-xl py-4 font-bold text-[15px] disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {submitting ? "Submitting…" : "Submit Listing Request"}
       </button>

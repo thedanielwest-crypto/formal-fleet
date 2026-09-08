@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import RegisterServiceWorker from "@/components/RegisterServiceWorker";
+import InstallPrompt from "@/components/InstallPrompt";
+import { AuthProvider } from "@/lib/authContext";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fleetformal.westeffects.com"),
@@ -44,7 +46,10 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        {children}
+        <AuthProvider>
+          {children}
+          <InstallPrompt />
+        </AuthProvider>
         <RegisterServiceWorker />
       </body>
     </html>

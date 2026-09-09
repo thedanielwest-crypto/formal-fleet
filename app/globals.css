@@ -11,6 +11,8 @@
   --line: #e9e3d5;
   --amber: #b8790a;
   --amber-bg: #fdf1de;
+  /* Fleet Formal brand refresh: subtler gold tone for hairline borders/dividers on dark navy */
+  --gold-border: rgba(201, 162, 39, 0.35);
 }
 
 @theme inline {
@@ -24,6 +26,7 @@
   --color-line: var(--line);
   --color-amber: var(--amber);
   --color-amber-bg: var(--amber-bg);
+  --color-gold-border: var(--gold-border);
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
 }

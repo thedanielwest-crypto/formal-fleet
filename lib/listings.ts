@@ -50,40 +50,6 @@ export const listings: Listing[] = [
     heroImage: "/photos/cobra-hero.jpg",
     gallery: ["/photos/cobra-hero.jpg", "/photos/cobra-side.jpg", "/photos/cobra-interior.jpg"],
   },
-  {
-    slug: "subaru-legacy-gt-wagon",
-    title: "Subaru Legacy GT Wagon",
-    price: 500,
-    priceLabel: "$500 / trip",
-    suburb: "The Gap",
-    region: "Brisbane North, QLD",
-    badge: "gold",
-    badgeLabel: "Gold Verified",
-    ownerName: "Orlando West",
-    ownerInitials: "OW",
-    ownerSub: "Verified owner · The Gap",
-    description:
-      "Immaculately kept family wagon with plenty of room for formal wear. A comfortable, reliable ride from a fully licensed, verified driver.",
-    heroImage: "/photos/subaru-hero.jpg",
-    gallery: ["/photos/subaru-hero.jpg"],
-  },
-  {
-    slug: "krazy-lemon-novelty-van",
-    title: '"Krazy Lemon" Novelty Van',
-    price: 75.55,
-    priceLabel: "$75.55 / trip",
-    suburb: "Brendale",
-    region: "Brisbane North, QLD",
-    badge: "verified",
-    badgeLabel: "Verified",
-    ownerName: "Daniel West",
-    ownerInitials: "DW",
-    ownerSub: "Verified owner · Brendale",
-    description:
-      "Not your average formal ride — Brisbane's most recognisable lemonade van, driven by owner Daniel West. Guaranteed to be the most talked-about arrival of the night.",
-    heroImage: "/photos/lemon-van-hero.jpg",
-    gallery: ["/photos/lemon-van-hero.jpg"],
-  },
 ];
 
 export function getListingBySlug(slug: string): Listing | undefined {

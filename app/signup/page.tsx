@@ -139,7 +139,6 @@ function SignupForm() {
               id="schoolName"
               value={schoolName}
               onChange={(e) => setSchoolName(e.target.value)}
-              required
             />
           </div>
         )}

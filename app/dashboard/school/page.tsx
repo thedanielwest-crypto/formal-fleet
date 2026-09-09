@@ -18,6 +18,20 @@ const carStatusStyle: Record<string, string> = {
   declined: "bg-red-50 text-red-600",
 };
 
+type InviteScope = "radius" | "qld" | "brisbane";
+
+const SCOPE_OPTIONS: { value: InviteScope; label: string }[] = [
+  { value: "radius", label: "Cars within 200km of the venue" },
+  { value: "qld", label: "All cars in Queensland" },
+  { value: "brisbane", label: "All cars in Brisbane" },
+];
+
+const SCOPE_RESULT_COPY: Record<InviteScope, string> = {
+  radius: "within 200km.",
+  qld: "across Queensland.",
+  brisbane: "within Brisbane.",
+};
+
 export default function SchoolDashboard() {
   const { session, profile, loading } = useRequireRole("school");
   const [events, setEvents] = useState<any[] | null>(null);
@@ -29,6 +43,11 @@ export default function SchoolDashboard() {
   const [invitingId, setInvitingId] = useState<string | null>(null);
   const [inviteResult, setInviteResult] = useState<string | null>(null);
   const [openThreadCarId, setOpenThreadCarId] = useState<string | null>(null);
+  const [inviteScope, setInviteScope] = useState<Record<string, InviteScope>>({});
+
+  function scopeFor(eventId: string): InviteScope {
+    return inviteScope[eventId] || "radius";
+  }
 
   async function loadEvents() {
     const { data, error } = await supabase.functions.invoke("events-hub", {
@@ -76,17 +95,20 @@ export default function SchoolDashboard() {
   }
 
   async function inviteCars(eventId: string) {
+    const scope = scopeFor(eventId);
     setInvitingId(eventId);
     setInviteResult(null);
     const { data, error } = await supabase.functions.invoke("events-hub", {
-      body: { action: "invite-cars", event_id: eventId },
+      body: { action: "invite-cars", event_id: eventId, scope },
     });
     setInvitingId(null);
     if (error || data?.error) {
       setInviteResult(data?.error || "Something went wrong.");
       return;
     }
-    setInviteResult(`Invited ${data.invited} car${data.invited === 1 ? "" : "s"} within 200km.`);
+    setInviteResult(
+      `Invited ${data.invited} car${data.invited === 1 ? "" : "s"} ${SCOPE_RESULT_COPY[scope]}`
+    );
     if (expanded === eventId) toggleExpand(eventId).then(() => toggleExpand(eventId));
   }
 
@@ -171,13 +193,35 @@ export default function SchoolDashboard() {
                     {ev.status}
                   </span>
                 </div>
+                <div className="mb-3">
+                  <div className="flex flex-col gap-1.5 mb-2">
+                    {SCOPE_OPTIONS.map((opt) => (
+                      <label
+                        key={opt.value}
+                        className="flex items-center gap-2 text-[13px] cursor-pointer"
+                      >
+                        <input
+                          type="radio"
+                          name={`scope-${ev.id}`}
+                          checked={scopeFor(ev.id) === opt.value}
+                          onChange={() => setInviteScope({ ...inviteScope, [ev.id]: opt.value })}
+                        />
+                        {opt.label}
+                      </label>
+                    ))}
+                  </div>
+                  <p className="text-[12px] text-muted mb-2">
+                    Inviting also sends car owners a notification asking them to register their
+                    interest.
+                  </p>
+                </div>
                 <div className="flex gap-3 flex-wrap">
                   <button
                     onClick={() => inviteCars(ev.id)}
                     disabled={invitingId === ev.id}
                     className="bg-navy text-white rounded-lg px-4 py-2.5 font-bold text-[13px] disabled:opacity-50"
                   >
-                    {invitingId === ev.id ? "Inviting…" : "Invite cars within 200km"}
+                    {invitingId === ev.id ? "Inviting…" : "Invite cars"}
                   </button>
                   <button
                     onClick={() => toggleExpand(ev.id)}
@@ -195,7 +239,7 @@ export default function SchoolDashboard() {
                     {eventCars === null && <p className="text-muted text-[13px]">Loading…</p>}
                     {eventCars?.length === 0 && (
                       <p className="text-muted text-[13px]">
-                        No cars invited yet — click &ldquo;Invite cars within 200km&rdquo; above.
+                        No cars invited yet — pick a scope and click &ldquo;Invite cars&rdquo; above.
                       </p>
                     )}
                     <div className="flex flex-col gap-3">

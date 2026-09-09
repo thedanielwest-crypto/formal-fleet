@@ -57,7 +57,12 @@ export default function LoginPage() {
             />
           </div>
           <div>
-            <label className={labelClass} htmlFor="password">Password</label>
+            <div className="flex justify-between items-baseline mb-1.5">
+              <label className={labelClass.replace("mb-1.5", "mb-0")} htmlFor="password">Password</label>
+              <a href="/forgot-password" className="text-[12.5px] font-semibold underline text-muted">
+                Forgot password?
+              </a>
+            </div>
             <input
               className={inputClass}
               id="password"

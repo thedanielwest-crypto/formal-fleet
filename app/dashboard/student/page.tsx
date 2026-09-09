@@ -23,7 +23,6 @@ type Connection = {
 
 type CarRow = {
   id: string;
-  name: string;
   suburb: string;
   car: string;
   description: string | null;
@@ -68,7 +67,7 @@ export default function StudentDashboard() {
   async function loadCars() {
     const { data, error } = await supabase
       .from("car_submissions")
-      .select("id, name, suburb, car, description, photo1_path, status")
+      .select("id, suburb, car, description, photo1_path, status")
       .neq("status", "rejected")
       .order("created_at", { ascending: false });
     if (!error) setCars(data as CarRow[]);

@@ -4,8 +4,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Get Started — Formal Fleet",
-  description: "Browse cars, sign up your school, or list your car with Formal Fleet.",
+  title: "Get Started — Fleet Formal",
+  description: "Browse cars, sign up your school, or list your car with Fleet Formal.",
 };
 
 const paths = [
@@ -36,9 +36,12 @@ export default function GetStartedPage() {
   return (
     <div>
       <Header />
-      <section className="bg-gradient-to-b from-navy-deep to-navy text-white px-6 md:px-14 pt-12 pb-10 text-center">
-        <h1 className="font-serif font-bold text-3xl md:text-4xl max-w-2xl mx-auto leading-tight">
-          What brings you to <span className="text-gold-light">Formal Fleet</span>?
+      <section className="bg-gradient-to-b from-navy-deep to-navy text-white px-6 md:px-14 pt-14 pb-11 text-center">
+        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold-light mb-4">
+          Get Started
+        </p>
+        <h1 className="font-serif font-black uppercase text-3xl md:text-4xl max-w-2xl mx-auto leading-tight tracking-tight">
+          What brings you to <span className="text-gold-light">Fleet Formal</span>?
         </h1>
         <p className="mt-3 text-slate-300 max-w-xl mx-auto">
           Pick the path that fits — you can always come back and set up another account later.
@@ -51,12 +54,12 @@ export default function GetStartedPage() {
             <Link
               key={p.title}
               href={p.href}
-              className="bg-white border border-line rounded-2xl p-7 flex flex-col hover:border-gold hover:shadow-md transition-all"
+              className="bg-white border border-line rounded-2xl p-7 flex flex-col hover:border-gold hover:shadow-lg hover:shadow-gold-border transition-all"
             >
               <div className="text-4xl mb-4">{p.emoji}</div>
               <h2 className="font-serif text-[20px] mb-2">{p.title}</h2>
               <p className="text-[14px] text-muted leading-relaxed flex-1">{p.blurb}</p>
-              <span className="mt-5 inline-block bg-navy text-white rounded-xl py-3 font-bold text-[14px] text-center">
+              <span className="mt-5 inline-block rounded-full py-3 font-bold text-[13px] uppercase tracking-wide text-center text-navy-deep bg-gradient-to-br from-gold-light to-gold">
                 {p.cta}
               </span>
             </Link>

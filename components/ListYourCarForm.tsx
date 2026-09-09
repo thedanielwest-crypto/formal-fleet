@@ -205,6 +205,8 @@ export default function ListYourCarForm() {
   const totalPrice = priceMode === "min" ? 100 : Math.max(0, Number(customPrice) || 0);
   const driverShare = totalPrice > 0 ? totalPrice / 2 : 0;
   const platformShare = totalPrice > 0 ? totalPrice / 2 : 0;
+  const [scenicDriveOk, setScenicDriveOk] = useState(false);
+  const [availableWeddings, setAvailableWeddings] = useState(false);
 
   const hasBlockingFileError = useMemo(
     () => Object.values(fileErrors).some(Boolean),
@@ -256,6 +258,13 @@ export default function ListYourCarForm() {
         gender: data.get("gender"),
         car: data.get("car"),
         description: data.get("message") || null,
+        make: data.get("make"),
+        model: data.get("model"),
+        year: data.get("year") ? Number(data.get("year")) : null,
+        colour: data.get("colour"),
+        seats: data.get("seats") ? Number(data.get("seats")) : null,
+        scenic_drive_ok: scenicDriveOk,
+        available_weddings: availableWeddings,
         photo1_path,
         photo2_path,
         photo3_path,
@@ -363,10 +372,54 @@ export default function ListYourCarForm() {
             <label className={labelClass} htmlFor="car">Car make, model &amp; year</label>
             <input className={inputClass} id="car" name="car" type="text" placeholder="e.g. 1980s Mazda RX-7" required />
           </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className={labelClass} htmlFor="make">Make</label>
+              <input className={inputClass} id="make" name="make" type="text" placeholder="e.g. Mazda" required />
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="model">Model</label>
+              <input className={inputClass} id="model" name="model" type="text" placeholder="e.g. RX-7" required />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className={labelClass} htmlFor="year">Year</label>
+              <input className={inputClass} id="year" name="year" type="number" min={1900} max={2100} placeholder="e.g. 1985" required />
+            </div>
+            <div>
+              <label className={labelClass} htmlFor="colour">Colour</label>
+              <input className={inputClass} id="colour" name="colour" type="text" placeholder="e.g. White" required />
+            </div>
+          </div>
+          <div>
+            <label className={labelClass} htmlFor="seats">Seats (including driver)</label>
+            <input className={inputClass} id="seats" name="seats" type="number" min={1} max={12} placeholder="e.g. 4" required />
+          </div>
           <div>
             <label className={labelClass} htmlFor="message">Tell us about your car</label>
             <textarea className={inputClass} id="message" name="message" rows={3} placeholder="What makes it special? Any story behind it?" />
           </div>
+          <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3.5 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
+            <input
+              type="checkbox"
+              checked={scenicDriveOk}
+              onChange={(e) => setScenicDriveOk(e.target.checked)}
+            />
+            <span className="text-[14.5px] font-semibold">
+              I&rsquo;m willing to do a scenic drive before the event
+            </span>
+          </label>
+          <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3.5 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
+            <input
+              type="checkbox"
+              checked={availableWeddings}
+              onChange={(e) => setAvailableWeddings(e.target.checked)}
+            />
+            <span className="text-[14.5px] font-semibold">
+              I&rsquo;m available for weddings / private events
+            </span>
+          </label>
         </div>
       </div>
 

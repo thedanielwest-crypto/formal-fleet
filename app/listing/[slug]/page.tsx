@@ -92,21 +92,6 @@ export default async function ListingDetail({
               {listing.description}
             </p>
           </div>
-
-          <div className="mt-8">
-            <h2 className="font-serif text-[19px] mb-3">Meet {listing.ownerName.split(" ")[0]}</h2>
-            <div className="flex gap-4 items-center bg-white border border-line rounded-2xl px-5 py-4.5 max-w-md">
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-slate-200 to-slate-300 flex items-center justify-center font-bold text-navy text-lg">
-                {listing.ownerInitials}
-              </div>
-              <div>
-                <div className="text-[15.5px] font-bold">{listing.ownerName}</div>
-                <div className="text-[12.5px] text-muted mt-0.5">
-                  Verified since 2026 · {listing.suburb}, QLD
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="w-[360px] shrink-0">
@@ -125,7 +110,7 @@ export default async function ListingDetail({
               Request to Book
             </button>
             <button className="w-full mt-2.5 bg-white text-navy border border-line rounded-xl py-3 font-bold text-[14.5px]">
-              Message {listing.ownerName.split(" ")[0]}
+              Message the owner
             </button>
             <div className="mt-4.5 text-[12px] text-muted flex gap-2 items-start leading-relaxed">
               🛡️ Parent/guardian confirmation is required before this booking is finalised, and full trip details are sent by SMS once confirmed.

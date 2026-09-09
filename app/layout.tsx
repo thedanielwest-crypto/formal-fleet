@@ -6,14 +6,14 @@ import { AuthProvider } from "@/lib/authContext";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://fleetformal.westeffects.com"),
-  title: "Formal Fleet — Verified Rides for Formal Night",
+  title: "Fleet Formal — Verified Rides for Formal Night",
   description:
     "Connecting classic and show car owners with students who want an unforgettable, verified ride to formal.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
-    title: "Formal Fleet",
+    title: "Fleet Formal",
   },
   icons: {
     icon: [

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { IconBadge } from "@/components/BrandIcon";
+import type { IconName } from "@/components/BrandIcon";
 
 export const metadata: Metadata = {
   title: "For Schools — Formal Fleet",
@@ -11,24 +13,24 @@ const inputClass =
   "w-full border border-line rounded-lg px-4 py-2.5 text-[14px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
 const labelClass = "block text-[13px] font-semibold mb-1.5";
 
-const benefits = [
+const benefits: { icon: IconName; title: string; body: string }[] = [
   {
-    icon: "✅",
+    icon: "check",
     title: "Every driver is checked",
     body: "ID, driver's licence, insurance, and a Working With Children Check — verified before any car is listed.",
   },
   {
-    icon: "📋",
+    icon: "clipboard",
     title: "A safer alternative to word-of-mouth",
     body: "Instead of students sourcing rides through unverified social posts, give families a checked, accountable option.",
   },
   {
-    icon: "🤝",
+    icon: "handshake",
     title: "Built for parent sign-off",
     body: "No booking is finalised without a parent or guardian confirming it — schools stay out of the liability loop.",
   },
   {
-    icon: "🎉",
+    icon: "celebration",
     title: "A genuine formal-night highlight",
     body: "Classic cars, show cars, and the odd novelty ride make for arrivals students remember for years.",
   },
@@ -53,7 +55,9 @@ export default function ForSchools() {
         <div className="grid grid-cols-2 gap-5 max-w-4xl">
           {benefits.map((b) => (
             <div key={b.title} className="flex gap-4 bg-white border border-line rounded-2xl p-5">
-              <div className="text-2xl shrink-0">{b.icon}</div>
+              <div className="shrink-0">
+                <IconBadge name={b.icon} tone="navy" size="w-11 h-11" iconSize="w-5 h-5" />
+              </div>
               <div>
                 <h3 className="font-semibold text-[15.5px] mb-1">{b.title}</h3>
                 <p className="text-[13.5px] text-[#454e60] leading-relaxed">{b.body}</p>

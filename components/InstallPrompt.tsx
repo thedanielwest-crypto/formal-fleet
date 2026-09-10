@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FFMonogram } from "@/components/BrandIcon";
 
 const DISMISS_KEY = "ff_install_prompt_dismissed";
 
@@ -70,9 +71,7 @@ export default function InstallPrompt() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm bg-navy-deep text-white rounded-2xl shadow-xl p-4 flex items-start gap-3 z-50">
-      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-gold-light to-gold flex items-center justify-center text-lg shrink-0">
-        🏆
-      </div>
+      <FFMonogram className="w-9 h-9" />
       <div className="flex-1 text-[13px] leading-relaxed">
         <div className="font-bold text-[14px] mb-0.5">Add Formal Fleet to your phone</div>
         {deferredPrompt ? (

@@ -1,13 +1,17 @@
 import Link from "next/link";
+import { FFMonogram, Icon } from "@/components/BrandIcon";
 
 export default function Footer() {
   return (
     <footer className="bg-navy-deep text-slate-300 px-14 py-10 mt-4">
       <div className="flex flex-wrap justify-between gap-8">
         <div className="max-w-xs">
-          <div className="font-serif font-extrabold text-xl uppercase tracking-tight">
-            <span className="text-white">Fleet</span>{" "}
-            <span className="text-gold-light">Formal</span>
+          <div className="flex items-center gap-2.5">
+            <FFMonogram className="w-9 h-9" />
+            <div className="font-serif font-extrabold text-xl uppercase tracking-tight">
+              <span className="text-white">Fleet</span>{" "}
+              <span className="text-gold-light">Formal</span>
+            </div>
           </div>
           <p className="text-[13px] mt-2 uppercase tracking-wide text-gold-light/80">
             Arrive at formal in something unforgettable.
@@ -54,11 +58,17 @@ export default function Footer() {
       </div>
       <div className="border-t border-white/10 mt-8 pt-5 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-4 text-[12.5px] text-slate-400">
-          <span className="flex items-center gap-1.5">📍 Local vehicles</span>
+          <span className="flex items-center gap-1.5">
+            <Icon name="pin" className="w-3.5 h-3.5 text-gold-light" /> Local vehicles
+          </span>
           <span className="text-white/15">·</span>
-          <span className="flex items-center gap-1.5">★ Real owners</span>
+          <span className="flex items-center gap-1.5">
+            <Icon name="star" className="w-3.5 h-3.5 text-gold-light" /> Real owners
+          </span>
           <span className="text-white/15">·</span>
-          <span className="flex items-center gap-1.5">♥ Great memories</span>
+          <span className="flex items-center gap-1.5">
+            <Icon name="heart" className="w-3.5 h-3.5 text-gold-light" /> Great memories
+          </span>
         </div>
         <div className="text-[12px] text-slate-500 text-right">
           <div>© {new Date().getFullYear()} Fleet Formal. Currently serving Brisbane North, QLD.</div>

@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --navy: #101d33;
-  --navy-deep: #0a1424;
-  --gold: #c9a227;
-  --gold-light: #e6c65c;
-  --cream: #faf6ee;
-  --ink: #1b2333;
-  --muted: #697082;
-  --line: #e9e3d5;
+  /* Fleet Formal official brand palette (from brand sheet) */
+  --navy-deep: #0d1b2a; /* Midnight Navy */
+  --navy: #16293e; /* lighter derived navy for depth/gradients — brand only specifies one core navy */
+  --gold: #d4a937; /* Accent Gold */
+  --gold-light: #e3c169; /* lighter derived gold for gradients/highlights */
+  --cream: #f1f1f1; /* Light Grey */
+  --ink: #2b2b2b; /* Charcoal */
+  --muted: #6b7280;
+  --line: #d9d9d9; /* Silver Grey */
   --amber: #b8790a;
   --amber-bg: #fdf1de;
-  /* Fleet Formal brand refresh: subtler gold tone for hairline borders/dividers on dark navy */
-  --gold-border: rgba(201, 162, 39, 0.35);
+  /* subtler gold tone for hairline borders/dividers on dark navy */
+  --gold-border: rgba(212, 169, 55, 0.35);
 }
 
 @theme inline {

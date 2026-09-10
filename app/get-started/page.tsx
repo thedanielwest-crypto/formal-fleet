@@ -2,29 +2,31 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { IconBadge } from "@/components/BrandIcon";
+import type { IconName } from "@/components/BrandIcon";
 
 export const metadata: Metadata = {
   title: "Get Started — Fleet Formal",
   description: "Browse cars, sign up your school, or list your car with Fleet Formal.",
 };
 
-const paths = [
+const paths: { icon: IconName; title: string; blurb: string; cta: string; href: string }[] = [
   {
-    emoji: "🚘",
+    icon: "search",
     title: "Browse cars",
     blurb: "See every verified (and unverified) car currently listed — no account needed to look.",
     cta: "Browse cars",
     href: "/browse",
   },
   {
-    emoji: "🏫",
+    icon: "school",
     title: "I'm a school or P&C",
     blurb: "Create an account to post your formal, invite verified drivers, and manage RSVPs.",
     cta: "Sign up as a school",
     href: "/signup?role=school",
   },
   {
-    emoji: "🚗",
+    icon: "car",
     title: "I want to list my car",
     blurb: "Create a driver account to list your car, browse events, and say yes to the ones you like.",
     cta: "Sign up as a car owner",
@@ -56,7 +58,9 @@ export default function GetStartedPage() {
               href={p.href}
               className="bg-white border border-line rounded-2xl p-7 flex flex-col hover:border-gold hover:shadow-lg hover:shadow-gold-border transition-all"
             >
-              <div className="text-4xl mb-4">{p.emoji}</div>
+              <div className="mb-4">
+                <IconBadge name={p.icon} tone="navy" size="w-14 h-14" iconSize="w-6 h-6" />
+              </div>
               <h2 className="font-serif text-[20px] mb-2">{p.title}</h2>
               <p className="text-[14px] text-muted leading-relaxed flex-1">{p.blurb}</p>
               <span className="mt-5 inline-block rounded-full py-3 font-bold text-[13px] uppercase tracking-wide text-center text-navy-deep bg-gradient-to-br from-gold-light to-gold">

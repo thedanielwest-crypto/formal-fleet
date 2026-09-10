@@ -6,6 +6,14 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabaseClient";
 import type { Role } from "@/lib/authContext";
+import { IconBadge } from "@/components/BrandIcon";
+import type { IconName } from "@/components/BrandIcon";
+
+const ROLE_ICON: Record<Role, IconName> = {
+  driver: "car",
+  school: "school",
+  student: "graduate",
+};
 
 const inputClass =
   "w-full border border-line rounded-lg px-4 py-3 text-[15px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
@@ -102,7 +110,9 @@ function SignupForm() {
               onClick={() => setRole(r)}
               className="text-left bg-white border border-line rounded-2xl p-6 hover:border-gold hover:shadow-md transition-all"
             >
-              <div className="text-3xl mb-3">{r === "driver" ? "🚗" : r === "school" ? "🏫" : "🎓"}</div>
+              <div className="mb-3">
+                <IconBadge name={ROLE_ICON[r]} tone="navy" size="w-12 h-12" iconSize="w-5 h-5" />
+              </div>
               <h3 className="font-serif text-[18px] mb-1.5">{ROLE_COPY[r].title}</h3>
               <p className="text-[13.5px] text-muted leading-relaxed">{ROLE_COPY[r].blurb}</p>
             </button>

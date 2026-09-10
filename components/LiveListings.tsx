@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/authContext";
 import { type Listing } from "@/lib/listings";
 import PrivateInquiryModal from "@/components/PrivateInquiryModal";
+import { Icon } from "@/components/BrandIcon";
 
 /**
  * This component owns the whole /browse grid: it fetches the live
@@ -441,8 +442,12 @@ function CarCardView({ car }: { car: CarCard }) {
       <div className="p-5">
         <h3 className="text-[19px] mb-1 font-medium">{car.title}</h3>
         <div className="flex justify-between items-center mb-2 flex-wrap gap-1.5">
-          <span className="text-[13px] text-muted">📍 {car.suburb}, QLD</span>
-          <span className="text-[13px] text-gold font-bold">★ New listing</span>
+          <span className="text-[13px] text-muted flex items-center gap-1">
+            <Icon name="pin" className="w-3.5 h-3.5" /> {car.suburb}, QLD
+          </span>
+          <span className="text-[13px] text-gold font-bold flex items-center gap-1">
+            <Icon name="star" className="w-3.5 h-3.5" /> New listing
+          </span>
         </div>
 
         {(specParts || car.colour || car.seats) && (

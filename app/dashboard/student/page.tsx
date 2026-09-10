@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabaseClient";
 import { useRequireRole } from "@/lib/useRequireRole";
+import { Icon } from "@/components/BrandIcon";
 
 type OpenEvent = {
   id: string;
@@ -223,8 +224,9 @@ export default function StudentDashboard() {
                 <img src={photoUrl(c.photo1_path)} alt={c.car} className="w-full h-40 object-cover" />
                 <div className="p-4">
                   <h3 className="font-serif text-[16px]">{c.car}</h3>
-                  <p className="text-[12.5px] text-muted mb-2">
-                    📍 {c.suburb} · {c.status === "verified" ? "Verified" : "Unverified"}
+                  <p className="text-[12.5px] text-muted mb-2 flex items-center gap-1">
+                    <Icon name="pin" className="w-3 h-3" />
+                    {c.suburb} · {c.status === "verified" ? "Verified" : "Unverified"}
                   </p>
                   {inviteMsg[c.id] ? (
                     <p className="text-[13px] font-semibold text-[#1d7a4c]">{inviteMsg[c.id]}</p>

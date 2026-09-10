@@ -7,6 +7,7 @@ import Footer from "@/components/Footer";
 import MessageThread from "@/components/MessageThread";
 import { supabase } from "@/lib/supabaseClient";
 import { useRequireRole } from "@/lib/useRequireRole";
+import { Icon } from "@/components/BrandIcon";
 
 const statusStyle: Record<string, string> = {
   unverified: "bg-amber-bg text-amber",
@@ -142,7 +143,7 @@ export default function DriverDashboard() {
               className="relative bg-white border border-line rounded-full w-10 h-10 flex items-center justify-center text-[17px]"
               aria-label="Notifications"
             >
-              🔔
+              <Icon name="bell" className="w-5 h-5" />
               {unreadIds.length > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1">
                   {unreadIds.length}
@@ -327,9 +328,16 @@ export default function DriverDashboard() {
                 </span>
               </div>
               {inq.message && <p className="text-[13.5px] mt-1 mb-2">{inq.message}</p>}
-              <div className="text-[12.5px] text-muted">
-                📧 {inq.requester_email}
-                {inq.requester_phone ? ` · 📞 ${inq.requester_phone}` : ""}
+              <div className="text-[12.5px] text-muted flex items-center gap-1 flex-wrap">
+                <Icon name="mail" className="w-3.5 h-3.5" /> {inq.requester_email}
+                {inq.requester_phone ? (
+                  <>
+                    <span className="mx-0.5">·</span>
+                    <Icon name="phone" className="w-3.5 h-3.5" /> {inq.requester_phone}
+                  </>
+                ) : (
+                  ""
+                )}
               </div>
               <div className="text-[11px] text-muted mt-1">{relativeTime(inq.created_at)}</div>
             </div>

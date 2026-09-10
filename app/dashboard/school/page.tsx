@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import MessageThread from "@/components/MessageThread";
 import { supabase } from "@/lib/supabaseClient";
 import { useRequireRole } from "@/lib/useRequireRole";
+import { Icon } from "@/components/BrandIcon";
 
 const inputClass =
   "w-full border border-line rounded-lg px-4 py-2.5 text-[14px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
@@ -263,8 +264,16 @@ export default function SchoolDashboard() {
                             </span>
                           </div>
                           {c.status === "confirmed" && c.contact && (
-                            <div className="mt-2 text-[12.5px]">
-                              📧 {c.contact.email} {c.contact.phone ? `· 📞 ${c.contact.phone}` : ""}
+                            <div className="mt-2 text-[12.5px] flex items-center gap-1 flex-wrap">
+                              <Icon name="mail" className="w-3.5 h-3.5" /> {c.contact.email}
+                              {c.contact.phone ? (
+                                <>
+                                  <span className="mx-0.5">·</span>
+                                  <Icon name="phone" className="w-3.5 h-3.5" /> {c.contact.phone}
+                                </>
+                              ) : (
+                                ""
+                              )}
                             </div>
                           )}
                           {c.status === "confirmed" && (

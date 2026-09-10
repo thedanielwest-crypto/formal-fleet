@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { Icon } from "@/components/BrandIcon";
 import { getListingBySlug, listings } from "@/lib/listings";
 
 export function generateStaticParams() {
@@ -65,8 +66,9 @@ export default async function ListingDetail({
 
           <div className="mt-6">
             <h1 className="font-serif text-[28px]">{listing.title}</h1>
-            <div className="text-[13.5px] text-muted mt-1">
-              📍 {listing.suburb}, {listing.region}
+            <div className="text-[13.5px] text-muted mt-1 flex items-center gap-1.5">
+              <Icon name="pin" className="w-3.5 h-3.5" />
+              {listing.suburb}, {listing.region}
             </div>
           </div>
 
@@ -113,7 +115,8 @@ export default async function ListingDetail({
               Message the owner
             </button>
             <div className="mt-4.5 text-[12px] text-muted flex gap-2 items-start leading-relaxed">
-              🛡️ Parent/guardian confirmation is required before this booking is finalised, and full trip details are sent by SMS once confirmed.
+              <Icon name="shield" className="w-3.5 h-3.5 mt-0.5 shrink-0" />
+              Parent/guardian confirmation is required before this booking is finalised, and full trip details are sent by SMS once confirmed.
             </div>
           </div>
         </div>

@@ -1,13 +1,13 @@
 {
-  "name": "Formal Fleet — Verified Rides for Formal Night",
-  "short_name": "Formal Fleet",
-  "description": "Connecting classic and show car owners with students who want an unforgettable, verified ride to formal.",
+  "name": "Fleet Formal — Rides for Formal Night",
+  "short_name": "Fleet Formal",
+  "description": "Connecting classic and show car owners with students and schools who want an unforgettable ride to formal night.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#faf6ee",
-  "theme_color": "#101d33",
+  "background_color": "#0d1b2a",
+  "theme_color": "#0d1b2a",
   "icons": [
     {
       "src": "/icons/icon-192.png",

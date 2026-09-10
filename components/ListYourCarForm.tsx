@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/authContext";
+import { Icon } from "@/components/BrandIcon";
 
 const inputClass =
   "w-full border border-line rounded-lg px-4 py-3.5 text-[16px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
@@ -165,7 +166,9 @@ function DocField({
       <label className={labelClass} htmlFor={id}>{label}</label>
       {fileName ? (
         <div className="flex items-center gap-3 border border-line rounded-lg px-4 py-3.5 bg-white">
-          <span className="text-[13.5px] flex-1 truncate">📄 {fileName}</span>
+          <span className="text-[13.5px] flex-1 truncate flex items-center gap-1.5">
+            <Icon name="document" className="w-3.5 h-3.5 shrink-0" /> {fileName}
+          </span>
           <button
             type="button"
             onClick={handleRemove}

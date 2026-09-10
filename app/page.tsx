@@ -4,26 +4,28 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StatsBanner from "@/components/StatsBanner";
 import UpcomingEvents from "@/components/UpcomingEvents";
+import { IconBadge } from "@/components/BrandIcon";
+import type { IconName } from "@/components/BrandIcon";
 import { listings } from "@/lib/listings";
 
-const steps = [
+const steps: { icon: IconName; title: string; blurb: string }[] = [
   {
-    icon: "🔍",
+    icon: "search",
     title: "Browse the fleet",
     blurb: "Scroll real cars from real owners near you — no account needed to look around.",
   },
   {
-    icon: "✅",
+    icon: "check",
     title: "Check verification",
     blurb: "Licence, insurance, and Working with Children Check status shown on every listing.",
   },
   {
-    icon: "🤝",
+    icon: "handshake",
     title: "Connect & confirm",
     blurb: "Schools invite cars, drivers say yes, students lock in the ride they want.",
   },
   {
-    icon: "🎉",
+    icon: "celebration",
     title: "Arrive in style",
     blurb: "Turn up to formal in something nobody will forget.",
   },
@@ -37,11 +39,11 @@ const usps = [
   "Make your formal unforgettable",
 ];
 
-const features = [
-  { icon: "🎓", title: "For Students", blurb: "Find amazing rides for your formal." },
-  { icon: "🚗", title: "For Vehicle Owners", blurb: "Share your ride. Make their night." },
-  { icon: "🛡️", title: "Safe & Trusted", blurb: "Clear information. Real people. Real rides." },
-  { icon: "🏫", title: "For Schools", blurb: "Supporting unforgettable formals." },
+const features: { icon: IconName; title: string; blurb: string }[] = [
+  { icon: "graduate", title: "For Students", blurb: "Find amazing rides for your formal." },
+  { icon: "car", title: "For Vehicle Owners", blurb: "Share your ride. Make their night." },
+  { icon: "shield", title: "Safe & Trusted", blurb: "Clear information. Real people. Real rides." },
+  { icon: "school", title: "For Schools", blurb: "Supporting unforgettable formals." },
 ];
 
 const galleryPhotos = listings.map((l) => ({ src: l.heroImage, alt: l.title }));
@@ -117,8 +119,8 @@ export default function Home() {
               key={f.title}
               className="text-center rounded-2xl border border-line p-6 hover:border-gold transition-colors"
             >
-              <div className="w-14 h-14 mx-auto rounded-full bg-navy flex items-center justify-center text-2xl mb-4">
-                {f.icon}
+              <div className="mb-4">
+                <IconBadge name={f.icon} tone="navy" />
               </div>
               <h3 className="font-serif text-[16px] mb-1.5">{f.title}</h3>
               <p className="text-[13.5px] text-muted leading-relaxed">{f.blurb}</p>
@@ -144,8 +146,8 @@ export default function Home() {
               key={s.title}
               className="text-center relative bg-white rounded-2xl border border-line p-6"
             >
-              <div className="w-16 h-16 mx-auto rounded-full bg-navy border border-gold-border flex items-center justify-center text-3xl mb-4">
-                {s.icon}
+              <div className="mb-4">
+                <IconBadge name={s.icon} tone="gold" size="w-16 h-16" iconSize="w-7 h-7" />
               </div>
               <div className="text-[12px] font-bold text-gold uppercase tracking-wide mb-1">
                 Step {i + 1}

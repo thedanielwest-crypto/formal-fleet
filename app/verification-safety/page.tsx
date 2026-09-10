@@ -2,30 +2,32 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { IconBadge } from "@/components/BrandIcon";
+import type { IconName } from "@/components/BrandIcon";
 
 export const metadata: Metadata = {
   title: "Verification & Safety — Formal Fleet",
   description: "Every Formal Fleet owner is checked before their listing goes live — ID, licence, insurance, WWCC, and parent-confirmed bookings.",
 };
 
-const checks = [
+const checks: { icon: IconName; title: string; body: string }[] = [
   {
-    icon: "🪪",
+    icon: "id",
     title: "ID & Licence Verified",
     body: "Every owner's identity and driver's licence are checked before their car can be listed. No listing goes live without this.",
   },
   {
-    icon: "👮",
+    icon: "badge",
     title: "WWCC Confirmed",
     body: "Owners driving minors hold a current Working With Children Check (WWCC), verified against the QLD register.",
   },
   {
-    icon: "🛡️",
+    icon: "shield",
     title: "Insurance Checked",
     body: "Comprehensive insurance covering passengers is confirmed and kept on file for every listed vehicle.",
   },
   {
-    icon: "📱",
+    icon: "phone",
     title: "Parent Booking Confirmation",
     body: "No booking is finalised without a parent or guardian confirming it first. Full trip and pickup details are then sent by SMS.",
   },
@@ -50,7 +52,9 @@ export default function VerificationSafety() {
         <div className="grid grid-cols-2 gap-5 max-w-4xl">
           {checks.map((c) => (
             <div key={c.title} className="flex gap-4 bg-white border border-line rounded-2xl p-5">
-              <div className="text-2xl shrink-0">{c.icon}</div>
+              <div className="shrink-0">
+                <IconBadge name={c.icon} tone="navy" size="w-11 h-11" iconSize="w-5 h-5" />
+              </div>
               <div>
                 <h3 className="font-semibold text-[15.5px] mb-1">{c.title}</h3>
                 <p className="text-[13.5px] text-[#454e60] leading-relaxed">{c.body}</p>

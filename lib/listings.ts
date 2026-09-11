@@ -30,8 +30,8 @@ export const listings: Listing[] = [
     ownerSub: "Verified owner · Samford",
     description:
       'A faithful tribute to the iconic #43 Peter Stuyvesant International Mazda RX-7 — right down to the Allan Moffat signage and gold BBS-style wheels. Craig is the son of legendary racer John English, and this build is a genuine labour of love. Expect a proper race-car welcome: hood up for a look at the engine bay, and a ride nobody at the formal will forget.',
-    heroImage: "/photos/rx7-sketch.png",
-    gallery: ["/photos/rx7-sketch.png"],
+    heroImage: "/photos/rx7-hero.jpg",
+    gallery: ["/photos/rx7-hero.jpg", "/photos/rx7-engine.jpg"],
   },
   {
     slug: "ac-cobra-replica",
@@ -47,8 +47,8 @@ export const listings: Listing[] = [
     ownerSub: "Verified owner · The Gap",
     description:
       "Hand-built Cobra replica with cream leather interior, roll bar, and a proper V8 rumble. Jeff's happy to drive for free — he just loves seeing the reaction when the doors open outside the venue.",
-    heroImage: "/photos/cobra-sketch.png",
-    gallery: ["/photos/cobra-sketch.png"],
+    heroImage: "/photos/cobra-hero.jpg",
+    gallery: ["/photos/cobra-hero.jpg", "/photos/cobra-side.jpg", "/photos/cobra-interior.jpg"],
   },
 ];
 

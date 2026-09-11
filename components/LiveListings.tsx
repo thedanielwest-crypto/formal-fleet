@@ -5,6 +5,7 @@ import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/authContext";
 import { type Listing } from "@/lib/listings";
+import { photoUrl } from "@/lib/carPhoto";
 import PrivateInquiryModal from "@/components/PrivateInquiryModal";
 import { Icon } from "@/components/BrandIcon";
 
@@ -98,14 +99,6 @@ const DEMO_SPECS: Record<
   },
 };
 
-function photoUrl(path: string) {
-  // A handful of early rows were backfilled from raw form submissions and
-  // store a full URL directly instead of a Storage object key - pass those
-  // through unchanged rather than trying to resolve them as storage paths.
-  if (/^https?:\/\//i.test(path)) return path;
-  return supabase.storage.from("car-photos").getPublicUrl(path).data.publicUrl;
-}
-
 function demoToCard(listing: Listing): CarCard {
   const specs = DEMO_SPECS[listing.slug];
   return {
@@ -146,7 +139,7 @@ function rowToCard(row: SubmissionRow): CarCard {
     scenicDriveOk: !!row.scenic_drive_ok,
     availableWeddings: !!row.available_weddings,
     priceLabel,
-    photoUrl: photoUrl(row.photo1_path),
+    photoUrl: photoUrl(row.photo1_path) ?? "",
     description: row.description,
   };
 }
@@ -422,59 +415,65 @@ function CarCardView({ car }: { car: CarCard }) {
     .filter(Boolean)
     .join(" ");
 
+  const detailHref = car.source === "demo" ? `/listing/${car.id}` : `/car?id=${car.id}`;
+
   return (
     <div className="bg-white border border-line rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-      <div className="relative h-[280px]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={car.photoUrl} alt={car.title} className="w-full h-full object-cover" />
-        <div
-          className={`absolute top-3.5 left-3.5 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11.5px] font-bold ${
-            isVerified ? "bg-white/95 text-navy-deep" : "bg-amber-bg text-amber"
-          }`}
-        >
-          <span className={`w-1.5 h-1.5 rounded-full ${isVerified ? "bg-gold" : "bg-amber"}`} />
-          {isVerified ? "Verified" : "Unverified"}
+      <Link href={detailHref} className="block">
+        <div className="relative h-[280px]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={car.photoUrl} alt={car.title} className="w-full h-full object-cover" />
+          <div
+            className={`absolute top-3.5 left-3.5 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11.5px] font-bold ${
+              isVerified ? "bg-white/95 text-navy-deep" : "bg-amber-bg text-amber"
+            }`}
+          >
+            <span className={`w-1.5 h-1.5 rounded-full ${isVerified ? "bg-gold" : "bg-amber"}`} />
+            {isVerified ? "Verified" : "Unverified"}
+          </div>
+          <div className="absolute bottom-3.5 right-3.5 px-3.5 py-1.5 rounded-lg text-[13px] font-bold text-white bg-navy-deep">
+            {car.priceLabel}
+          </div>
         </div>
-        <div className="absolute bottom-3.5 right-3.5 px-3.5 py-1.5 rounded-lg text-[13px] font-bold text-white bg-navy-deep">
-          {car.priceLabel}
-        </div>
-      </div>
-      <div className="p-5">
-        <h3 className="text-[19px] mb-1 font-medium">{car.title}</h3>
-        <div className="flex justify-between items-center mb-2 flex-wrap gap-1.5">
-          <span className="text-[13px] text-muted flex items-center gap-1">
-            <Icon name="pin" className="w-3.5 h-3.5" /> {car.suburb}, QLD
-          </span>
-          <span className="text-[13px] text-gold font-bold flex items-center gap-1">
-            <Icon name="star" className="w-3.5 h-3.5" /> New listing
-          </span>
-        </div>
-
-        {(specParts || car.colour || car.seats) && (
-          <p className="text-[12.5px] text-muted mb-2.5">
-            {[specParts, car.colour, car.seats ? `${car.seats} seats` : null]
-              .filter(Boolean)
-              .join(" · ")}
-          </p>
-        )}
-
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {car.scenicDriveOk && (
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-bg text-amber">
-              Scenic drive OK
+        <div className="px-5 pt-5">
+          <h3 className="text-[19px] mb-1 font-medium hover:underline">{car.title}</h3>
+          <div className="flex justify-between items-center mb-2 flex-wrap gap-1.5">
+            <span className="text-[13px] text-muted flex items-center gap-1">
+              <Icon name="pin" className="w-3.5 h-3.5" /> {car.suburb}, QLD
             </span>
-          )}
-          {car.availableWeddings && (
-            <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#eef1fb] text-navy">
-              Available for weddings
+            <span className="text-[13px] text-gold font-bold flex items-center gap-1">
+              <Icon name="star" className="w-3.5 h-3.5" /> New listing
             </span>
+          </div>
+
+          {(specParts || car.colour || car.seats) && (
+            <p className="text-[12.5px] text-muted mb-2.5">
+              {[specParts, car.colour, car.seats ? `${car.seats} seats` : null]
+                .filter(Boolean)
+                .join(" · ")}
+            </p>
+          )}
+
+          <div className="flex flex-wrap gap-1.5 mb-3">
+            {car.scenicDriveOk && (
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-amber-bg text-amber">
+                Scenic drive OK
+              </span>
+            )}
+            {car.availableWeddings && (
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#eef1fb] text-navy">
+                Available for weddings
+              </span>
+            )}
+          </div>
+
+          {car.description && (
+            <p className="text-[13.5px] text-[#454e60] leading-relaxed mb-3.5">{car.description}</p>
           )}
         </div>
+      </Link>
 
-        {car.description && (
-          <p className="text-[13.5px] text-[#454e60] leading-relaxed mb-3.5">{car.description}</p>
-        )}
-
+      <div className="px-5 pb-5">
         <div className="flex flex-col gap-2 pt-2 border-t border-line">
           {car.source === "live" ? (
             <InviteToEventControl carId={car.id} />
@@ -497,7 +496,7 @@ function CarCardView({ car }: { car: CarCard }) {
   );
 }
 
-function InviteToEventControl({ carId }: { carId: string }) {
+export function InviteToEventControl({ carId }: { carId: string }) {
   const { session, profile } = useAuth();
   const [open, setOpen] = useState(false);
   const [connections, setConnections] = useState<EventConnection[] | null>(null);
@@ -615,7 +614,7 @@ function InviteToEventControl({ carId }: { carId: string }) {
   );
 }
 
-function PrivateEventControl({ carId }: { carId: string }) {
+export function PrivateEventControl({ carId }: { carId: string }) {
   const [open, setOpen] = useState(false);
   return (
     <>

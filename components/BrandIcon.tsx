@@ -1,11 +1,13 @@
 /**
  * Fleet Formal brand marks & icon system.
  *
- * FFMonogram is the custom vector "FF" mark from the brand sheet — a white F
- * and a gold F, forward-leaning, with a dashed road-line running through the
- * gold F and trailing gold speed-lines. It replaces the old skewed-system-font
- * version and is the single source of truth for the mark (header, footer,
- * favicons/app icons are all generated from the same geometry).
+ * FFMonogram is the custom vector "FF" mark from the September 2026 brand
+ * refresh — a white F and a gold F, forward-leaning, with a single tapered
+ * gold "road ribbon" sweeping in from the bottom-left and a dashed white
+ * lane-line running down its centre. It replaces the earlier version's
+ * separate parallel speed-lines + in-letter dash, and is the single source
+ * of truth for the mark (header, footer, favicons/app icons are all
+ * generated from the same geometry).
  *
  * IconBadge + the icon components below replace the raw emoji that were
  * scattered across the site (🎓🚗🛡️🏫🔍✅🤝🎉 etc.) with one consistent set of
@@ -29,28 +31,28 @@ export function FFMonogram({ className = "w-10 h-10" }: { className?: string }) 
         strokeOpacity="0.35"
       />
 
-      {/* trailing gold speed-lines */}
-      <line x1="14" y1="54.93" x2="25.61" y2="47.73" stroke="#d4a937" strokeWidth="2.7" strokeLinecap="round" />
-      <line x1="17.1" y1="48.74" x2="33.35" y2="38.66" stroke="#d4a937" strokeWidth="3.1" strokeLinecap="round" />
-      <line x1="20.19" y1="41.77" x2="41.1" y2="28.81" stroke="#d4a937" strokeWidth="3.5" strokeLinecap="round" />
+      <g transform="translate(-3,2) scale(1.08)">
+        {/* tapered gold "road ribbon" sweeping in from bottom-left */}
+        <path d="M 6 86 L 19 86 L 47 38 L 40 38 Z" fill="#d4a937" />
+        <path
+          d="M 11.5 80 L 34 42"
+          stroke="#ffffff"
+          strokeWidth="1.7"
+          strokeDasharray="3.6 3.2"
+          strokeLinecap="round"
+        />
 
-      {/* white F */}
-      <polygon
-        points="45.74,32.48 68.97,32.48 66.41,41.0 52.48,41.0 49.92,49.51 59.99,49.51 57.66,57.25 47.6,57.25 43.42,71.19 34.13,71.19"
-        fill="#ffffff"
-      />
-      {/* gold F */}
-      <polygon
-        points="62.77,32.48 86.0,32.48 83.45,41.0 69.51,41.0 66.95,49.51 77.02,49.51 74.7,57.25 64.63,57.25 60.45,71.19 51.16,71.19"
-        fill="#d4a937"
-      />
-
-      {/* dashed road-line through the gold F */}
-      <line x1="55.03" y1="68.09" x2="57.76" y2="64.6" stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" />
-      <line x1="59.99" y1="61.74" x2="62.71" y2="58.25" stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" />
-      <line x1="64.94" y1="55.4" x2="67.67" y2="51.9" stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" />
-      <line x1="69.9" y1="49.05" x2="72.62" y2="45.56" stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" />
-      <line x1="74.85" y1="42.7" x2="77.58" y2="39.21" stroke="#ffffff" strokeWidth="2.6" strokeLinecap="round" />
+        {/* white F */}
+        <polygon
+          points="45.74,32.48 68.97,32.48 66.41,41.0 52.48,41.0 49.92,49.51 59.99,49.51 57.66,57.25 47.6,57.25 43.42,71.19 34.13,71.19"
+          fill="#ffffff"
+        />
+        {/* gold F */}
+        <polygon
+          points="62.77,32.48 86.0,32.48 83.45,41.0 69.51,41.0 66.95,49.51 77.02,49.51 74.7,57.25 64.63,57.25 60.45,71.19 51.16,71.19"
+          fill="#d4a937"
+        />
+      </g>
     </svg>
   );
 }

@@ -1,169 +1,28 @@
-import Image from "next/image";
-import Link from "next/link";
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import StatsBanner from "@/components/StatsBanner";
-import UpcomingEvents from "@/components/UpcomingEvents";
-import { IconBadge } from "@/components/BrandIcon";
-import type { IconName } from "@/components/BrandIcon";
+import TrustUSPs from "@/components/TrustUSPs";
+import LiveListings from "@/components/LiveListings";
 import { listings } from "@/lib/listings";
 
-const steps: { icon: IconName; title: string; blurb: string }[] = [
-  {
-    icon: "search",
-    title: "Browse the fleet",
-    blurb: "Scroll real cars from real owners near you — no account needed to look around.",
-  },
-  {
-    icon: "check",
-    title: "Check verification",
-    blurb: "Licence, insurance, and Working with Children Check status shown on every listing.",
-  },
-  {
-    icon: "handshake",
-    title: "Connect & confirm",
-    blurb: "Schools invite cars, drivers say yes, students lock in the ride they want.",
-  },
-  {
-    icon: "celebration",
-    title: "Arrive in style",
-    blurb: "Turn up to formal in something nobody will forget.",
-  },
-];
+export const metadata: Metadata = {
+  title: "Browse Cars — Formal Fleet",
+  description: "Every verified and unverified car currently listed on Formal Fleet.",
+};
 
-const usps = [
-  "Find amazing vehicles",
-  "Connect with local owners",
-  "Safe, simple and trusted",
-  "From classics to modern icons",
-  "Make your formal unforgettable",
-];
-
-const features: { icon: IconName; title: string; blurb: string }[] = [
-  { icon: "graduate", title: "For Students", blurb: "Find amazing rides for your formal." },
-  { icon: "car", title: "For Vehicle Owners", blurb: "Share your ride. Make their night." },
-  { icon: "shield", title: "Safe & Trusted", blurb: "Clear information. Real people. Real rides." },
-  { icon: "school", title: "For Schools", blurb: "Supporting unforgettable formals." },
-];
-
-const galleryPhotos = listings.map((l) => ({ src: l.heroImage, alt: l.title }));
-
-export default function Home() {
+export default function BrowsePage() {
   return (
     <div>
       <Header />
 
-      <section className="bg-gradient-to-b from-navy-deep via-navy-deep to-navy text-white px-6 md:px-14 pt-20 pb-16 text-center">
-        <div className="max-w-3xl mx-auto">
-          <p className="text-[12px] font-bold uppercase tracking-[0.3em] text-gold-light mb-5">
-            Youthful · Luxury · Automotive
-          </p>
-          <h1 className="font-serif font-black uppercase text-4xl md:text-6xl leading-[1.05] tracking-tight">
-            Your Formal.
-            <br />
-            <span className="text-gold-light">Your Ride.</span>
-          </h1>
-          <p className="mt-6 text-slate-200 text-[17px] max-w-xl mx-auto">
-            Arrive at formal in something unforgettable.
-          </p>
-          <p className="mt-2 text-slate-400 text-[15px] max-w-lg mx-auto">
-            Find amazing vehicles. Arrive in unforgettable style.
-          </p>
-          <div className="flex gap-4 mt-9 justify-center flex-wrap">
-            <Link
-              href="/browse"
-              className="px-8 py-3.5 rounded-full font-bold text-[14px] uppercase tracking-wide text-navy-deep bg-gradient-to-br from-gold-light to-gold"
-            >
-              Find a Ride
-            </Link>
-            <Link
-              href="/list-your-car"
-              className="px-8 py-3.5 rounded-full font-bold text-[14px] uppercase tracking-wide border-2 border-gold text-gold-light hover:bg-white/5"
-            >
-              List Your Ride
-            </Link>
-          </div>
-
-          <ul className="mt-12 flex flex-col gap-3 max-w-sm mx-auto text-left">
-            {usps.map((u) => (
-              <li key={u} className="flex items-start gap-3 text-[14.5px] text-slate-200">
-                <span className="mt-0.5 text-gold-light font-bold">✓</span>
-                <span>{u}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </section>
-
-      <StatsBanner />
-
-      {/* Fun photo strip */}
-      <section className="px-6 md:px-14 py-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {galleryPhotos.map((p) => (
-            <div
-              key={p.src}
-              className="relative h-[160px] md:h-[200px] rounded-2xl overflow-hidden border border-line"
-            >
-              <Image src={p.src} alt={p.alt} fill className="object-cover" />
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Feature callouts */}
-      <section className="px-6 md:px-14 py-12 bg-white">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-          {features.map((f) => (
-            <div
-              key={f.title}
-              className="text-center rounded-2xl border border-line p-6 hover:border-gold transition-colors"
-            >
-              <div className="mb-4">
-                <IconBadge name={f.icon} tone="navy" />
-              </div>
-              <h3 className="font-serif text-[16px] mb-1.5">{f.title}</h3>
-              <p className="text-[13.5px] text-muted leading-relaxed">{f.blurb}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="px-6 md:px-14 py-14 bg-cream">
-        <p className="text-[12px] font-bold uppercase tracking-[0.25em] text-gold text-center mb-2">
-          The Journey
+      <section className="bg-[linear-gradient(180deg,rgba(13,27,42,0.90),rgba(13,27,42,0.82)_55%,rgba(22,41,62,0.95)),url('/photos/brand-hero.jpg')] bg-cover bg-center bg-no-repeat text-white px-6 md:px-14 pt-10 pb-9">
+        <h1 className="font-serif font-bold text-4xl max-w-2xl leading-tight">
+          Arrive at formal in <span className="text-gold-light">something unforgettable.</span>
+        </h1>
+        <p className="mt-3 text-slate-300 max-w-xl">
+          Brisbane&rsquo;s first Formal Fleet listings — real cars, real verified owners.
         </p>
-        <h2 className="font-serif font-black uppercase text-[28px] text-center mb-2 tracking-tight">
-          How it works
-        </h2>
-        <p className="text-muted text-center mb-10 max-w-lg mx-auto">
-          From browsing to arriving, here&rsquo;s the whole journey in four steps.
-        </p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-          {steps.map((s, i) => (
-            <div
-              key={s.title}
-              className="text-center relative bg-white rounded-2xl border border-line p-6"
-            >
-              <div className="mb-4">
-                <IconBadge name={s.icon} tone="gold" size="w-16 h-16" iconSize="w-7 h-7" />
-              </div>
-              <div className="text-[12px] font-bold text-gold uppercase tracking-wide mb-1">
-                Step {i + 1}
-              </div>
-              <h3 className="font-serif text-[17px] mb-1.5">{s.title}</h3>
-              <p className="text-[13.5px] text-muted leading-relaxed">{s.blurb}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <UpcomingEvents />
-
-      {/* Trust strip */}
-      <section className="px-6 md:px-14 py-12 bg-navy-deep text-white">
-        <div className="flex flex-wrap justify-center gap-5">
+        <div className="flex gap-5 mt-6 flex-wrap">
           {[
             "ID & Licence Verified",
             "WWCC Confirmed",
@@ -172,30 +31,20 @@ export default function Home() {
           ].map((t) => (
             <div
               key={t}
-              className="flex items-center gap-2 bg-white/[0.07] border border-gold-border px-4 py-2.5 rounded-full text-[13.5px] font-medium"
+              className="flex items-center gap-2 bg-white/[0.07] border border-white/15 px-3.5 py-2 rounded-full text-[13px] font-medium"
             >
-              <span className="text-gold-light">✓</span> {t}
+              ✓ {t}
             </div>
           ))}
         </div>
       </section>
 
-      {/* Final CTA */}
-      <section className="px-6 md:px-14 py-16 text-center bg-gradient-to-b from-white to-cream">
-        <h2 className="font-serif font-black uppercase text-[28px] md:text-[32px] mb-3 tracking-tight">
-          Ready to join <span className="text-gold">Fleet Formal</span>?
-        </h2>
-        <p className="text-muted mb-7 max-w-lg mx-auto">
-          Whether you&rsquo;re a school planning a formal, an owner with a car worth showing off,
-          or a student hunting for the perfect ride — it starts with an account.
-        </p>
-        <Link
-          href="/get-started"
-          className="inline-block px-8 py-4 rounded-full font-bold text-[14px] uppercase tracking-wide text-navy-deep bg-gradient-to-br from-gold-light to-gold"
-        >
-          Get Started
-        </Link>
-      </section>
+      {/* LiveListings fetches the live car_submissions rows client-side,
+          merges them with these static demo listings into one shared shape,
+          and owns all filtering — see components/LiveListings.tsx. */}
+      <LiveListings listings={listings} />
+
+      <TrustUSPs />
 
       <Footer />
     </div>

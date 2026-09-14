@@ -28,12 +28,15 @@
   --color-amber: var(--amber);
   --color-amber-bg: var(--amber-bg);
   --color-gold-border: var(--gold-border);
-  --font-serif: "Playfair Display", Georgia, serif;
-  --font-sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+  /* Sept 2026 brand refresh: Montserrat for headings, Poppins for body -
+     the --font-serif name is kept so every existing `font-serif` heading
+     class site-wide picks up the new headline face without a rename. */
+  --font-serif: "Montserrat", -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Poppins", -apple-system, "Segoe UI", sans-serif;
 }
 
 body {
   background: var(--cream);
   color: var(--ink);
-  font-family: "Inter", -apple-system, "Segoe UI", sans-serif;
+  font-family: "Poppins", -apple-system, "Segoe UI", sans-serif;
 }

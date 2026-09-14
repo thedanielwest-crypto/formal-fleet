@@ -15,7 +15,7 @@ export default function BrowsePage() {
     <div>
       <Header />
 
-      <section className="bg-gradient-to-b from-navy-deep to-navy text-white px-6 md:px-14 pt-10 pb-9">
+      <section className="bg-[linear-gradient(180deg,rgba(13,27,42,0.90),rgba(13,27,42,0.82)_55%,rgba(22,41,62,0.95)),url('/photos/brand-hero.jpg')] bg-cover bg-center bg-no-repeat text-white px-6 md:px-14 pt-10 pb-9">
         <h1 className="font-serif font-bold text-4xl max-w-2xl leading-tight">
           Arrive at formal in <span className="text-gold-light">something unforgettable.</span>
         </h1>

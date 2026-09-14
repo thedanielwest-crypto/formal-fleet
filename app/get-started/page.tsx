@@ -38,7 +38,7 @@ export default function GetStartedPage() {
   return (
     <div>
       <Header />
-      <section className="bg-gradient-to-b from-navy-deep to-navy text-white px-6 md:px-14 pt-14 pb-11 text-center">
+      <section className="bg-[linear-gradient(180deg,rgba(13,27,42,0.90),rgba(13,27,42,0.82)_55%,rgba(22,41,62,0.95)),url('/photos/brand-hero.jpg')] bg-cover bg-center bg-no-repeat text-white px-6 md:px-14 pt-14 pb-11 text-center">
         <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold-light mb-4">
           Get Started
         </p>

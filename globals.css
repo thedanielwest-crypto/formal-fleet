@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+:root {
+  /* Fleet Formal official brand palette (from brand sheet) */
+  --navy-deep: #0d1b2a; /* Midnight Navy */
+  --navy: #16293e; /* lighter derived navy for depth/gradients — brand only specifies one core navy */
+  --gold: #d4a937; /* Accent Gold */
+  --gold-light: #e3c169; /* lighter derived gold for gradients/highlights */
+  --cream: #f1f1f1; /* Light Grey */
+  --ink: #2b2b2b; /* Charcoal */
+  --muted: #6b7280;
+  --line: #d9d9d9; /* Silver Grey */
+  --amber: #b8790a;
+  --amber-bg: #fdf1de;
+  /* subtler gold tone for hairline borders/dividers on dark navy */
+  --gold-border: rgba(212, 169, 55, 0.35);
+}
+
+@theme inline {
+  --color-navy: var(--navy);
+  --color-navy-deep: var(--navy-deep);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-amber: var(--amber);
+  --color-amber-bg: var(--amber-bg);
+  --color-gold-border: var(--gold-border);
+  /* Sept 2026 brand refresh: Montserrat for headings, Poppins for body -
+     the --font-serif name is kept so every existing `font-serif` heading
+     class site-wide picks up the new headline face without a rename. */
+  --font-serif: "Montserrat", -apple-system, "Segoe UI", sans-serif;
+  --font-sans: "Poppins", -apple-system, "Segoe UI", sans-serif;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Poppins", -apple-system, "Segoe UI", sans-serif;
+}

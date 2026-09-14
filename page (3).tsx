@@ -1,0 +1,84 @@
+import Link from "next/link";
+import type { Metadata } from "next";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { IconBadge } from "@/components/BrandIcon";
+import type { IconName } from "@/components/BrandIcon";
+
+export const metadata: Metadata = {
+  title: "Get Started — Fleet Formal",
+  description: "Browse cars, sign up your school, or list your car with Fleet Formal.",
+};
+
+const paths: { icon: IconName; title: string; blurb: string; cta: string; href: string }[] = [
+  {
+    icon: "search",
+    title: "Browse cars",
+    blurb: "See every verified (and unverified) car currently listed — no account needed to look.",
+    cta: "Browse cars",
+    href: "/browse",
+  },
+  {
+    icon: "school",
+    title: "I'm a school or P&C",
+    blurb: "Create an account to post your formal, invite verified drivers, and manage RSVPs.",
+    cta: "Sign up as a school",
+    href: "/signup?role=school",
+  },
+  {
+    icon: "car",
+    title: "I want to list my car",
+    blurb: "Create a driver account to list your car, browse events, and say yes to the ones you like.",
+    cta: "Sign up as a car owner",
+    href: "/signup?role=driver",
+  },
+];
+
+export default function GetStartedPage() {
+  return (
+    <div>
+      <Header />
+      <section className="bg-[linear-gradient(180deg,rgba(13,27,42,0.90),rgba(13,27,42,0.82)_55%,rgba(22,41,62,0.95)),url('/photos/brand-hero.jpg')] bg-cover bg-center bg-no-repeat text-white px-6 md:px-14 pt-14 pb-11 text-center">
+        <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold-light mb-4">
+          Get Started
+        </p>
+        <h1 className="font-serif font-black uppercase text-3xl md:text-4xl max-w-2xl mx-auto leading-tight tracking-tight">
+          What brings you to <span className="text-gold-light">Fleet Formal</span>?
+        </h1>
+        <p className="mt-3 text-slate-300 max-w-xl mx-auto">
+          Pick the path that fits — you can always come back and set up another account later.
+        </p>
+      </section>
+
+      <div className="px-6 md:px-14 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+          {paths.map((p) => (
+            <Link
+              key={p.title}
+              href={p.href}
+              className="bg-white border border-line rounded-2xl p-7 flex flex-col hover:border-gold hover:shadow-lg hover:shadow-gold-border transition-all"
+            >
+              <div className="mb-4">
+                <IconBadge name={p.icon} tone="navy" size="w-14 h-14" iconSize="w-6 h-6" />
+              </div>
+              <h2 className="font-serif text-[20px] mb-2">{p.title}</h2>
+              <p className="text-[14px] text-muted leading-relaxed flex-1">{p.blurb}</p>
+              <span className="mt-5 inline-block rounded-full py-3 font-bold text-[13px] uppercase tracking-wide text-center text-navy-deep bg-gradient-to-br from-gold-light to-gold">
+                {p.cta}
+              </span>
+            </Link>
+          ))}
+        </div>
+        <p className="text-center text-[13px] text-muted mt-8">
+          Are you a student wanting a ride?{" "}
+          <Link href="/signup?role=student" className="underline font-semibold">
+            Create a student account
+          </Link>{" "}
+          to connect to your event and invite the car you want.
+        </p>
+      </div>
+
+      <Footer />
+    </div>
+  );
+}

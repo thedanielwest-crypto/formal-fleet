@@ -97,6 +97,32 @@ const DEMO_SPECS: Record<
     scenicDriveOk: true,
     availableWeddings: true,
   },
+  "cupra-ateca-phillip": { make: "Cupra", model: "Ateca", year: 2024, colour: "Silver", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "mercedes-s-class-anthony": { make: "Mercedes-Benz", model: "S-Class", year: 2020, colour: "Grey", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "porsche-911-eddy": { make: "Porsche", model: "911", year: 2004, colour: "Miami Blue", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "alfa-156-gta-russell": { make: "Alfa Romeo", model: "156 GTA", year: 2002, colour: "White", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "bmw-e36-cyrus": { make: "BMW", model: "E36 Convertible", year: 1999, colour: "Black", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "mg-mgrv8-geoff-lane": { make: "MG", model: "RV8", year: 1995, colour: "Woodcote Green", seats: 2, scenicDriveOk: false, availableWeddings: false },
+  "holden-hq-mark": { make: "Holden", model: "HQ", year: 1974, colour: "White", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "chevrolet-apache-terry": { make: "Chevrolet", model: "Apache", year: 1961, colour: "Silver-Grey", seats: 3, scenicDriveOk: false, availableWeddings: false },
+  "chevrolet-styleline-renato": { make: "Chevrolet", model: "Styleline Deluxe", year: 1951, colour: "Yellow", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "honda-super-one-boden": { make: "Honda", model: "Super-ONE", year: 2026, colour: "Purple/Black", seats: 2, scenicDriveOk: false, availableWeddings: false },
+  "subaru-brz-james": { make: "Subaru", model: "BRZ", year: 2023, colour: "White", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "subaru-brz-cyril": { make: "Subaru", model: "BRZ", year: 2022, colour: "WRB Blue", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "alfa-brera-wayne-obrien": { make: "Alfa Romeo", model: "Brera", year: 2010, colour: "Red", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "hsv-clubsport-kyle": { make: "HSV", model: "Clubsport", year: 2008, colour: "Black", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "subaru-wrx-thomas": { make: "Subaru", model: "WRX", year: 2003, colour: "Blue", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "subaru-wrx-sti-aidan": { make: "Subaru", model: "WRX STI", year: 1997, colour: "Black", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "nissan-180sx-jack": { make: "Nissan", model: "180SX", year: 1992, colour: "Silver", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "eunos-roadster-nathaniel": { make: "Eunos", model: "Roadster", year: 1989, colour: "Mariner Blue", seats: 2, scenicDriveOk: false, availableWeddings: false },
+  "mgb-convertible-malcolm": { make: "MG", model: "MGB Convertible", year: 1970, colour: "Damask Red", seats: 2, scenicDriveOk: false, availableWeddings: false },
+  "morris-mini-mark": { make: "Morris", model: "Mini Cooper S", year: 1969, colour: "White", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "amc-amx-chris": { make: "AMC", model: "AMX", year: 1968, colour: "Rootbeer Candy", seats: 2, scenicDriveOk: false, availableWeddings: false },
+  "mg-midget-paul": { make: "MG", model: "Midget", year: 1968, colour: "White", seats: 2, scenicDriveOk: false, availableWeddings: false },
+  "toyota-corona-nathan": { make: "Toyota", model: "Corona", year: 1966, colour: "White", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "plymouth-valiant-warwick": { make: "Plymouth", model: "Valiant", year: 1963, colour: "White", seats: 5, scenicDriveOk: false, availableWeddings: false },
+  "land-rover-jack": { make: "Land Rover", model: "Series I", year: 1950, colour: "Green", seats: 4, scenicDriveOk: false, availableWeddings: false },
+  "ford-roadster-anthony": { make: "Ford", model: "Roadster", year: 1927, colour: "Red", seats: 2, scenicDriveOk: false, availableWeddings: false },
 };
 
 function demoToCard(listing: Listing): CarCard {
@@ -123,8 +149,8 @@ function demoToCard(listing: Listing): CarCard {
 function rowToCard(row: SubmissionRow): CarCard {
   const priceLabel =
     row.price_mode === "min" || !row.total_price
-      ? "$100 / trip"
-      : `$${Number(row.total_price).toFixed(2).replace(/\.00$/, "")} / trip`;
+      ? "$350 / hour"
+      : `$${Number(row.total_price).toFixed(2).replace(/\.00$/, "")} / hour`;
   return {
     id: row.id,
     source: "live",

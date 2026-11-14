@@ -54,6 +54,15 @@ export default function Footer() {
               <Link href="/founders" className="hover:text-white">Founders Login</Link>
             </div>
           </div>
+          <div>
+            <h4 className="text-white text-[12.5px] uppercase tracking-wide font-bold mb-3">
+              Legal
+            </h4>
+            <div className="flex flex-col gap-2 text-[13.5px]">
+              <Link href="/terms" className="hover:text-white">Terms &amp; Conditions</Link>
+              <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
+            </div>
+          </div>
         </div>
       </div>
       <div className="border-t border-white/10 mt-8 pt-5 flex flex-wrap items-center justify-between gap-3">

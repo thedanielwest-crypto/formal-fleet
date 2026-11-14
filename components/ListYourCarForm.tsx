@@ -205,9 +205,9 @@ export default function ListYourCarForm() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
-  const totalPrice = priceMode === "min" ? 100 : Math.max(0, Number(customPrice) || 0);
-  const driverShare = totalPrice > 0 ? totalPrice / 2 : 0;
-  const platformShare = totalPrice > 0 ? totalPrice / 2 : 0;
+  const totalPrice = priceMode === "min" ? 350 : Math.max(350, Number(customPrice) || 0);
+  const driverShare = totalPrice > 0 ? totalPrice * 0.75 : 0;
+  const platformShare = totalPrice > 0 ? totalPrice * 0.25 : 0;
   const [scenicDriveOk, setScenicDriveOk] = useState(false);
   const [availableWeddings, setAvailableWeddings] = useState(false);
 
@@ -528,8 +528,9 @@ export default function ListYourCarForm() {
       <div>
         <h2 className="font-serif text-[18px] mb-1">Pricing</h2>
         <p className={`${hintClass} mb-3.5 mt-0`}>
-          Every trip is a $100 minimum, split straight 50/50 — always. Want to charge more? You
-          can, but it&rsquo;s still an even 50/50 split.
+          Every trip is $350 an hour, minimum — always. Want to charge more per hour? You can.
+          A share of every booking goes straight back to the school and the rest keeps Fleet
+          Formal running. You&rsquo;ll see your exact take-home below before you submit.
         </p>
         <div className="flex flex-col gap-2.5">
           <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3.5 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
@@ -539,7 +540,7 @@ export default function ListYourCarForm() {
               checked={priceMode === "min"}
               onChange={() => setPriceMode("min")}
             />
-            <span className="text-[14.5px] font-semibold">$100 minimum (recommended)</span>
+            <span className="text-[14.5px] font-semibold">$350 / hour minimum (recommended)</span>
           </label>
           <label className="flex items-center gap-2.5 border border-line rounded-lg px-4 py-3.5 cursor-pointer has-[:checked]:border-gold has-[:checked]:bg-amber-bg/40">
             <input
@@ -548,15 +549,15 @@ export default function ListYourCarForm() {
               checked={priceMode === "custom"}
               onChange={() => setPriceMode("custom")}
             />
-            <span className="text-[14.5px] font-semibold">I&rsquo;d like to charge more</span>
+            <span className="text-[14.5px] font-semibold">I&rsquo;d like to charge more per hour</span>
           </label>
           {priceMode === "custom" && (
             <input
               className={inputClass}
               type="number"
-              min={100}
-              step={5}
-              placeholder="Enter total price ($100 minimum)"
+              min={350}
+              step={10}
+              placeholder="Enter hourly rate ($350 minimum)"
               value={customPrice}
               onChange={(e) => setCustomPrice(e.target.value)}
             />
@@ -565,13 +566,13 @@ export default function ListYourCarForm() {
 
         <div className="mt-3.5 bg-cream border border-line rounded-lg px-4 py-3.5 flex justify-between text-[13.5px]">
           <div>
-            <div className="text-muted text-[12px] uppercase tracking-wide font-bold mb-0.5">You receive</div>
+            <div className="text-muted text-[12px] uppercase tracking-wide font-bold mb-0.5">You receive, per hour</div>
             <div className="font-bold text-[16px]">
               {driverShare > 0 ? `$${driverShare.toFixed(2)}` : "—"}
             </div>
           </div>
           <div className="text-right">
-            <div className="text-muted text-[12px] uppercase tracking-wide font-bold mb-0.5">School / platform</div>
+            <div className="text-muted text-[12px] uppercase tracking-wide font-bold mb-0.5">School / platform, per hour</div>
             <div className="font-bold text-[16px]">
               {platformShare > 0 ? `$${platformShare.toFixed(2)}` : "—"}
             </div>
@@ -593,7 +594,7 @@ export default function ListYourCarForm() {
         {submitting ? "Submitting…" : "Submit Listing Request"}
       </button>
       <p className={hintClass}>
-        Your car appears on Formal Fleet right away, marked &ldquo;Unverified&rdquo; until we
+        Your car appears on Fleet Formal right away, marked &ldquo;Unverified&rdquo; until we
         check your documents — then we&rsquo;ll flip it to Verified.
       </p>
     </form>

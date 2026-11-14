@@ -73,7 +73,7 @@ export default function InstallPrompt() {
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm bg-navy-deep text-white rounded-2xl shadow-xl p-4 flex items-start gap-3 z-50">
       <FFMonogram className="w-9 h-9" />
       <div className="flex-1 text-[13px] leading-relaxed">
-        <div className="font-bold text-[14px] mb-0.5">Add Formal Fleet to your phone</div>
+        <div className="font-bold text-[14px] mb-0.5">Add Fleet Formal to your phone</div>
         {deferredPrompt ? (
           <p className="text-slate-300 mb-2">
             Install the app for one-tap access to listings, your dashboard, and event invites.

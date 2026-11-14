@@ -10,7 +10,7 @@ const usps: { icon: IconName; title: string; body: string }[] = [
   {
     icon: "handshake",
     title: "A respect-first code of conduct",
-    body: "Every driver agrees to a code of conduct before joining. Disrespectful behaviour of any kind ends a driver's place on Formal Fleet, permanently.",
+    body: "Every driver agrees to a code of conduct before joining. Disrespectful behaviour of any kind ends a driver's place on Fleet Formal, permanently.",
   },
   {
     icon: "phone",
@@ -19,13 +19,13 @@ const usps: { icon: IconName; title: string; body: string }[] = [
   },
   {
     icon: "money",
-    title: "Transparent, fixed 50/50 pricing",
-    body: "Every trip splits straight down the middle between the driver and the school/platform — no hidden fees, no surprise cuts.",
+    title: "Transparent hourly pricing",
+    body: "Every ride is booked by the hour, $350 minimum, with no hidden fees. A share of every booking goes straight back to the school and the rest keeps Fleet Formal running — see our Terms for the exact split.",
   },
   {
     icon: "graduate",
     title: "Built with schools, not just around them",
-    body: "Formal Fleet partners directly with QLD schools and P&Cs, so committees always have a safer option to point families toward.",
+    body: "Fleet Formal partners directly with QLD schools and P&Cs, so committees always have a safer option to point families toward.",
   },
   {
     icon: "pin",
@@ -34,7 +34,7 @@ const usps: { icon: IconName; title: string; body: string }[] = [
   },
 ];
 
-export default function TrustUSPs({ title = "Why families and schools trust Formal Fleet" }: { title?: string }) {
+export default function TrustUSPs({ title = "Why families and schools trust Fleet Formal" }: { title?: string }) {
   return (
     <section className="px-14 py-12 bg-white border-y border-line">
       <h2 className="font-serif text-[22px] mb-6 max-w-xl">{title}</h2>

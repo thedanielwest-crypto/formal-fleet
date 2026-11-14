@@ -6,8 +6,8 @@ import LiveListings from "@/components/LiveListings";
 import { listings } from "@/lib/listings";
 
 export const metadata: Metadata = {
-  title: "Browse Cars — Formal Fleet",
-  description: "Every verified and unverified car currently listed on Formal Fleet.",
+  title: "Browse Cars — Fleet Formal",
+  description: "Every verified and unverified car currently listed on Fleet Formal.",
 };
 
 export default function BrowsePage() {
@@ -20,7 +20,7 @@ export default function BrowsePage() {
           Arrive at formal in <span className="text-gold-light">something unforgettable.</span>
         </h1>
         <p className="mt-3 text-slate-300 max-w-xl">
-          Brisbane&rsquo;s first Formal Fleet listings — real cars, real verified owners.
+          Brisbane&rsquo;s first Fleet Formal listings — real cars, real verified owners.
         </p>
         <div className="flex gap-5 mt-6 flex-wrap">
           {[

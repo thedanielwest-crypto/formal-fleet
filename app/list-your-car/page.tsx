@@ -5,8 +5,8 @@ import Footer from "@/components/Footer";
 import ListYourCarForm from "@/components/ListYourCarForm";
 
 export const metadata: Metadata = {
-  title: "List Your Car — Formal Fleet",
-  description: "Tell us about your classic or show car and we'll get you verified and listed on Formal Fleet.",
+  title: "List Your Car — Fleet Formal",
+  description: "Tell us about your classic or show car and we'll get you verified and listed on Fleet Formal.",
 };
 
 export default function ListYourCar() {
@@ -16,7 +16,7 @@ export default function ListYourCar() {
 
       <section className="bg-[linear-gradient(180deg,rgba(13,27,42,0.90),rgba(13,27,42,0.82)_55%,rgba(22,41,62,0.95)),url('/photos/brand-hero.jpg')] bg-cover bg-center bg-no-repeat text-white px-6 md:px-14 pt-10 pb-9">
         <h1 className="font-serif font-bold text-3xl md:text-4xl max-w-2xl leading-tight">
-          List your car on <span className="text-gold-light">Formal Fleet</span>
+          List your car on <span className="text-gold-light">Fleet Formal</span>
         </h1>
         <p className="mt-3 text-slate-300 max-w-xl">
           Tell us about your car and yourself, upload your photos and documents, and we&rsquo;ll
@@ -29,7 +29,7 @@ export default function ListYourCar() {
 
         <aside className="w-full lg:w-[300px] shrink-0 flex flex-col gap-5">
           <div className="bg-cream border border-line rounded-2xl p-6">
-            <h3 className="font-serif text-[17px] mb-3">Why owners list on Formal Fleet</h3>
+            <h3 className="font-serif text-[17px] mb-3">Why owners list on Fleet Formal</h3>
             <ul className="text-[13.5px] text-[#454e60] leading-relaxed flex flex-col gap-2.5 list-disc pl-4">
               <li>Make someone's formal night genuinely unforgettable</li>
               <li>A fair, transparent 50/50 split on every trip</li>
@@ -41,7 +41,7 @@ export default function ListYourCar() {
           <div className="bg-navy text-white rounded-2xl p-6">
             <h3 className="font-serif text-[17px] mb-2">Represent a school?</h3>
             <p className="text-[13px] text-slate-300 leading-relaxed mb-4">
-              If you're a school or P&amp;C committee wanting to partner with Formal Fleet, we'd
+              If you're a school or P&amp;C committee wanting to partner with Fleet Formal, we'd
               love to hear from you.
             </p>
             <Link

@@ -4,8 +4,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "How It Works — Formal Fleet",
-  description: "How Formal Fleet connects verified car owners with students and parents for a safe, unforgettable formal ride.",
+  title: "How It Works — Fleet Formal",
+  description: "How Fleet Formal connects verified car owners with students and parents for a safe, unforgettable formal ride.",
 };
 
 const ownerSteps = [
@@ -69,7 +69,7 @@ export default function HowItWorks() {
 
       <section className="bg-[linear-gradient(180deg,rgba(13,27,42,0.90),rgba(13,27,42,0.82)_55%,rgba(22,41,62,0.95)),url('/photos/brand-hero.jpg')] bg-cover bg-center bg-no-repeat text-white px-14 pt-10 pb-9">
         <h1 className="font-serif font-bold text-4xl max-w-2xl leading-tight">
-          How <span className="text-gold-light">Formal Fleet</span> works
+          How <span className="text-gold-light">Fleet Formal</span> works
         </h1>
         <p className="mt-3 text-slate-300 max-w-xl">
           A verified marketplace with two sides — car owners who want to make someone's formal
@@ -103,7 +103,7 @@ export default function HowItWorks() {
       <div className="px-14 pb-14">
         <div className="bg-amber-bg border border-amber/30 rounded-2xl px-6 py-5 max-w-3xl">
           <p className="text-[13.5px] text-[#6b4a12] leading-relaxed">
-            Every booking on Formal Fleet requires parent or guardian confirmation before it's
+            Every booking on Fleet Formal requires parent or guardian confirmation before it's
             finalised — no exceptions. Read more on our{" "}
             <Link href="/verification-safety" className="underline font-semibold">
               Verification &amp; Safety

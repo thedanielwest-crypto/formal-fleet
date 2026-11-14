@@ -43,7 +43,7 @@ export default function LoginPage() {
           onSubmit={handleSubmit}
           className="w-full max-w-sm bg-white border border-line rounded-2xl p-7 flex flex-col gap-4"
         >
-          <h1 className="font-serif text-[20px]">Log in to Formal Fleet</h1>
+          <h1 className="font-serif text-[20px]">Log in to Fleet Formal</h1>
           <div>
             <label className={labelClass} htmlFor="email">Email</label>
             <input

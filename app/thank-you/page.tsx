@@ -4,7 +4,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Thanks — Formal Fleet",
+  title: "Thanks — Fleet Formal",
 };
 
 export default function ThankYou() {

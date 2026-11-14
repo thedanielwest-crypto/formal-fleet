@@ -5,8 +5,8 @@ import { IconBadge } from "@/components/BrandIcon";
 import type { IconName } from "@/components/BrandIcon";
 
 export const metadata: Metadata = {
-  title: "For Schools — Formal Fleet",
-  description: "Partner with Formal Fleet to give your students safe, verified, memorable rides to formal night.",
+  title: "For Schools — Fleet Formal",
+  description: "Partner with Fleet Formal to give your students safe, verified, memorable rides to formal night.",
 };
 
 const inputClass =
@@ -46,7 +46,7 @@ export default function ForSchools() {
           A safer ride option for <span className="text-gold-light">your formal</span>
         </h1>
         <p className="mt-3 text-slate-300 max-w-xl">
-          Formal Fleet partners with schools and P&amp;C committees to point students and parents
+          Fleet Formal partners with schools and P&amp;C committees to point students and parents
           toward verified, accountable rides — instead of an unvetted post in a group chat.
         </p>
       </section>

@@ -104,7 +104,7 @@ export default async function ListingDetail({
               ) : (
                 <>
                   ${listing.price.toFixed(2).replace(/\.00$/, "")}{" "}
-                  <span className="text-sm font-medium text-muted">/ trip</span>
+                  <span className="text-sm font-medium text-muted">/ hour</span>
                 </>
               )}
             </div>

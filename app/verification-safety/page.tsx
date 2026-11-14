@@ -6,8 +6,8 @@ import { IconBadge } from "@/components/BrandIcon";
 import type { IconName } from "@/components/BrandIcon";
 
 export const metadata: Metadata = {
-  title: "Verification & Safety — Formal Fleet",
-  description: "Every Formal Fleet owner is checked before their listing goes live — ID, licence, insurance, WWCC, and parent-confirmed bookings.",
+  title: "Verification & Safety — Fleet Formal",
+  description: "Every Fleet Formal owner is checked before their listing goes live — ID, licence, insurance, WWCC, and parent-confirmed bookings.",
 };
 
 const checks: { icon: IconName; title: string; body: string }[] = [
@@ -43,7 +43,7 @@ export default function VerificationSafety() {
           Verification &amp; <span className="text-gold-light">Safety</span>
         </h1>
         <p className="mt-3 text-slate-300 max-w-xl">
-          Formal Fleet is a verified marketplace, not an open listing board. Here's exactly what
+          Fleet Formal is a verified marketplace, not an open listing board. Here's exactly what
           we check, and what each badge means.
         </p>
       </section>
@@ -99,7 +99,7 @@ export default function VerificationSafety() {
         <div className="mt-10 max-w-4xl bg-amber-bg border border-amber/30 rounded-2xl px-6 py-5">
           <p className="text-[13.5px] text-[#6b4a12] leading-relaxed">
             Something feel off about a listing or a message? Reach out and we'll look into it
-            straight away. Trust is the entire point of Formal Fleet — see how the booking flow
+            straight away. Trust is the entire point of Fleet Formal — see how the booking flow
             protects it on our{" "}
             <Link href="/how-it-works" className="underline font-semibold">
               How It Works

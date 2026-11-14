@@ -5,8 +5,6 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabaseClient";
 
-const SESSION_KEY = "ff_school_code";
-
 type SchoolEvent = {
   id: string;
   created_at: string;
@@ -43,10 +41,8 @@ const emptyForm = {
 };
 
 export default function SchoolPage() {
-  const [code, setCode] = useState("");
-  const [authedCode, setAuthedCode] = useState<string | null>(null);
   const [events, setEvents] = useState<SchoolEvent[] | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const [form, setForm] = useState(emptyForm);
@@ -57,36 +53,26 @@ export default function SchoolPage() {
   const [drivers, setDrivers] = useState<Driver[] | null>(null);
   const [driversLoading, setDriversLoading] = useState(false);
 
-  async function loadWith(candidateCode: string) {
+  async function loadEvents() {
     setLoading(true);
     setError(null);
     const { data, error } = await supabase.functions.invoke("school", {
-      body: { code: candidateCode, action: "list-events" },
+      body: { action: "list-events" },
     });
     setLoading(false);
     if (error || data?.error) {
-      setError(data?.error || "Incorrect code.");
-      return false;
+      setError(data?.error || "Couldn't load events right now.");
+      return;
     }
     setEvents(data.events);
-    setAuthedCode(candidateCode);
-    sessionStorage.setItem(SESSION_KEY, candidateCode);
-    return true;
   }
 
   useEffect(() => {
-    const saved = sessionStorage.getItem(SESSION_KEY);
-    if (saved) loadWith(saved);
+    loadEvents();
   }, []);
-
-  async function handleGateSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    await loadWith(code);
-  }
 
   async function handleCreateEvent(e: React.FormEvent) {
     e.preventDefault();
-    if (!authedCode) return;
     if (!form.school_name || !form.contact_name || !form.email || !form.event_name) {
       setCreateError("Please fill in school name, contact name, email and event name.");
       return;
@@ -94,7 +80,7 @@ export default function SchoolPage() {
     setCreating(true);
     setCreateError(null);
     const { data, error } = await supabase.functions.invoke("school", {
-      body: { code: authedCode, action: "create-event", event: form },
+      body: { action: "create-event", event: form },
     });
     setCreating(false);
     if (error || data?.error) {
@@ -102,28 +88,26 @@ export default function SchoolPage() {
       return;
     }
     setForm(emptyForm);
-    await loadWith(authedCode);
+    await loadEvents();
   }
 
   async function closeEvent(id: string) {
-    if (!authedCode) return;
     setActingId(id);
     const { data, error } = await supabase.functions.invoke("school", {
-      body: { code: authedCode, action: "close-event", id },
+      body: { action: "close-event", id },
     });
     setActingId(null);
     if (error || data?.error) {
       alert(data?.error || "Something went wrong.");
       return;
     }
-    await loadWith(authedCode);
+    await loadEvents();
   }
 
   async function notifyDrivers(ev: SchoolEvent) {
-    if (!authedCode) return;
     setDriversLoading(true);
     const { data, error } = await supabase.functions.invoke("school", {
-      body: { code: authedCode, action: "notify-drivers" },
+      body: { action: "notify-drivers" },
     });
     setDriversLoading(false);
     if (error || data?.error) {
@@ -138,7 +122,7 @@ export default function SchoolPage() {
     }
     const bcc = list.map((d) => d.email).join(",");
     const subject = encodeURIComponent(
-      `Formal Fleet — ${ev.event_name} at ${ev.school_name}`
+      `Fleet Formal — ${ev.event_name} at ${ev.school_name}`
     );
     const dateLine = ev.event_date
       ? new Date(ev.event_date).toLocaleDateString("en-AU", {
@@ -152,45 +136,9 @@ export default function SchoolPage() {
       `Hi drivers,\n\n${ev.school_name} has a formal event coming up and is looking for verified cars:\n\n` +
         `Event: ${ev.event_name}\nDate: ${dateLine}\nVenue: ${ev.venue || "TBC"}\n\n` +
         `${ev.details || ""}\n\nIf you'd like to offer your car for this event, reply to ${ev.contact_name} at ${ev.email} ` +
-        `(or ${ev.phone || "the school office"}) with your availability.\n\nThanks for being part of Formal Fleet!`
+        `(or ${ev.phone || "the school office"}) with your availability.\n\nThanks for being part of Fleet Formal!`
     );
     window.location.href = `mailto:?bcc=${encodeURIComponent(bcc)}&subject=${subject}&body=${body}`;
-  }
-
-  if (!authedCode) {
-    return (
-      <div>
-        <Header />
-        <div className="px-14 py-20 flex justify-center">
-          <form
-            onSubmit={handleGateSubmit}
-            className="w-full max-w-sm bg-white border border-line rounded-2xl p-7 flex flex-col gap-4"
-          >
-            <h1 className="font-serif text-[20px]">School &amp; P&amp;C Access</h1>
-            <p className="text-[13px] text-muted -mt-2">
-              Enter your access code to list a formal or event and notify verified drivers.
-            </p>
-            <input
-              className={inputClass}
-              type="password"
-              placeholder="Access code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              autoFocus
-            />
-            {error && <p className="text-[12.5px] text-red-600">{error}</p>}
-            <button
-              type="submit"
-              disabled={loading}
-              className="bg-navy text-white rounded-xl py-3 font-bold text-[14px] disabled:opacity-50"
-            >
-              {loading ? "Checking…" : "Enter"}
-            </button>
-          </form>
-        </div>
-        <Footer />
-      </div>
-    );
   }
 
   return (
@@ -266,20 +214,10 @@ export default function SchoolPage() {
         <div className="flex-1 min-w-[320px]">
           <div className="flex justify-between items-baseline mb-5">
             <h2 className="font-serif text-[22px]">Your events</h2>
-            <button
-              onClick={() => {
-                sessionStorage.removeItem(SESSION_KEY);
-                setAuthedCode(null);
-                setEvents(null);
-                setCode("");
-              }}
-              className="text-[13px] text-muted underline"
-            >
-              Log out
-            </button>
           </div>
 
           {loading && !events && <p className="text-muted">Loading…</p>}
+          {error && <p className="text-[13px] text-red-600 mb-3">{error}</p>}
           {events && events.length === 0 && <p className="text-muted">No events posted yet.</p>}
 
           <div className="flex flex-col gap-5">

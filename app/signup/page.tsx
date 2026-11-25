@@ -4,6 +4,7 @@ import { Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PasswordInput from "@/components/PasswordInput";
 import { supabase } from "@/lib/supabaseClient";
 import type { Role } from "@/lib/authContext";
 import { IconBadge } from "@/components/BrandIcon";
@@ -167,14 +168,12 @@ function SignupForm() {
 
         <div>
           <label className={labelClass} htmlFor="password">Password</label>
-          <input
+          <PasswordInput
             className={inputClass}
             id="password"
-            type="password"
-            minLength={6}
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            onChange={setPassword}
+            autoComplete="new-password"
           />
         </div>
 

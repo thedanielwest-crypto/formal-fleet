@@ -213,3 +213,19 @@ body {
   .btn-gold, .btn-outline, .lift { transition: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ---------------- Dark sections (Find a Ride grid) ----------------
+   Unlayered, so these beat the light-theme utility classes the shared
+   controls use (they're also used on light pages like /car). */
+.ff-dark .text-muted { color: rgba(255, 255, 255, 0.6); }
+.ff-dark .text-ink { color: #fff; }
+.ff-dark .border-line { border-color: rgba(255, 255, 255, 0.12); }
+.ff-dark select,
+.ff-dark input[type="text"],
+.ff-dark input[type="number"] {
+  background-color: #0a1d33;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+.ff-dark select option { background: #0a1d33; color: #fff; }
+.ff-dark input::placeholder { color: rgba(255, 255, 255, 0.4); }

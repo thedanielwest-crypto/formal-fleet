@@ -49,20 +49,21 @@ const extras: { icon: IconName; title: string; body: string }[] = [
   { icon: "ring", title: "Weddings", body: "Same verified owners, available for the big day." },
   { icon: "camera", title: "Photoshoots", body: "Grad photos, portraits, content — book by the hour." },
   { icon: "car", title: "Scenic drives", body: "Some owners will take the long way round. Look for the badge." },
+  { icon: "film", title: "Movie hire", body: "Film, TV and music-video shoots. Hero cars for the screen." },
   { icon: "sparkle", title: "Birthdays & more", body: "18ths, anniversaries, or just because." },
 ];
 
 const featuredSlugs = [
   "mazda-rx7-peter-stuyvesant-tribute",
   "ac-cobra-replica",
-  "porsche-911-eddy",
-  "chevrolet-styleline-renato",
   "amc-amx-chris",
-  "subaru-wrx-sti-aidan",
-  "hsv-clubsport-kyle",
+  "mgb-convertible-malcolm",
+  "subaru-brz-cyril",
+  "alfa-156-gta-russell",
   "ford-roadster-anthony",
-  "alfa-brera-wayne-obrien",
-  "morris-mini-mark",
+  "bmw-e36-cyrus",
+  "honda-super-one-boden",
+  "chevrolet-styleline-renato",
 ];
 
 export default function HomePage() {
@@ -197,8 +198,8 @@ export default function HomePage() {
                     <span className="text-[12.5px] text-white/70 flex items-center gap-1">
                       <Icon name="pin" className="w-3.5 h-3.5" /> {car.suburb}
                     </span>
-                    <span className="rounded-md bg-gold text-midnight px-2.5 py-1 text-[12.5px] font-bold">
-                      {car.priceLabel}
+                    <span className="text-[12px] font-bold uppercase tracking-[0.08em] text-gold flex items-center gap-1">
+                      View ride <Icon name="arrowRight" className="w-3.5 h-3.5" strokeWidth={2.2} />
                     </span>
                   </div>
                 </div>
@@ -243,7 +244,7 @@ export default function HomePage() {
             </p>
           </div>
         </div>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
           {extras.map((e) => (
             <div
               key={e.title}

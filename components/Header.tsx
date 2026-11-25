@@ -17,18 +17,30 @@ const navLinks = [
 export default function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const { session, profile, signOut } = useAuth();
+  const { session, profile, isAdmin, signOut } = useAuth();
   const [open, setOpen] = useState(false);
 
   const authButtons =
-    session && profile ? (
+    session && (profile || isAdmin) ? (
       <>
-        <Link
-          href={`/dashboard/${profile.role}`}
-          className="px-4 py-2.5 rounded-lg font-semibold text-[13.5px] text-white/90 hover:text-white"
-        >
-          My Dashboard
-        </Link>
+        {isAdmin && (
+          <Link
+            href="/admin"
+            onClick={() => setOpen(false)}
+            className="px-3 py-2 rounded-lg font-serif font-bold uppercase tracking-[0.08em] text-[12px] text-gold border border-gold/50 hover:bg-gold hover:text-midnight transition-colors"
+          >
+            Admin
+          </Link>
+        )}
+        {profile && (
+          <Link
+            href={`/dashboard/${profile.role}`}
+            onClick={() => setOpen(false)}
+            className="px-4 py-2.5 rounded-lg font-semibold text-[13.5px] text-white/90 hover:text-white"
+          >
+            My Dashboard
+          </Link>
+        )}
         <button
           onClick={async () => {
             await signOut();

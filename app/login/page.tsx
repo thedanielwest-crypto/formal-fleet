@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PasswordInput from "@/components/PasswordInput";
 import { supabase } from "@/lib/supabaseClient";
 
 const inputClass =
@@ -25,6 +26,16 @@ export default function LoginPage() {
     setSubmitting(false);
     if (signInError || !data.user) {
       setError(signInError?.message || "Couldn't log you in.");
+      return;
+    }
+    // Admins share this login; send them straight to the Admin page.
+    const { data: adminRow } = await supabase
+      .from("admin_users")
+      .select("user_id")
+      .eq("user_id", data.user.id)
+      .maybeSingle();
+    if (adminRow) {
+      router.push("/admin");
       return;
     }
     const { data: profile } = await supabase
@@ -63,13 +74,11 @@ export default function LoginPage() {
                 Forgot password?
               </a>
             </div>
-            <input
+            <PasswordInput
               className={inputClass}
               id="password"
-              type="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              onChange={setPassword}
             />
           </div>
           {error && <p className="text-[12.5px] text-red-600">{error}</p>}

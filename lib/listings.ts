@@ -36,7 +36,7 @@ export const listings: Listing[] = [
     description:
       'A faithful tribute to the iconic #43 Peter Stuyvesant International Mazda RX-7 — right down to the Allan Moffat signage and gold BBS-style wheels. Craig is the son of legendary racer John English, and this build is a genuine labour of love. Expect a proper race-car welcome: hood up for a look at the engine bay, and a ride nobody at the formal will forget.',
     heroImage: "/photos/rx7-hero.jpg",
-    gallery: ["/photos/rx7-hero.jpg", "/photos/rx7-engine.jpg"],
+    gallery: ["/photos/rx7-hero.jpg", "/photos/rx7-event.jpg", "/photos/rx7-engine.jpg"],
   },
   {
     slug: "ac-cobra-replica",
@@ -131,8 +131,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       'A white 2002 Alfa Romeo 156 GTA, known on the show circuit as "Alfie". Russell is part of the Cars & Coffee: The Gap Village community and hasn\'t confirmed a Fleet Formal listing yet — reach out if you\'d love to see this car at your formal and we\'ll follow up before anything is booked.',
-    heroImage: "/photos/community/alfa-156-gta-russell.jpg",
-    gallery: ["/photos/community/alfa-156-gta-russell.jpg"],
+    heroImage: "/photos/community/alfa-156-gta-russell-event.jpg",
+    gallery: ["/photos/community/alfa-156-gta-russell-event.jpg", "/photos/community/alfa-156-gta-russell-event-2.jpg", "/photos/community/alfa-156-gta-russell.jpg"],
   },
   {
     slug: "bmw-e36-cyrus",
@@ -148,8 +148,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       "A black 1999 BMW E36 Convertible. Cyrus is part of the Cars & Coffee: The Gap Village community and hasn't confirmed a Fleet Formal listing yet — reach out if you'd love to see this car at your formal and we'll follow up before anything is booked.",
-    heroImage: "/photos/community/bmw-e36-cyrus.jpg",
-    gallery: ["/photos/community/bmw-e36-cyrus.jpg"],
+    heroImage: "/photos/community/bmw-e36-cyrus-event.jpg",
+    gallery: ["/photos/community/bmw-e36-cyrus-event.jpg", "/photos/community/bmw-e36-cyrus.jpg"],
   },
   {
     slug: "mg-mgrv8-geoff-lane",
@@ -233,8 +233,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       "A purple/black 2026 Honda Super-ONE — a playful, brand-new addition to the community. Boden hasn't confirmed a Fleet Formal listing yet — reach out if you'd love to see this car at your formal and we'll follow up before anything is booked.",
-    heroImage: "/photos/community/honda-super-one-boden.jpg",
-    gallery: ["/photos/community/honda-super-one-boden.jpg"],
+    heroImage: "/photos/community/honda-super-one-boden-event.jpg",
+    gallery: ["/photos/community/honda-super-one-boden-event.jpg", "/photos/community/honda-super-one-boden.jpg"],
   },
   {
     slug: "subaru-brz-james",
@@ -267,8 +267,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       "A WRB-blue 2022 Subaru BRZ. Cyril is part of the Cars & Coffee: The Gap Village community and hasn't confirmed a Fleet Formal listing yet — reach out if you'd love to see this car at your formal and we'll follow up before anything is booked.",
-    heroImage: "/photos/community/subaru-brz-cyril.jpg",
-    gallery: ["/photos/community/subaru-brz-cyril.jpg"],
+    heroImage: "/photos/community/subaru-brz-cyril-event.jpg",
+    gallery: ["/photos/community/subaru-brz-cyril-event.jpg", "/photos/community/subaru-brz-cyril.jpg"],
   },
   {
     slug: "alfa-brera-wayne-obrien",
@@ -386,8 +386,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       "A Damask Red 1970 MGB Convertible. Malcolm is part of the Cars & Coffee: The Gap Village community and hasn't confirmed a Fleet Formal listing yet — reach out if you'd love to see this car at your formal and we'll follow up before anything is booked.",
-    heroImage: "/photos/community/mgb-convertible-malcolm.jpg",
-    gallery: ["/photos/community/mgb-convertible-malcolm.jpg"],
+    heroImage: "/photos/community/mgb-convertible-malcolm-event.jpg",
+    gallery: ["/photos/community/mgb-convertible-malcolm-event.jpg", "/photos/community/mgb-convertible-malcolm-event-2.jpg", "/photos/community/mgb-convertible-malcolm.jpg"],
   },
   {
     slug: "morris-mini-mark",
@@ -420,8 +420,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       "A 1968 AMC AMX in Rootbeer Candy. Chris is part of the Cars & Coffee: The Gap Village community and hasn't confirmed a Fleet Formal listing yet — reach out if you'd love to see this car at your formal and we'll follow up before anything is booked.",
-    heroImage: "/photos/community/amc-amx-chris.jpg",
-    gallery: ["/photos/community/amc-amx-chris.jpg"],
+    heroImage: "/photos/community/amc-amx-chris-event.jpg",
+    gallery: ["/photos/community/amc-amx-chris-event.jpg", "/photos/community/amc-amx-chris-event-2.jpg", "/photos/community/amc-amx-chris.jpg"],
   },
   {
     slug: "mg-midget-paul",
@@ -437,8 +437,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       "A white 1968 MG Midget. Paul is part of the Cars & Coffee: The Gap Village community and hasn't confirmed a Fleet Formal listing yet — reach out if you'd love to see this car at your formal and we'll follow up before anything is booked.",
-    heroImage: "/photos/community/mg-midget-paul.jpg",
-    gallery: ["/photos/community/mg-midget-paul.jpg"],
+    heroImage: "/photos/community/mg-midget-paul-event.jpg",
+    gallery: ["/photos/community/mg-midget-paul-event.jpg", "/photos/community/mg-midget-paul.jpg"],
   },
   {
     slug: "toyota-corona-nathan",
@@ -505,8 +505,8 @@ export const listings: Listing[] = [
     ownerSub: "Cars & Coffee: The Gap Village community",
     description:
       "A red 1927 Ford Roadster hot rod. Anthony is part of the Cars & Coffee: The Gap Village community and hasn't confirmed a Fleet Formal listing yet — reach out if you'd love to see this car at your formal and we'll follow up before anything is booked.",
-    heroImage: "/photos/community/ford-roadster-anthony.jpg",
-    gallery: ["/photos/community/ford-roadster-anthony.jpg"],
+    heroImage: "/photos/community/ford-roadster-anthony-event.jpg",
+    gallery: ["/photos/community/ford-roadster-anthony-event.jpg", "/photos/community/ford-roadster-anthony.jpg"],
   },
 ];
 

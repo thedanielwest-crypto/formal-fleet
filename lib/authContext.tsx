@@ -6,6 +6,11 @@ import { supabase } from "@/lib/supabaseClient";
 
 export type Role = "driver" | "school" | "student";
 
+// Captured before supabase-js processes and clears the URL hash, so we can
+// tell when someone has just arrived from an invite email.
+const ARRIVED_FROM_INVITE =
+  typeof window !== "undefined" && /type=invite/.test(window.location.hash);
+
 export type Profile = {
   id: string;
   role: Role;
@@ -59,6 +64,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const { data: listener } = supabase.auth.onAuthStateChange(async (_event, newSession) => {
       setSession(newSession);
+      // Invited users (e.g. new admins) have no password yet: send them to
+      // choose one before anything else.
+      if (
+        newSession &&
+        ARRIVED_FROM_INVITE &&
+        !window.location.pathname.startsWith("/reset-password")
+      ) {
+        window.location.replace("/reset-password?welcome=1");
+        return;
+      }
       if (newSession?.user) {
         await loadProfile(newSession.user.id);
       } else {

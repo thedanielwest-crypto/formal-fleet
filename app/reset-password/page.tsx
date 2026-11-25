@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import PasswordInput from "@/components/PasswordInput";
 import { supabase } from "@/lib/supabaseClient";
 
 const inputClass =
@@ -19,6 +20,11 @@ export default function ResetPasswordPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
+  const [welcome, setWelcome] = useState(false);
+
+  useEffect(() => {
+    setWelcome(new URLSearchParams(window.location.search).has("welcome"));
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -98,30 +104,28 @@ export default function ResetPasswordPage() {
             onSubmit={handleSubmit}
             className="w-full max-w-sm bg-white border border-line rounded-2xl p-7 flex flex-col gap-4"
           >
-            <h1 className="font-serif text-[20px]">Choose a new password</h1>
+            <h1 className="font-serif text-[20px]">
+              {welcome ? "Welcome! Set your password" : "Choose a new password"}
+            </h1>
             <div>
               <label className={labelClass} htmlFor="password">New password</label>
-              <input
+              <PasswordInput
                 className={inputClass}
                 id="password"
-                type="password"
-                minLength={6}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={setPassword}
+                autoComplete="new-password"
                 autoFocus
-                required
               />
             </div>
             <div>
               <label className={labelClass} htmlFor="confirmPassword">Confirm new password</label>
-              <input
+              <PasswordInput
                 className={inputClass}
                 id="confirmPassword"
-                type="password"
-                minLength={6}
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
+                onChange={setConfirmPassword}
+                autoComplete="new-password"
               />
             </div>
             {error && <p className="text-[12.5px] text-red-600">{error}</p>}

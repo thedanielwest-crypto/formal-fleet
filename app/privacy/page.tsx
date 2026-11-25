@@ -17,7 +17,7 @@ export default function PrivacyPage() {
     <div>
       <Header />
 
-      <section className="bg-[linear-gradient(180deg,rgba(13,27,42,0.90),rgba(13,27,42,0.82)_55%,rgba(22,41,62,0.95)),url('/photos/brand-hero.jpg')] bg-cover bg-center bg-no-repeat text-white px-6 md:px-14 pt-10 pb-9">
+      <section className="page-hero text-white px-6 md:px-14 pt-14 pb-12 md:pt-20 md:pb-16">
         <h1 className="font-serif font-bold text-4xl max-w-2xl leading-tight">Privacy Policy</h1>
         <p className="mt-3 text-slate-300 max-w-xl text-[14px]">
           Last updated 19 November 2026. This explains what Fleet Formal collects and why.

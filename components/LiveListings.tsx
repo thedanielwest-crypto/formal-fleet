@@ -6,6 +6,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/authContext";
 import { type Listing } from "@/lib/listings";
 import { photoUrl } from "@/lib/carPhoto";
+import { isHiddenSubmission } from "@/lib/hiddenListings";
 import PrivateInquiryModal from "@/components/PrivateInquiryModal";
 import { Icon } from "@/components/BrandIcon";
 
@@ -180,12 +181,12 @@ const SEAT_OPTIONS = [
 ];
 
 const pillClass = (active: boolean) =>
-  `px-3 py-1.5 rounded-full text-[12.5px] font-medium border ${
-    active ? "bg-navy text-white border-navy" : "border-line"
+  `px-3 py-1.5 rounded-full text-[12.5px] font-semibold border transition-colors ${
+    active ? "bg-gold text-midnight border-gold" : "border-white/20 text-white/80 hover:border-gold/60"
   }`;
 const selectClass =
   "w-full border border-line rounded-lg px-3 py-2 text-[13px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
-const filterLabelClass = "text-[12px] uppercase tracking-wide text-muted font-bold mb-2.5";
+const filterLabelClass = "text-[11.5px] uppercase tracking-[0.12em] text-gold font-bold mb-2.5";
 
 export default function LiveListings({ listings }: { listings: Listing[] }) {
   const [rows, setRows] = useState<SubmissionRow[] | null>(null);
@@ -217,7 +218,7 @@ export default function LiveListings({ listings }: { listings: Listing[] }) {
           setLoadError(error.message);
           return;
         }
-        setRows((data as SubmissionRow[]) ?? []);
+        setRows(((data as SubmissionRow[]) ?? []).filter((r) => !isHiddenSubmission(r)));
       });
     return () => {
       cancelled = true;
@@ -225,7 +226,14 @@ export default function LiveListings({ listings }: { listings: Listing[] }) {
   }, []);
 
   const allCars = useMemo<CarCard[]>(() => {
-    const demoCards = listings.map(demoToCard);
+    // Verified cars first, then cars with real event photos, then the rest.
+    const rank = (c: CarCard) =>
+      c.status === "verified" ? 0 : c.photoUrl.includes("-event") ? 1 : 2;
+    const demoCards = listings
+      .map(demoToCard)
+      .map((c, i) => ({ c, i }))
+      .sort((a, b) => rank(a.c) - rank(b.c) || a.i - b.i)
+      .map(({ c }) => c);
     const liveCards = (rows ?? []).map(rowToCard);
     return [...demoCards, ...liveCards];
   }, [listings, rows]);
@@ -278,9 +286,9 @@ export default function LiveListings({ listings }: { listings: Listing[] }) {
   ]);
 
   return (
-    <div className="flex flex-col md:flex-row gap-8 px-6 md:px-14 py-9 items-start">
-      <aside className="w-full md:w-[260px] bg-white border border-line rounded-2xl p-5.5 shrink-0 flex flex-col gap-5">
-        <h3 className="font-serif text-[15px]">Filters</h3>
+    <div className="ff-dark bg-midnight text-white flex flex-col md:flex-row gap-8 px-6 md:px-14 pt-10 pb-16 items-start">
+      <aside className="w-full md:w-[260px] bg-navy-deep border border-white/10 rounded-2xl p-5.5 shrink-0 flex flex-col gap-5 md:sticky md:top-24">
+        <h3 className="font-display text-[20px]">Filters</h3>
 
         <div>
           <h4 className={filterLabelClass}>Trust &amp; Verification</h4>
@@ -397,7 +405,7 @@ export default function LiveListings({ listings }: { listings: Listing[] }) {
           </div>
         </div>
 
-        <label className="flex items-center gap-2 text-[13px] font-medium">
+        <label className="flex items-center gap-2 text-[13px] font-medium text-white/85 accent-[#d4a937]">
           <input
             type="checkbox"
             checked={scenicOnly}
@@ -409,10 +417,10 @@ export default function LiveListings({ listings }: { listings: Listing[] }) {
 
       <main className="flex-1 w-full">
         <div className="flex justify-between items-baseline mb-5 flex-wrap gap-2">
-          <h2 className="font-serif text-[22px]">
+          <h2 className="font-display text-[30px] md:text-[38px]">
             {filteredCars.length} {filteredCars.length === 1 ? "car" : "cars"} near Brisbane
           </h2>
-          <span className="text-muted text-sm">Sorted by: Newest</span>
+          <span className="text-muted text-sm">Sorted by: Featured</span>
         </div>
 
         {loadError && (
@@ -444,7 +452,7 @@ function CarCardView({ car }: { car: CarCard }) {
   const detailHref = car.source === "demo" ? `/listing/${car.id}` : `/car?id=${car.id}`;
 
   return (
-    <div className="lift group bg-white border border-line rounded-2xl overflow-hidden shadow-sm">
+    <div className="lift group bg-navy-deep border border-white/10 rounded-2xl overflow-hidden">
       <Link href={detailHref} className="block">
         <div className="relative h-[280px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -462,12 +470,12 @@ function CarCardView({ car }: { car: CarCard }) {
           </div>
         </div>
         <div className="px-5 pt-5">
-          <h3 className="font-serif font-extrabold italic uppercase text-[18px] leading-tight text-midnight mb-1.5">{car.title}</h3>
+          <h3 className="font-serif font-extrabold italic uppercase text-[18px] leading-tight text-white mb-1.5 group-hover:text-gold transition-colors">{car.title}</h3>
           <div className="flex justify-between items-center mb-2 flex-wrap gap-1.5">
             <span className="text-[13px] text-muted flex items-center gap-1">
               <Icon name="pin" className="w-3.5 h-3.5" /> {car.suburb}, QLD
             </span>
-            <span className="text-[13px] text-gold-dark font-bold flex items-center gap-1">
+            <span className="text-[13px] text-gold font-bold flex items-center gap-1">
               <Icon name="star" className="w-3.5 h-3.5" /> New listing
             </span>
           </div>
@@ -487,14 +495,14 @@ function CarCardView({ car }: { car: CarCard }) {
               </span>
             )}
             {car.availableWeddings && (
-              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-[#eef1fb] text-navy">
+              <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-white/10 text-white">
                 Available for weddings
               </span>
             )}
           </div>
 
           {car.description && (
-            <p className="text-[13.5px] text-[#454e60] leading-relaxed mb-3.5">{car.description}</p>
+            <p className="text-[13.5px] text-white/70 leading-relaxed mb-3.5 line-clamp-3">{car.description}</p>
           )}
         </div>
       </Link>
@@ -508,7 +516,7 @@ function CarCardView({ car }: { car: CarCard }) {
               type="button"
               disabled
               title="Demo listing"
-              className="w-full bg-cream text-muted border border-line rounded-lg px-4 py-2.5 font-bold text-[13px] cursor-not-allowed"
+              className="w-full bg-white/5 text-white/45 border border-white/10 rounded-lg px-4 py-2.5 font-bold text-[13px] cursor-not-allowed"
             >
               Invite to Event
             </button>

@@ -23,7 +23,7 @@ const columns = [
     title: "Portals",
     links: [
       { href: "/school", label: "School / P&C Portal" },
-      { href: "/founders", label: "Founders Login" },
+      { href: "/admin", label: "Admin" },
     ],
   },
   {

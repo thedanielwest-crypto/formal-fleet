@@ -43,7 +43,7 @@ export default function Header() {
       <>
         <Link
           href="/login"
-          className="px-4 py-2.5 rounded-lg font-semibold text-[13.5px] text-white/90 hover:text-white"
+          className="px-4 py-2.5 rounded-lg font-semibold text-[13.5px] text-white/90 hover:text-white whitespace-nowrap"
         >
           Log In
         </Link>
@@ -55,19 +55,19 @@ export default function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-midnight/95 backdrop-blur-md border-b border-white/[0.07] text-white">
-      <div className="px-5 md:px-10 lg:px-14 h-[72px] flex items-center justify-between gap-6">
-        <Link href="/" aria-label="Fleet Formal home" onClick={() => setOpen(false)}>
+      <div className="px-5 md:px-10 2xl:px-14 h-[72px] flex items-center justify-between gap-6">
+        <Link href="/" aria-label="Fleet Formal home" onClick={() => setOpen(false)} className="shrink-0">
           <FFLogo size="md" />
         </Link>
 
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden min-[1120px]:flex flex-1 justify-center items-center gap-4 xl:gap-6 2xl:gap-9">
           {navLinks.map((link) => {
             const active = pathname === link.href;
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative font-serif font-bold uppercase tracking-[0.08em] text-[12.5px] py-2 transition-colors ${
+                className={`relative whitespace-nowrap font-serif font-bold uppercase tracking-[0.06em] xl:tracking-[0.08em] text-[11.5px] xl:text-[12.5px] py-2 transition-colors ${link.href === "/verification-safety" ? "hidden xl:inline-block" : ""} ${
                   active ? "text-gold" : "text-white/80 hover:text-white"
                 }`}
               >
@@ -82,14 +82,14 @@ export default function Header() {
           })}
         </nav>
 
-        <div className="hidden lg:flex gap-2 items-center">{authButtons}</div>
+        <div className="hidden min-[1120px]:flex gap-1 xl:gap-2 items-center shrink-0 whitespace-nowrap">{authButtons}</div>
 
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
-          className="lg:hidden w-11 h-11 -mr-2 flex items-center justify-center rounded-lg text-white"
+          className="min-[1120px]:hidden w-11 h-11 -mr-2 flex items-center justify-center rounded-lg text-white"
         >
           {open ? (
             <Icon name="close" className="w-6 h-6" />
@@ -102,7 +102,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="lg:hidden border-t border-white/10 bg-midnight px-5 pb-6 pt-3">
+        <div className="min-[1120px]:hidden border-t border-white/10 bg-midnight px-5 pb-6 pt-3">
           <nav className="flex flex-col">
             {navLinks.map((link) => (
               <Link

@@ -143,7 +143,11 @@ export type IconName =
   | "document"
   | "sparkle"
   | "camera"
-  | "ring";
+  | "ring"
+  | "film"
+  | "eye"
+  | "eyeOff"
+  | "lock";
 
 const paths: Record<IconName, ReactNode> = {
   graduate: (
@@ -323,6 +327,34 @@ const paths: Record<IconName, ReactNode> = {
     <>
       <path d="M4.5 8h3l1.6-2.2h5.8L16.5 8h3c.6 0 1 .4 1 1v9c0 .6-.4 1-1 1h-15c-.6 0-1-.4-1-1V9c0-.6.4-1 1-1Z" />
       <circle cx="12" cy="13.2" r="3.4" />
+    </>
+  ),
+  film: (
+    <>
+      <rect x="3.5" y="9" width="17" height="11" rx="1.5" />
+      <path d="m3.5 9 1.2-4.2 15.8 0L20.5 9" />
+      <path d="m8 4.8 1.6 4.2M13 4.8l1.6 4.2" />
+      <path d="M10.2 12.4v4.6l3.8-2.3-3.8-2.3Z" />
+    </>
+  ),
+  eye: (
+    <>
+      <path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12Z" />
+      <circle cx="12" cy="12" r="3" />
+    </>
+  ),
+  eyeOff: (
+    <>
+      <path d="M10.6 6.1A9 9 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a16.8 16.8 0 0 1-2.6 3.4" />
+      <path d="M6.6 7.4C4 9.2 2.5 12 2.5 12S6 18.5 12 18.5c1.6 0 3-.4 4.2-1.1" />
+      <path d="M9.9 9.9a3 3 0 0 0 4.2 4.2" />
+      <path d="m3.5 3.5 17 17" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="5" y="10.5" width="14" height="10" rx="2" />
+      <path d="M8 10.5V7.5a4 4 0 0 1 8 0v3" />
     </>
   ),
   ring: (

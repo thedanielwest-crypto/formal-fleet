@@ -1,87 +1,134 @@
 import Link from "next/link";
-import { FFMonogram, Icon } from "@/components/BrandIcon";
+import { FFLogo, GoldSwoosh, Icon } from "@/components/BrandIcon";
 
-export default function Footer() {
+const columns = [
+  {
+    title: "Fleet Formal",
+    links: [
+      { href: "/browse", label: "Find a Ride" },
+      { href: "/how-it-works", label: "How It Works" },
+      { href: "/verification-safety", label: "Verification & Safety" },
+      { href: "/for-schools", label: "For Schools" },
+    ],
+  },
+  {
+    title: "Get Started",
+    links: [
+      { href: "/get-started", label: "Create an Account" },
+      { href: "/list-your-car", label: "List Your Ride" },
+      { href: "/login", label: "Log In" },
+    ],
+  },
+  {
+    title: "Portals",
+    links: [
+      { href: "/school", label: "School / P&C Portal" },
+      { href: "/founders", label: "Founders Login" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { href: "/terms", label: "Terms & Conditions" },
+      { href: "/privacy", label: "Privacy Policy" },
+    ],
+  },
+];
+
+/**
+ * Site footer. By default it opens with the "More than a ride" band — the
+ * car-and-students shot from the poster — so every page ends on the same
+ * image it starts with. Pass cta={false} to drop the band (e.g. dashboards).
+ */
+export default function Footer({ cta = true }: { cta?: boolean }) {
   return (
-    <footer className="bg-navy-deep text-slate-300 px-14 py-10 mt-4">
-      <div className="flex flex-wrap justify-between gap-8">
-        <div className="max-w-xs">
-          <div className="flex items-center gap-2.5">
-            <FFMonogram className="w-9 h-9" />
-            <div className="font-serif font-extrabold text-xl uppercase tracking-tight">
-              <span className="text-white">Fleet</span>{" "}
-              <span className="text-gold-light">Formal</span>
-            </div>
-          </div>
-          <p className="text-[13px] mt-2 uppercase tracking-wide text-gold-light/80">
-            Arrive at formal in something unforgettable.
-          </p>
-          <p className="text-[13px] mt-3 leading-relaxed text-slate-400">
-            Connecting verified classic and show car owners with students and parents who want an
-            unforgettable, safe ride to formal night. Starting in Brisbane, QLD.
-          </p>
-        </div>
-        <div className="flex gap-14 flex-wrap">
-          <div>
-            <h4 className="text-white text-[12.5px] uppercase tracking-wide font-bold mb-3">
-              Fleet Formal
-            </h4>
-            <div className="flex flex-col gap-2 text-[13.5px]">
-              <Link href="/browse" className="hover:text-white">Browse Cars</Link>
-              <Link href="/how-it-works" className="hover:text-white">How It Works</Link>
-              <Link href="/verification-safety" className="hover:text-white">
-                Verification &amp; Safety
+    <footer>
+      {cta && (
+        <section className="relative overflow-hidden bg-midnight text-white">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/hero-formal-night.jpg"
+            alt="Students in formal wear beside a black classic Mustang at dusk"
+            className="absolute inset-0 w-full h-full object-cover object-[75%_28%]"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,19,38,0.97)_0%,rgba(1,19,38,0.85)_40%,rgba(1,19,38,0.2)_75%,rgba(1,19,38,0.1)_100%)]" />
+          <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-midnight to-transparent" />
+          <div className="relative px-6 md:px-14 py-16 md:py-24 max-w-4xl">
+            <div className="eyebrow mb-4">Youthful · Luxury · Automotive</div>
+            <h2 className="font-display text-[40px] md:text-[60px]">
+              More than a ride.
+              <br />
+              <span className="text-gold">A memory in the making.</span>
+            </h2>
+            <div className="flex flex-wrap gap-3 mt-8">
+              <Link href="/browse" className="btn-gold">
+                <Icon name="search" className="w-5 h-5" strokeWidth={2.2} />
+                Find a Ride
+                <Icon name="arrowRight" className="w-5 h-5 btn-arrow" strokeWidth={2.2} />
               </Link>
-              <Link href="/for-schools" className="hover:text-white">For Schools</Link>
+              <Link href="/list-your-car" className="btn-outline">
+                <Icon name="car" className="w-5 h-5" strokeWidth={2} />
+                List Your Ride
+                <Icon name="arrowRight" className="w-5 h-5 btn-arrow" strokeWidth={2} />
+              </Link>
             </div>
           </div>
-          <div>
-            <h4 className="text-white text-[12.5px] uppercase tracking-wide font-bold mb-3">
-              Get Started
-            </h4>
-            <div className="flex flex-col gap-2 text-[13.5px]">
-              <Link href="/get-started" className="hover:text-white">Create an Account</Link>
-              <Link href="/list-your-car" className="hover:text-white">List Your Car</Link>
-              <Link href="/login" className="hover:text-white">Log In</Link>
-            </div>
-          </div>
-          <div>
-            <h4 className="text-white text-[12.5px] uppercase tracking-wide font-bold mb-3">
-              Portals
-            </h4>
-            <div className="flex flex-col gap-2 text-[13.5px]">
-              <Link href="/school" className="hover:text-white">School / P&amp;C Portal</Link>
-              <Link href="/founders" className="hover:text-white">Founders Login</Link>
-            </div>
-          </div>
-          <div>
-            <h4 className="text-white text-[12.5px] uppercase tracking-wide font-bold mb-3">
-              Legal
-            </h4>
-            <div className="flex flex-col gap-2 text-[13.5px]">
-              <Link href="/terms" className="hover:text-white">Terms &amp; Conditions</Link>
-              <Link href="/privacy" className="hover:text-white">Privacy Policy</Link>
-            </div>
-          </div>
-        </div>
+        </section>
+      )}
+
+      <div className="relative bg-midnight">
+        <GoldSwoosh className="-mt-px" />
       </div>
-      <div className="border-t border-white/10 mt-8 pt-5 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-4 text-[12.5px] text-slate-400">
-          <span className="flex items-center gap-1.5">
-            <Icon name="pin" className="w-3.5 h-3.5 text-gold-light" /> Local vehicles
-          </span>
-          <span className="text-white/15">·</span>
-          <span className="flex items-center gap-1.5">
-            <Icon name="star" className="w-3.5 h-3.5 text-gold-light" /> Real owners
-          </span>
-          <span className="text-white/15">·</span>
-          <span className="flex items-center gap-1.5">
-            <Icon name="heart" className="w-3.5 h-3.5 text-gold-light" /> Great memories
-          </span>
+
+      <div className="bg-midnight text-slate-300 px-6 md:px-14 pt-8 pb-8">
+        <div className="flex flex-wrap justify-between gap-10">
+          <div className="max-w-xs">
+            <FFLogo size="lg" tagline />
+            <p className="text-[13px] mt-5 leading-relaxed text-slate-400">
+              Connecting verified classic, muscle and show car owners with students who want an
+              unforgettable, safe ride to formal night. Starting in Brisbane, QLD.
+            </p>
+          </div>
+          <div className="flex gap-10 md:gap-14 flex-wrap">
+            {columns.map((col) => (
+              <div key={col.title}>
+                <h4 className="text-gold text-[12px] uppercase tracking-[0.14em] font-serif font-bold mb-3.5">
+                  {col.title}
+                </h4>
+                <div className="flex flex-col gap-2.5 text-[13.5px]">
+                  {col.links.map((l) => (
+                    <Link key={l.href} href={l.href} className="hover:text-white transition-colors">
+                      {l.label}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="text-[12px] text-slate-500 text-right">
-          <div>© {new Date().getFullYear()} Fleet Formal. Currently serving Brisbane North, QLD.</div>
-          <div className="text-slate-600">formal-fleet.netlify.app</div>
+
+        <div className="border-t border-white/10 mt-10 pt-6 flex flex-wrap items-center justify-between gap-5">
+          <div className="flex items-center gap-6 md:gap-9 text-[11.5px] uppercase tracking-[0.12em] text-white/85 flex-wrap">
+            <span className="flex items-center gap-2">
+              <Icon name="pin" className="w-6 h-6 text-gold" /> Local vehicles
+            </span>
+            <span className="flex items-center gap-2">
+              <Icon name="star" className="w-6 h-6 text-gold" /> Real owners
+            </span>
+            <span className="flex items-center gap-2">
+              <Icon name="heart" className="w-6 h-6 text-gold" /> Great memories
+            </span>
+          </div>
+          <div className="text-right">
+            <div className="text-white font-serif font-bold text-[18px]">fleetformal.com</div>
+            <div className="text-gold text-[11px] uppercase tracking-[0.14em] mt-0.5">
+              Arrive at formal in something unforgettable.
+            </div>
+          </div>
+        </div>
+        <div className="text-[11.5px] text-slate-500 mt-6">
+          © {new Date().getFullYear()} Fleet Formal. Currently serving Brisbane North, QLD.
         </div>
       </div>
     </footer>

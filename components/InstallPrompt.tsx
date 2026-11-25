@@ -71,7 +71,7 @@ export default function InstallPrompt() {
 
   return (
     <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-6 md:max-w-sm bg-navy-deep text-white rounded-2xl shadow-xl p-4 flex items-start gap-3 z-50">
-      <FFMonogram className="w-9 h-9" />
+      <FFMonogram className="w-10 h-10" tile />
       <div className="flex-1 text-[13px] leading-relaxed">
         <div className="font-bold text-[14px] mb-0.5">Add Fleet Formal to your phone</div>
         {deferredPrompt ? (

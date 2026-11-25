@@ -444,30 +444,30 @@ function CarCardView({ car }: { car: CarCard }) {
   const detailHref = car.source === "demo" ? `/listing/${car.id}` : `/car?id=${car.id}`;
 
   return (
-    <div className="bg-white border border-line rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+    <div className="lift group bg-white border border-line rounded-2xl overflow-hidden shadow-sm">
       <Link href={detailHref} className="block">
         <div className="relative h-[280px]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={car.photoUrl} alt={car.title} className="w-full h-full object-cover" />
+          <img src={car.photoUrl} alt={car.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
           <div
             className={`absolute top-3.5 left-3.5 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11.5px] font-bold ${
-              isVerified ? "bg-white/95 text-navy-deep" : "bg-amber-bg text-amber"
+              isVerified ? "bg-gold text-midnight" : "bg-white/90 text-amber backdrop-blur"
             }`}
           >
-            <span className={`w-1.5 h-1.5 rounded-full ${isVerified ? "bg-gold" : "bg-amber"}`} />
+            <span className={`w-1.5 h-1.5 rounded-full ${isVerified ? "bg-midnight" : "bg-amber"}`} />
             {isVerified ? "Verified" : "Unverified"}
           </div>
-          <div className="absolute bottom-3.5 right-3.5 px-3.5 py-1.5 rounded-lg text-[13px] font-bold text-white bg-navy-deep">
+          <div className="absolute bottom-3.5 right-3.5 px-3.5 py-1.5 rounded-lg text-[13px] font-bold text-midnight bg-gold shadow-lg">
             {car.priceLabel}
           </div>
         </div>
         <div className="px-5 pt-5">
-          <h3 className="text-[19px] mb-1 font-medium hover:underline">{car.title}</h3>
+          <h3 className="font-serif font-extrabold italic uppercase text-[18px] leading-tight text-midnight mb-1.5">{car.title}</h3>
           <div className="flex justify-between items-center mb-2 flex-wrap gap-1.5">
             <span className="text-[13px] text-muted flex items-center gap-1">
               <Icon name="pin" className="w-3.5 h-3.5" /> {car.suburb}, QLD
             </span>
-            <span className="text-[13px] text-gold font-bold flex items-center gap-1">
+            <span className="text-[13px] text-gold-dark font-bold flex items-center gap-1">
               <Icon name="star" className="w-3.5 h-3.5" /> New listing
             </span>
           </div>
@@ -572,7 +572,7 @@ export function InviteToEventControl({ carId }: { carId: string }) {
       <button
         type="button"
         onClick={handleToggle}
-        className="w-full bg-navy text-white rounded-lg px-4 py-2.5 font-bold text-[13px]"
+        className="w-full btn-gold !py-2.5 !text-[12.5px]"
       >
         {open ? "Hide" : "Invite to Event"}
       </button>

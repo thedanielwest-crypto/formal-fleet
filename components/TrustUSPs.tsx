@@ -23,7 +23,7 @@ const usps: { icon: IconName; title: string; body: string }[] = [
     body: "Every ride is booked by the hour, $350 minimum, with no hidden fees. A share of every booking goes straight back to the school and the rest keeps Fleet Formal running — see our Terms for the exact split.",
   },
   {
-    icon: "graduate",
+    icon: "users",
     title: "Built with schools, not just around them",
     body: "Fleet Formal partners directly with QLD schools and P&Cs, so committees always have a safer option to point families toward.",
   },
@@ -36,17 +36,18 @@ const usps: { icon: IconName; title: string; body: string }[] = [
 
 export default function TrustUSPs({ title = "Why families and schools trust Fleet Formal" }: { title?: string }) {
   return (
-    <section className="px-14 py-12 bg-white border-y border-line">
-      <h2 className="font-serif text-[22px] mb-6 max-w-xl">{title}</h2>
-      <div className="grid grid-cols-3 gap-5">
+    <section className="px-6 md:px-14 py-16 md:py-20 bg-white border-y border-line">
+      <div className="eyebrow !text-gold-dark mb-2">Safe &amp; trusted</div>
+      <h2 className="font-display text-[32px] md:text-[44px] text-midnight mb-9 max-w-3xl">{title}</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {usps.map((u) => (
-          <div key={u.title} className="flex gap-3.5 bg-cream border border-line rounded-2xl p-5">
+          <div key={u.title} className="lift flex gap-4 bg-cream border border-line rounded-2xl p-5">
             <div className="shrink-0">
-              <IconBadge name={u.icon} tone="navy" size="w-10 h-10" iconSize="w-4 h-4" />
+              <IconBadge name={u.icon} tone="navy" size="w-12 h-12" iconSize="w-6 h-6" />
             </div>
             <div>
-              <h3 className="font-semibold text-[14.5px] mb-1">{u.title}</h3>
-              <p className="text-[13px] text-[#454e60] leading-relaxed">{u.body}</p>
+              <h3 className="font-serif font-extrabold text-[15px] text-midnight mb-1">{u.title}</h3>
+              <p className="text-[13.5px] text-[#454e60] leading-relaxed">{u.body}</p>
             </div>
           </div>
         ))}

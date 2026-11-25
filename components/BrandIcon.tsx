@@ -1,58 +1,117 @@
 /**
- * Fleet Formal brand marks & icon system.
+ * Fleet Formal brand marks & icon system (Nov 2026 rebrand).
  *
- * FFMonogram is the custom vector "FF" mark from the September 2026 brand
- * refresh — a white F and a gold F, forward-leaning, with a single tapered
- * gold "road ribbon" sweeping in from the bottom-left and a dashed white
- * lane-line running down its centre. It replaces the earlier version's
- * separate parallel speed-lines + in-letter dash, and is the single source
- * of truth for the mark (header, footer, favicons/app icons are all
- * generated from the same geometry).
+ * The FF mark is no longer hand-drawn here: /public/brand/ff-mark.svg is a
+ * vector trace of the official logo on the brand sheet / "Your Formal. Your
+ * Ride." poster — white italic F, gold italic F, and the road with its gold
+ * edge-lines and white lane dashes running between them. Every logo on the
+ * site (header, footer, install prompt, app icons, favicon) comes from that
+ * one file so they can never drift apart again.
  *
- * IconBadge + the icon components below replace the raw emoji that were
- * scattered across the site (🎓🚗🛡️🏫🔍✅🤝🎉 etc.) with one consistent set of
- * line icons on a uniform navy or gold circle, matching the "Icon Usage"
- * panel on the brand sheet.
+ * The wordmark is Montserrat ExtraBold Italic (self-hosted in /public/fonts),
+ * "FLEET" in white and "FORMAL" in gold, matching the brand sheet lockups.
+ *
+ * Icons follow the poster's icon row: clean gold line icons with rounded
+ * ends, no filled circles behind them.
  */
 import type { ReactNode } from "react";
 
-export function FFMonogram({ className = "w-10 h-10" }: { className?: string }) {
+/** The FF mark on its own. `tile` puts it on the midnight-navy app-icon tile. */
+export function FFMonogram({
+  className = "w-10 h-10",
+  tile = false,
+}: {
+  className?: string;
+  tile?: boolean;
+}) {
+  if (tile) {
+    return (
+      <span
+        className={`${className} shrink-0 inline-flex items-center justify-center rounded-[24%] bg-[radial-gradient(circle_at_50%_30%,#0b2440,#011326_75%)] ring-1 ring-gold/35`}
+        aria-hidden="true"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/brand/ff-mark.svg" alt="" className="w-[78%] h-auto" />
+      </span>
+    );
+  }
   return (
-    <svg viewBox="0 0 100 100" className={`${className} shrink-0`} aria-hidden="true">
-      <rect x="0" y="0" width="100" height="100" rx="26" fill="#0d1b2a" />
-      <rect
-        x="1.5"
-        y="1.5"
-        width="97"
-        height="97"
-        rx="24.5"
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src="/brand/ff-mark.svg"
+      alt=""
+      aria-hidden="true"
+      className={`${className} shrink-0 object-contain`}
+    />
+  );
+}
+
+/** "FLEET FORMAL" wordmark — white + gold, heavy italic. */
+export function FFWordmark({ className = "text-2xl" }: { className?: string }) {
+  return (
+    <span className={`ff-wordmark ${className}`}>
+      <span className="text-white">Fleet</span>{" "}
+      <span className="text-gold">Formal</span>
+    </span>
+  );
+}
+
+/**
+ * Full logo lockup, as on the brand sheet's horizontal logo: mark on the
+ * left, wordmark on the right, optional tagline underneath.
+ */
+export function FFLogo({
+  size = "md",
+  tagline = false,
+}: {
+  size?: "sm" | "md" | "lg";
+  tagline?: boolean;
+}) {
+  const s = {
+    sm: { mark: "h-8 w-auto", word: "text-[19px]", tag: "text-[10px]" },
+    md: { mark: "h-10 w-auto", word: "text-[23px]", tag: "text-[11px]" },
+    lg: { mark: "h-12 sm:h-16 w-auto", word: "text-[25px] sm:text-[34px]", tag: "text-[11px] sm:text-[13px]" },
+  }[size];
+  return (
+    <span className="inline-flex items-center gap-2.5">
+      <FFMonogram className={s.mark} />
+      <span className="flex flex-col leading-none">
+        <FFWordmark className={s.word} />
+        {tagline && (
+          <span className={`${s.tag} text-white/75 mt-1.5 tracking-wide sm:whitespace-nowrap`}>
+            Arrive at formal in something unforgettable.
+          </span>
+        )}
+      </span>
+    </span>
+  );
+}
+
+/** The gold + white sweep from the bottom of the poster. */
+export function GoldSwoosh({ className = "" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 1440 90"
+      preserveAspectRatio="none"
+      className={`block w-full h-[46px] md:h-[70px] ${className}`}
+      aria-hidden="true"
+    >
+      <path d="M0 62 C 360 6, 900 6, 1440 40 L1440 90 L0 90 Z" fill="#011326" />
+      <path
+        d="M0 58 C 380 -2, 920 2, 1440 34"
         fill="none"
         stroke="#d4a937"
-        strokeOpacity="0.35"
+        strokeWidth="6"
+        strokeLinecap="round"
       />
-
-      <g transform="translate(-3,2) scale(1.08)">
-        {/* tapered gold "road ribbon" sweeping in from bottom-left */}
-        <path d="M 6 86 L 19 86 L 47 38 L 40 38 Z" fill="#d4a937" />
-        <path
-          d="M 11.5 80 L 34 42"
-          stroke="#ffffff"
-          strokeWidth="1.7"
-          strokeDasharray="3.6 3.2"
-          strokeLinecap="round"
-        />
-
-        {/* white F */}
-        <polygon
-          points="45.74,32.48 68.97,32.48 66.41,41.0 52.48,41.0 49.92,49.51 59.99,49.51 57.66,57.25 47.6,57.25 43.42,71.19 34.13,71.19"
-          fill="#ffffff"
-        />
-        {/* gold F */}
-        <polygon
-          points="62.77,32.48 86.0,32.48 83.45,41.0 69.51,41.0 66.95,49.51 77.02,49.51 74.7,57.25 64.63,57.25 60.45,71.19 51.16,71.19"
-          fill="#d4a937"
-        />
-      </g>
+      <path
+        d="M0 74 C 420 22, 940 26, 1440 52"
+        fill="none"
+        stroke="#ffffff"
+        strokeWidth="3"
+        strokeLinecap="round"
+        opacity="0.9"
+      />
     </svg>
   );
 }
@@ -61,9 +120,12 @@ export type IconName =
   | "graduate"
   | "car"
   | "shield"
+  | "users"
   | "school"
   | "search"
   | "check"
+  | "checkCircle"
+  | "arrowRight"
   | "handshake"
   | "celebration"
   | "clipboard"
@@ -78,28 +140,45 @@ export type IconName =
   | "mail"
   | "trophy"
   | "close"
-  | "document";
+  | "document"
+  | "sparkle"
+  | "camera"
+  | "ring";
 
 const paths: Record<IconName, ReactNode> = {
   graduate: (
     <>
-      <path d="M3 9.5 12 5l9 4.5-9 4.5-9-4.5Z" />
-      <path d="M7 11.8v4.2c0 1.4 2.24 2.5 5 2.5s5-1.1 5-2.5v-4.2" />
-      <path d="M20 9.5v5.5" />
+      <path d="M2.5 9 12 4.8 21.5 9 12 13.2 2.5 9Z" />
+      <path d="M6.5 11v4.6c0 1.5 2.5 2.9 5.5 2.9s5.5-1.4 5.5-2.9V11" />
+      <path d="M21.5 9v5.2" />
+      <path d="M21.5 14.2 20.6 17h1.8l-.9-2.8Z" />
     </>
   ),
   car: (
     <>
-      <path d="M4 16V12.2a1.6 1.6 0 0 1 .27-.9l1.9-2.8A2 2 0 0 1 7.83 7.6h8.34a2 2 0 0 1 1.66.9l1.9 2.8c.18.27.27.58.27.9V16" />
-      <path d="M4 16h16v2.2a.8.8 0 0 1-.8.8h-1.4a.8.8 0 0 1-.8-.8V17H7v1.2a.8.8 0 0 1-.8.8H4.8a.8.8 0 0 1-.8-.8V16Z" />
-      <circle cx="7.5" cy="13.5" r="1.1" />
-      <circle cx="16.5" cy="13.5" r="1.1" />
+      <path d="M6.2 10.2 7.9 6.3c.3-.6.9-1 1.6-1h5c.7 0 1.3.4 1.6 1l1.7 3.9" />
+      <path d="M4.3 10.2h15.4c.9 0 1.6.7 1.6 1.6v3.9c0 .6-.5 1.1-1.1 1.1H3.8c-.6 0-1.1-.5-1.1-1.1v-3.9c0-.9.7-1.6 1.6-1.6Z" />
+      <path d="M5.3 16.8v1.6c0 .4.3.7.7.7h1.6c.4 0 .7-.3.7-.7v-1.6" />
+      <path d="M15.7 16.8v1.6c0 .4.3.7.7.7H18c.4 0 .7-.3.7-.7v-1.6" />
+      <circle cx="6.6" cy="13.4" r="1.1" />
+      <circle cx="17.4" cy="13.4" r="1.1" />
+      <path d="M10 13.6h4" />
     </>
   ),
   shield: (
     <>
-      <path d="M12 3.5 19 6v5.2c0 4.2-2.9 7.4-7 9.3-4.1-1.9-7-5.1-7-9.3V6l7-2.5Z" />
-      <path d="m9 12 2 2 4-4.2" />
+      <path d="M12 3 19.5 5.8v5.6c0 4.4-3.1 7.8-7.5 9.6-4.4-1.8-7.5-5.2-7.5-9.6V5.8L12 3Z" />
+      <path d="m8.8 12 2.3 2.3 4.3-4.6" />
+    </>
+  ),
+  users: (
+    <>
+      <circle cx="12" cy="7.6" r="2.7" />
+      <path d="M7.2 19c0-3 2.1-5.1 4.8-5.1s4.8 2.1 4.8 5.1" />
+      <circle cx="5.9" cy="9.6" r="2" />
+      <path d="M2.4 17.8c0-2.4 1.5-4 3.6-4.1" />
+      <circle cx="18.1" cy="9.6" r="2" />
+      <path d="M21.6 17.8c0-2.4-1.5-4-3.6-4.1" />
     </>
   ),
   school: (
@@ -109,16 +188,27 @@ const paths: Record<IconName, ReactNode> = {
       <path d="M18.5 20.5v-8.7" />
       <path d="M3 11.8 12 4l9 7.8" />
       <path d="M9 20.5v-4a3 3 0 0 1 6 0v4" />
-      <path d="M8 16h1.6M14.4 16H16" />
     </>
   ),
   search: (
     <>
-      <circle cx="10.8" cy="10.8" r="6.3" />
-      <path d="m19.5 19.5-4-4" />
+      <circle cx="10.5" cy="10.5" r="6.2" />
+      <path d="m19.5 19.5-4.4-4.4" />
     </>
   ),
   check: <path d="m4.5 12.5 5 5 10-11" />,
+  checkCircle: (
+    <>
+      <circle cx="12" cy="12" r="8.8" />
+      <path d="m8.2 12.3 2.6 2.6 5-5.4" />
+    </>
+  ),
+  arrowRight: (
+    <>
+      <path d="M4.5 12h15" />
+      <path d="m13.5 6 6 6-6 6" />
+    </>
+  ),
   handshake: (
     <>
       <path d="M3 11.5h4l3-2.3 3 2.3 2-2 3 2.3h3" />
@@ -157,7 +247,7 @@ const paths: Record<IconName, ReactNode> = {
   ),
   badge: (
     <>
-      <path d="M12 3.5 19 6v5.2c0 4.2-2.9 7.4-7 9.3-4.1-1.9-7-5.1-7-9.3V6l7-2.5Z" />
+      <path d="M12 3 19.5 5.8v5.6c0 4.4-3.1 7.8-7.5 9.6-4.4-1.8-7.5-5.2-7.5-9.6V5.8L12 3Z" />
       <circle cx="12" cy="10.3" r="2.3" />
       <path d="M8.2 16.4c.7-1.9 2.1-2.9 3.8-2.9s3.1 1 3.8 2.9" />
     </>
@@ -170,15 +260,15 @@ const paths: Record<IconName, ReactNode> = {
   ),
   pin: (
     <>
-      <path d="M12 21s-6.5-5.7-6.5-11A6.5 6.5 0 0 1 18.5 10c0 5.3-6.5 11-6.5 11Z" />
-      <circle cx="12" cy="10" r="2.3" />
+      <path d="M12 21.2s-6.8-5.9-6.8-11.4a6.8 6.8 0 0 1 13.6 0c0 5.5-6.8 11.4-6.8 11.4Z" />
+      <circle cx="12" cy="9.9" r="2.4" />
     </>
   ),
   star: (
-    <path d="m12 3.5 2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6-4.4-4.2 6-.8L12 3.5Z" />
+    <path d="m12 3.2 2.7 5.6 6.1.8-4.5 4.3 1.1 6.1-5.4-3-5.4 3 1.1-6.1-4.5-4.3 6.1-.8L12 3.2Z" />
   ),
   heart: (
-    <path d="M12 20s-7.5-4.5-7.5-10a4.5 4.5 0 0 1 7.5-3.4A4.5 4.5 0 0 1 19.5 10c0 5.5-7.5 10-7.5 10Z" />
+    <path d="M12 20.2s-7.8-4.6-7.8-10.3A4.6 4.6 0 0 1 12 6.6a4.6 4.6 0 0 1 7.8 3.3c0 5.7-7.8 10.3-7.8 10.3Z" />
   ),
   money: (
     <>
@@ -223,21 +313,41 @@ const paths: Record<IconName, ReactNode> = {
       <path d="M9 15.5h6" />
     </>
   ),
+  sparkle: (
+    <>
+      <path d="M12 3.5c.6 3.9 2.6 5.9 6.5 6.5-3.9.6-5.9 2.6-6.5 6.5-.6-3.9-2.6-5.9-6.5-6.5 3.9-.6 5.9-2.6 6.5-6.5Z" />
+      <path d="M18.5 15.5c.3 1.5 1 2.2 2.5 2.5-1.5.3-2.2 1-2.5 2.5-.3-1.5-1-2.2-2.5-2.5 1.5-.3 2.2-1 2.5-2.5Z" />
+    </>
+  ),
+  camera: (
+    <>
+      <path d="M4.5 8h3l1.6-2.2h5.8L16.5 8h3c.6 0 1 .4 1 1v9c0 .6-.4 1-1 1h-15c-.6 0-1-.4-1-1V9c0-.6.4-1 1-1Z" />
+      <circle cx="12" cy="13.2" r="3.4" />
+    </>
+  ),
+  ring: (
+    <>
+      <circle cx="12" cy="14.5" r="5.8" />
+      <path d="m9.4 6.2 1.3-2.4h2.6l1.3 2.4L12 8.7 9.4 6.2Z" />
+    </>
+  ),
 };
 
 export function Icon({
   name,
   className = "w-6 h-6",
+  strokeWidth = 1.7,
 }: {
   name: IconName;
   className?: string;
+  strokeWidth?: number;
 }) {
   return (
     <svg
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.7}
+      strokeWidth={strokeWidth}
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}
@@ -248,6 +358,12 @@ export function Icon({
   );
 }
 
+/**
+ * tone="navy" (for light backgrounds): gold line icon on a midnight-navy
+ * rounded tile — the same shape as the app icon.
+ * tone="gold" (for dark backgrounds): the bare gold line icon from the
+ * poster's icon row, with a soft gold glow.
+ */
 export function IconBadge({
   name,
   tone = "navy",
@@ -259,12 +375,17 @@ export function IconBadge({
   size?: string;
   iconSize?: string;
 }) {
-  const toneClass =
-    tone === "gold"
-      ? "bg-gradient-to-br from-gold-light to-gold text-navy-deep"
-      : "bg-navy text-gold-light border border-gold-border";
+  if (tone === "gold") {
+    return (
+      <div className={`${size} mx-auto flex items-center justify-center text-gold ff-icon-glow`}>
+        <Icon name={name} className="w-full h-full" strokeWidth={1.5} />
+      </div>
+    );
+  }
   return (
-    <div className={`${size} mx-auto rounded-full flex items-center justify-center ${toneClass}`}>
+    <div
+      className={`${size} mx-auto rounded-[28%] flex items-center justify-center bg-[radial-gradient(circle_at_50%_25%,#0b2440,#011326_80%)] text-gold ring-1 ring-gold/30 shadow-[0_6px_18px_-8px_rgba(1,19,38,0.6)]`}
+    >
       <Icon name={name} className={iconSize} />
     </div>
   );

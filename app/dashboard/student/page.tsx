@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabaseClient";
 import { useRequireRole } from "@/lib/useRequireRole";
 import { Icon } from "@/components/BrandIcon";
+import { isHiddenSubmission } from "@/lib/hiddenListings";
 
 type OpenEvent = {
   id: string;
@@ -71,7 +72,7 @@ export default function StudentDashboard() {
       .select("id, suburb, car, description, photo1_path, status")
       .neq("status", "rejected")
       .order("created_at", { ascending: false });
-    if (!error) setCars(data as CarRow[]);
+    if (!error) setCars((data as CarRow[]).filter((c) => !isHiddenSubmission(c)));
   }
 
   useEffect(() => {

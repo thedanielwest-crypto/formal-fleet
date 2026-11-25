@@ -28,22 +28,16 @@ export default function LoginPage() {
       setError(signInError?.message || "Couldn't log you in.");
       return;
     }
-    // Admins share this login; send them straight to the Admin page.
-    const { data: adminRow } = await supabase
-      .from("admin_users")
-      .select("user_id")
-      .eq("user_id", data.user.id)
-      .maybeSingle();
-    if (adminRow) {
-      router.push("/admin");
-      return;
-    }
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("role")
-      .eq("id", data.user.id)
-      .maybeSingle();
-    router.push(profile?.role ? `/dashboard/${profile.role}` : "/");
+    // Car owners, schools and students go to their dashboard. Admins who
+    // don't also have one of those accounts go to the Admin page (admins who
+    // do get an "Admin" button in the header).
+    const [{ data: profile }, { data: adminRow }] = await Promise.all([
+      supabase.from("profiles").select("role").eq("id", data.user.id).maybeSingle(),
+      supabase.from("admin_users").select("user_id").eq("user_id", data.user.id).maybeSingle(),
+    ]);
+    if (profile?.role) router.push(`/dashboard/${profile.role}`);
+    else if (adminRow) router.push("/admin");
+    else router.push("/signup?complete=1");
   }
 
   return (

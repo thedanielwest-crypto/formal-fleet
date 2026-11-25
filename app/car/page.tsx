@@ -8,6 +8,7 @@ import Footer from "@/components/Footer";
 import { Icon } from "@/components/BrandIcon";
 import { supabase } from "@/lib/supabaseClient";
 import { photoUrl } from "@/lib/carPhoto";
+import { isHiddenSubmission } from "@/lib/hiddenListings";
 import CarBookingStatus from "@/components/CarBookingStatus";
 import { InviteToEventControl, PrivateEventControl } from "@/components/LiveListings";
 
@@ -74,7 +75,8 @@ function CarDetailInner() {
           setCar(null);
           return;
         }
-        setCar((data as CarRow) ?? null);
+        const row = (data as CarRow) ?? null;
+        setCar(row && !isHiddenSubmission(row) ? row : null);
       });
     return () => {
       cancelled = true;

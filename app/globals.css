@@ -1,26 +1,45 @@
 @import "tailwindcss";
 
+/* ------------------------------------------------------------------
+   Fonts — self-hosted so the brand type renders everywhere (and in the
+   installed app offline). Montserrat for headings/wordmark, Poppins body.
+   ------------------------------------------------------------------ */
+@font-face { font-family: "Montserrat"; src: url("/fonts/montserrat-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("/fonts/montserrat-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("/fonts/montserrat-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("/fonts/montserrat-latin-900-normal.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("/fonts/montserrat-latin-700-italic.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("/fonts/montserrat-latin-800-italic.woff2") format("woff2"); font-weight: 800; font-style: italic; font-display: swap; }
+@font-face { font-family: "Montserrat"; src: url("/fonts/montserrat-latin-900-italic.woff2") format("woff2"); font-weight: 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/fonts/poppins-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/fonts/poppins-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/fonts/poppins-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Poppins"; src: url("/fonts/poppins-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+
 :root {
-  /* Fleet Formal official brand palette (from brand sheet) */
-  --navy-deep: #0d1b2a; /* Midnight Navy */
-  --navy: #16293e; /* lighter derived navy for depth/gradients — brand only specifies one core navy */
-  --gold: #d4a937; /* Accent Gold */
-  --gold-light: #e3c169; /* lighter derived gold for gradients/highlights */
-  --cream: #f1f1f1; /* Light Grey */
+  /* Fleet Formal brand palette (brand sheet + poster) */
+  --midnight: #011326; /* the deep poster navy — headers, heroes, footer */
+  --navy-deep: #0d1b2a; /* Midnight Navy swatch */
+  --navy: #13283f; /* raised navy for cards/borders on dark */
+  --gold: #d4a937; /* Gold */
+  --gold-light: #e8c766;
+  --gold-dark: #a8821f; /* gold that still reads on white */
+  --cream: #f3f3f1;
   --ink: #2b2b2b; /* Charcoal */
   --muted: #6b7280;
   --line: #d9d9d9; /* Silver Grey */
   --amber: #b8790a;
   --amber-bg: #fdf1de;
-  /* subtler gold tone for hairline borders/dividers on dark navy */
   --gold-border: rgba(212, 169, 55, 0.35);
 }
 
 @theme inline {
+  --color-midnight: var(--midnight);
   --color-navy: var(--navy);
   --color-navy-deep: var(--navy-deep);
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
+  --color-gold-dark: var(--gold-dark);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
@@ -28,15 +47,169 @@
   --color-amber: var(--amber);
   --color-amber-bg: var(--amber-bg);
   --color-gold-border: var(--gold-border);
-  /* Sept 2026 brand refresh: Montserrat for headings, Poppins for body -
-     the --font-serif name is kept so every existing `font-serif` heading
-     class site-wide picks up the new headline face without a rename. */
+  /* --font-serif keeps its old name so every existing `font-serif`
+     heading picks up Montserrat without touching each page. */
   --font-serif: "Montserrat", -apple-system, "Segoe UI", sans-serif;
   --font-sans: "Poppins", -apple-system, "Segoe UI", sans-serif;
 }
+
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--cream);
   color: var(--ink);
   font-family: "Poppins", -apple-system, "Segoe UI", sans-serif;
+}
+
+/* ---------------- Brand type ---------------- */
+
+/* Big poster headlines: "YOUR FORMAL. YOUR RIDE." */
+.font-display {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+}
+
+/* FLEET FORMAL wordmark */
+.ff-wordmark {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-block;
+  transform: skewX(-5deg);
+}
+
+.eyebrow {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+/* ---------------- Buttons ---------------- */
+
+.btn-gold,
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-radius: 10px;
+  padding: 0.95rem 1.6rem;
+  font-size: 15px;
+  transition: transform 0.2s ease, box-shadow 0.25s ease, background-color 0.2s ease, border-color 0.2s ease;
+}
+.btn-gold {
+  color: var(--midnight);
+  background: linear-gradient(135deg, var(--gold-light), var(--gold) 55%, #c69a2b);
+  box-shadow: 0 10px 30px -12px rgba(212, 169, 55, 0.7);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px -12px rgba(212, 169, 55, 0.95);
+}
+.btn-outline {
+  color: #fff;
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
+  background: rgba(1, 19, 38, 0.35);
+  backdrop-filter: blur(6px);
+}
+.btn-outline:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+.btn-gold .btn-arrow,
+.btn-outline .btn-arrow { transition: transform 0.2s ease; }
+.btn-gold:hover .btn-arrow,
+.btn-outline:hover .btn-arrow { transform: translateX(4px); }
+
+/* ---------------- Page heroes (inner pages) ---------------- */
+
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--midnight);
+  background-image:
+    linear-gradient(90deg, rgba(1, 19, 38, 0.97) 0%, rgba(1, 19, 38, 0.9) 38%, rgba(1, 19, 38, 0.45) 70%, rgba(1, 19, 38, 0.25) 100%),
+    linear-gradient(0deg, rgba(1, 19, 38, 0.9) 0%, rgba(1, 19, 38, 0) 45%),
+    url("/brand/hero-formal-night.jpg");
+  background-size: cover;
+  background-position: 72% 30%;
+  background-repeat: no-repeat;
+  border-bottom: 3px solid var(--gold);
+}
+.page-hero h1 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 1;
+}
+.page-hero h1 .text-gold-light { color: var(--gold); }
+.page-hero h1 { font-size: clamp(34px, 5.2vw, 60px); }
+@media (max-width: 767px) {
+  .page-hero {
+    background-image:
+      linear-gradient(90deg, rgba(1, 19, 38, 0.95) 0%, rgba(1, 19, 38, 0.82) 60%, rgba(1, 19, 38, 0.6) 100%),
+      url("/brand/hero-formal-night-mobile.jpg");
+    background-position: 60% 50%;
+  }
+}
+
+/* ---------------- Motion ---------------- */
+
+.ff-icon-glow svg { filter: drop-shadow(0 0 10px rgba(212, 169, 55, 0.35)); }
+
+@keyframes ff-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ff-drift {
+  from { transform: scale(1.06); }
+  to { transform: scale(1); }
+}
+@keyframes ff-shine {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.rise { animation: ff-rise 0.8s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.rise-1 { animation-delay: 0.08s; }
+.rise-2 { animation-delay: 0.18s; }
+.rise-3 { animation-delay: 0.3s; }
+.rise-4 { animation-delay: 0.44s; }
+.drift { animation: ff-drift 9s ease-out both; }
+.gold-shine {
+  background: linear-gradient(100deg, var(--gold) 0%, var(--gold) 40%, #fff3c4 50%, var(--gold) 60%, var(--gold) 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ff-shine 6s linear infinite;
+}
+.lift { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.lift:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -18px rgba(1, 19, 38, 0.55); }
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rise, .drift, .gold-shine { animation: none !important; }
+  .btn-gold, .btn-outline, .lift { transition: none; }
+  html { scroll-behavior: auto; }
 }

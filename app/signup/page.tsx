@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import PasswordInput from "@/components/PasswordInput";
 import { supabase } from "@/lib/supabaseClient";
-import type { Role } from "@/lib/authContext";
+import { useAuth, type Role } from "@/lib/authContext";
 import { IconBadge } from "@/components/BrandIcon";
 import type { IconName } from "@/components/BrandIcon";
 
@@ -37,6 +37,10 @@ const ROLE_COPY: Record<Role, { title: string; blurb: string }> = {
 
 function SignupForm() {
   const router = useRouter();
+  const { session, profile, loading: authLoading, refreshProfile } = useAuth();
+  // Logged in but no Fleet Formal profile yet (e.g. an admin, or a sign-up
+  // that didn't finish): just add the profile to the existing login.
+  const completing = !authLoading && !!session && !profile;
   const params = useSearchParams();
   const initialRole = (params.get("role") as Role) || null;
 
@@ -57,26 +61,54 @@ function SignupForm() {
     setSubmitting(true);
     setError(null);
 
-    const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
-    if (signUpError || !data.user) {
-      setError(signUpError?.message || "Couldn't create that account.");
+    if (completing && session) {
+      const { error: profileError } = await supabase.from("profiles").insert({
+        id: session.user.id,
+        role,
+        name: name.trim(),
+        email: session.user.email,
+        phone: phone.trim() || null,
+        suburb: suburb.trim() || null,
+        school_name: role === "school" ? schoolName.trim() || name.trim() : null,
+      });
       setSubmitting(false);
+      if (profileError) {
+        setError(profileError.message);
+        return;
+      }
+      await refreshProfile();
+      router.push(`/dashboard/${role}`);
       return;
     }
 
-    const { error: profileError } = await supabase.from("profiles").insert({
-      id: data.user.id,
-      role,
-      name,
+    // The profile row is created by a database trigger from this metadata
+    // (email confirmation is on, so there's no browser session yet to
+    // insert it ourselves).
+    const { data, error: signUpError } = await supabase.auth.signUp({
       email,
-      phone: phone || null,
-      suburb: suburb || null,
-      school_name: role === "school" ? schoolName || name : null,
+      password,
+      options: {
+        emailRedirectTo: `${window.location.origin}/login`,
+        data: {
+          role,
+          name: name.trim(),
+          phone: phone.trim() || null,
+          suburb: suburb.trim() || null,
+          school_name: role === "school" ? schoolName.trim() || name.trim() : null,
+        },
+      },
     });
-
     setSubmitting(false);
-    if (profileError) {
-      setError(profileError.message);
+    if (signUpError || !data.user) {
+      setError(signUpError?.message || "Couldn't create that account.");
+      return;
+    }
+    // Supabase returns a user with no identities when the email is already
+    // registered (it doesn't say so outright, for privacy).
+    if (data.user.identities && data.user.identities.length === 0) {
+      setError(
+        "There's already an account with this email. Log in instead, or use Forgot password to set a new one."
+      );
       return;
     }
 
@@ -154,6 +186,12 @@ function SignupForm() {
           </div>
         )}
 
+        {completing ? (
+          <p className="text-[13px] bg-cream border border-line rounded-lg px-4 py-3">
+            Adding this account to your existing login, <strong>{session?.user.email}</strong>.
+          </p>
+        ) : (
+        <>
         <div>
           <label className={labelClass} htmlFor="email">Email</label>
           <input
@@ -176,6 +214,8 @@ function SignupForm() {
             autoComplete="new-password"
           />
         </div>
+        </>
+        )}
 
         <div>
           <label className={labelClass} htmlFor="phone">Phone</label>
@@ -197,8 +237,12 @@ function SignupForm() {
           {submitting ? "Creating account…" : "Create account"}
         </button>
         <p className="text-[13px] text-muted text-center">
-          Already have an account?{" "}
-          <a href="/login" className="underline font-semibold">Log in</a>
+          {!completing && (
+            <>
+              Already have an account?{" "}
+              <a href="/login" className="underline font-semibold">Log in</a>
+            </>
+          )}
         </p>
       </form>
     </div>

@@ -30,18 +30,18 @@ export default async function ListingDetail({
     <div>
       <Header />
 
-      <div className="px-14 pt-5 text-[13px] text-muted">
-        <Link href="/" className="hover:underline">
-          Browse Cars
+      <div className="px-6 md:px-14 pt-5 text-[13px] text-muted">
+        <Link href="/browse" className="hover:underline">
+          Find a Ride
         </Link>{" "}
         &nbsp;›&nbsp;{" "}
         <span className="text-ink font-semibold">{listing.title}</span>
       </div>
 
-      <div className="flex gap-9 px-14 pt-5 pb-16 items-start">
-        <div className="flex-1">
+      <div className="flex flex-col lg:flex-row gap-9 px-6 md:px-14 pt-5 pb-16 items-start">
+        <div className="flex-1 w-full">
           <div
-            className={`grid gap-2.5 rounded-2xl overflow-hidden h-[420px] ${
+            className={`grid gap-2.5 rounded-2xl overflow-hidden h-[260px] md:h-[420px] ${
               listing.gallery.length > 1 ? "grid-cols-[2fr_1fr]" : "grid-cols-1"
             }`}
           >
@@ -65,7 +65,7 @@ export default async function ListingDetail({
           </div>
 
           <div className="mt-6">
-            <h1 className="font-serif text-[28px]">{listing.title}</h1>
+            <h1 className="font-display text-[30px] md:text-[38px] text-midnight">{listing.title}</h1>
             <div className="text-[13.5px] text-muted mt-1 flex items-center gap-1.5">
               <Icon name="pin" className="w-3.5 h-3.5" />
               {listing.suburb}, {listing.region}
@@ -96,8 +96,8 @@ export default async function ListingDetail({
           </div>
         </div>
 
-        <div className="w-[360px] shrink-0">
-          <div className="bg-white border border-line rounded-2xl p-6.5 sticky top-5 shadow-lg shadow-navy/5">
+        <div className="w-full lg:w-[360px] shrink-0">
+          <div className="bg-white border border-line rounded-2xl p-6.5 lg:sticky lg:top-24 shadow-lg shadow-navy/5">
             <div className="text-[28px] font-extrabold">
               {listing.price === "free" ? (
                 "Free"
@@ -108,7 +108,7 @@ export default async function ListingDetail({
                 </>
               )}
             </div>
-            <button className="w-full mt-5.5 bg-navy text-white rounded-xl py-3.5 font-bold text-[14.5px]">
+            <button className="w-full mt-5.5 btn-gold">
               Request to Book
             </button>
             <button className="w-full mt-2.5 bg-white text-navy border border-line rounded-xl py-3 font-bold text-[14.5px]">

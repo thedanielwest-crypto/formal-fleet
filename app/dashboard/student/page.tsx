@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { useRequireRole } from "@/lib/useRequireRole";
 import { Icon } from "@/components/BrandIcon";
 import { isHiddenSubmission } from "@/lib/hiddenListings";
+import { isPhotoBlurred } from "@/lib/photoPrivacy";
 
 type OpenEvent = {
   id: string;
@@ -222,7 +223,10 @@ export default function StudentDashboard() {
             {cars?.map((c) => (
               <div key={c.id} className="bg-white border border-line rounded-2xl overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={photoUrl(c.photo1_path)} alt={c.car} className="w-full h-40 object-cover" />
+                <div className="relative h-40 overflow-hidden">
+                  <img src={photoUrl(c.photo1_path)} alt={c.car} className={`w-full h-40 object-cover ${isPhotoBlurred(c.car) ? "photo-blur" : ""}`} />
+                  {isPhotoBlurred(c.car) && <span className="photo-soon">Photos coming soon</span>}
+                </div>
                 <div className="p-4">
                   <h3 className="font-serif text-[16px]">{c.car}</h3>
                   <p className="text-[12.5px] text-muted mb-2 flex items-center gap-1">

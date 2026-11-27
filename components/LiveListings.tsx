@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { isPhotoBlurred } from "@/lib/photoPrivacy";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/authContext";
@@ -450,13 +451,15 @@ function CarCardView({ car }: { car: CarCard }) {
     .join(" ");
 
   const detailHref = car.source === "demo" ? `/listing/${car.id}` : `/car?id=${car.id}`;
+  const blurred = isPhotoBlurred(car.id, car.title, car.model);
 
   return (
     <div className="lift group bg-navy-deep border border-white/10 rounded-2xl overflow-hidden">
       <Link href={detailHref} className="block">
-        <div className="relative h-[280px]">
+        <div className="relative h-[280px] overflow-hidden">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={car.photoUrl} alt={car.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <img src={car.photoUrl} alt={car.title} className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${blurred ? "photo-blur" : ""}`} />
+          {blurred && <span className="photo-soon">Photos coming soon</span>}
           <div
             className={`absolute top-3.5 left-3.5 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-[11.5px] font-bold ${
               isVerified ? "bg-gold text-midnight" : "bg-white/90 text-amber backdrop-blur"

@@ -1,0 +1,48 @@
+FLEET FORMAL - UPDATE 5: OWNER ACADEMY
+Repo: thedanielwest-crypto/formal-fleet
+
+WHAT'S NEW
+- /owners          Owner Academy hub with 12-step progress tracker
+- /owners/start    Start here guide (introduction document, can be saved as PDF)
+- /owners/costs    Rego comparison + earnings calculator (formals, weddings,
+                   film & advertising, scenic drives) + Film & Advertising only
+                   section for club rego / left-hand-drive cars
+- /owners/requirements  Every requirement with official links + secure uploads
+- /owners/training + /owners/module   4 training modules with quizzes
+                   (graded on the server, 80% to pass). Passing creates a PDF
+                   certificate saved to the driver's documents.
+- /owners/documents     Driver's private document store with expiry dates
+- Admin > Owner Academy tab: alerts, documents to verify, driver compliance
+  table, booking lock switch
+- Driver dashboard: Owner Academy progress card
+- Header (wide screens) + footer: Owner Academy link
+- New package: jspdf (certificates). package.json + package-lock.json included.
+
+The database, storage bucket and the owner-alert email function are ALREADY
+live in Supabase. The supabase/ folder is a record copy; nothing to run.
+
+HOW TO UPLOAD (GitHub website)
+1. Open github.com/thedanielwest-crypto/formal-fleet
+2. Add file -> Upload files
+3. Drag in the CONTENTS of this folder (the app, components, lib and supabase
+   folders plus package.json, package-lock.json and tsconfig.json).
+   GitHub keeps the folder paths and replaces matching files.
+   Don't upload this instructions file.
+4. Commit message: "Owner Academy" -> Commit changes
+5. Netlify rebuilds in a couple of minutes.
+
+TO TURN ON ALERT EMAILS (one-off, about 15 minutes)
+Alerts already show in Admin > Owner Academy. To also email them to
+admin@fleetformal.com.au:
+1. Sign up free at resend.com.
+2. Domains -> Add domain -> fleetformal.com.au, then add the DNS records it
+   shows at your domain provider.
+3. API Keys -> Create API key -> copy it.
+4. Supabase -> Edge Functions -> Secrets -> add RESEND_API_KEY = (your key).
+5. In Admin > Owner Academy, click "Retry emails" to send anything waiting.
+
+BOOKING LOCK
+Off by default, because no car is linked to a fully trained owner yet.
+Turn it on in Admin > Owner Academy once your BEA is approved and owners are
+verified. When on, a car can't be invited to an event or enquired about
+until its owner has all 12 steps verified.

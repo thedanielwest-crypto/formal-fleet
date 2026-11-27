@@ -11,6 +11,7 @@ const navLinks = [
   { href: "/list-your-car", label: "List Your Ride" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/for-schools", label: "For Schools" },
+  { href: "/owners", label: "Owner Academy" },
   { href: "/verification-safety", label: "Safety" },
 ];
 
@@ -74,12 +75,12 @@ export default function Header() {
 
         <nav className="hidden min-[1120px]:flex flex-1 justify-center items-center gap-4 xl:gap-6 2xl:gap-9">
           {navLinks.map((link) => {
-            const active = pathname === link.href;
+            const active = pathname === link.href || (link.href === "/owners" && !!pathname?.startsWith("/owners"));
             return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`relative whitespace-nowrap font-serif font-bold uppercase tracking-[0.06em] xl:tracking-[0.08em] text-[11.5px] xl:text-[12.5px] py-2 transition-colors ${link.href === "/verification-safety" ? "hidden xl:inline-block" : ""} ${
+                className={`relative whitespace-nowrap font-serif font-bold uppercase tracking-[0.06em] xl:tracking-[0.08em] text-[11.5px] xl:text-[12.5px] py-2 transition-colors ${link.href === "/verification-safety" ? "hidden 2xl:inline-block" : link.href === "/owners" ? "hidden 2xl:inline-block" : ""} ${
                   active ? "text-gold" : "text-white/80 hover:text-white"
                 }`}
               >

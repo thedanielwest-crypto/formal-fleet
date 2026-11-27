@@ -16,6 +16,7 @@ const columns = [
     links: [
       { href: "/get-started", label: "Create an Account" },
       { href: "/list-your-car", label: "List Your Ride" },
+      { href: "/owners", label: "Owner Academy" },
       { href: "/login", label: "Log In" },
     ],
   },

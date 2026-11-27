@@ -8,6 +8,7 @@ import MessageThread from "@/components/MessageThread";
 import { supabase } from "@/lib/supabaseClient";
 import { useRequireRole } from "@/lib/useRequireRole";
 import { Icon } from "@/components/BrandIcon";
+import AcademyCard from "@/components/AcademyCard";
 
 const statusStyle: Record<string, string> = {
   unverified: "bg-amber-bg text-amber",
@@ -189,7 +190,8 @@ export default function DriverDashboard() {
             )}
           </div>
         </div>
-        <p className="text-muted mb-8">Your cars and event invites, all in one place.</p>
+        <p className="text-muted mb-6">Your cars and event invites, all in one place.</p>
+        {session && <AcademyCard userId={session.user.id} />}
 
         <div className="flex justify-between items-baseline mb-4">
           <h2 className="font-serif text-[19px]">Your cars</h2>

@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabaseClient";
 import { useAuth } from "@/lib/authContext";
+import AdminAcademy from "@/components/AdminAcademy";
 import PasswordInput from "@/components/PasswordInput";
 import { FFMonogram } from "@/components/BrandIcon";
 
@@ -522,7 +523,7 @@ export default function AdminPage() {
   const [notes, setNotes] = useState<Record<string, string>>({});
   const [actingId, setActingId] = useState<string | null>(null);
 
-  const [tab, setTab] = useState<"cars" | "events">("cars");
+  const [tab, setTab] = useState<"cars" | "events" | "academy">("cars");
 
   const [editingCarId, setEditingCarId] = useState<string | null>(null);
   const [carDraft, setCarDraft] = useState<CarDraft | null>(null);
@@ -664,7 +665,7 @@ export default function AdminPage() {
     setEvents(data.events);
   }
 
-  function selectTab(next: "cars" | "events") {
+  function selectTab(next: "cars" | "events" | "academy") {
     setTab(next);
     if (next === "events" && events === null && !eventsLoading) {
       loadEvents();
@@ -790,7 +791,7 @@ export default function AdminPage() {
       <div className="px-6 md:px-14 py-10">
         <div className="flex justify-between items-baseline mb-6 flex-wrap gap-3">
           <h1 className="font-serif text-[24px]">
-            Admin — {tab === "cars" ? "Car Submissions" : "School Events"}
+            Admin — {tab === "cars" ? "Car Submissions" : tab === "events" ? "School Events" : "Owner Academy"}
           </h1>
           <button
             onClick={handleSignOut}
@@ -800,7 +801,7 @@ export default function AdminPage() {
           </button>
         </div>
 
-        <div className="flex gap-2 mb-7">
+        <div className="flex gap-2 mb-7 flex-wrap">
           <button
             onClick={() => selectTab("cars")}
             className={
@@ -821,7 +822,19 @@ export default function AdminPage() {
           >
             School Events
           </button>
+          <button
+            onClick={() => selectTab("academy")}
+            className={
+              tab === "academy"
+                ? "bg-navy text-white rounded-lg px-4 py-2.5 font-bold text-[13px]"
+                : "bg-white border border-line rounded-lg px-4 py-2.5 font-bold text-[13px]"
+            }
+          >
+            Owner Academy
+          </button>
         </div>
+
+        {tab === "academy" && session && <AdminAcademy adminId={session.user.id} />}
 
         {tab === "cars" && (
           <>

@@ -7,6 +7,7 @@ import MessageThread from "@/components/MessageThread";
 import { supabase } from "@/lib/supabaseClient";
 import { useRequireRole } from "@/lib/useRequireRole";
 import { Icon } from "@/components/BrandIcon";
+import { isPhotoBlurred } from "@/lib/photoPrivacy";
 
 const inputClass =
   "w-full border border-line rounded-lg px-4 py-2.5 text-[14px] bg-white focus:outline-none focus:ring-2 focus:ring-gold/40";
@@ -250,7 +251,7 @@ export default function SchoolDashboard() {
                             <div className="flex items-center gap-3">
                               {c.photo_url && (
                                 // eslint-disable-next-line @next/next/no-img-element
-                                <img src={c.photo_url} alt={c.car_name} className="w-12 h-12 rounded-lg object-cover" />
+                                <span className="block w-12 h-12 rounded-lg overflow-hidden shrink-0"><img src={c.photo_url} alt={c.car_name} className={`w-12 h-12 object-cover ${isPhotoBlurred(c.car_name) ? "photo-blur" : ""}`} /></span>
                               )}
                               <div>
                                 <div className="font-semibold text-[14px]">{c.car_name}</div>

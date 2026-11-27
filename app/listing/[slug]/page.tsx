@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { isPhotoBlurred } from "@/lib/photoPrivacy";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
@@ -18,6 +19,7 @@ export default async function ListingDetail({
   const { slug } = await params;
   const listing = getListingBySlug(slug);
   if (!listing) notFound();
+  const blurred = isPhotoBlurred(listing.slug, listing.title);
 
   const badges =
     listing.badge === "pending"
@@ -45,19 +47,20 @@ export default async function ListingDetail({
               listing.gallery.length > 1 ? "grid-cols-[2fr_1fr]" : "grid-cols-1"
             }`}
           >
-            <div className="relative">
+            <div className="relative overflow-hidden">
               <Image
                 src={listing.gallery[0]}
                 alt={listing.title}
                 fill
-                className="object-cover"
+                className={`object-cover ${blurred ? "photo-blur" : ""}`}
               />
+              {blurred && <span className="photo-soon">Photos coming soon</span>}
             </div>
             {listing.gallery.length > 1 && (
               <div className="grid gap-2.5" style={{ gridTemplateRows: `repeat(${listing.gallery.length - 1}, 1fr)` }}>
                 {listing.gallery.slice(1).map((img, i) => (
-                  <div key={i} className="relative">
-                    <Image src={img} alt={`${listing.title} photo ${i + 2}`} fill className="object-cover" />
+                  <div key={i} className="relative overflow-hidden">
+                    <Image src={img} alt={`${listing.title} photo ${i + 2}`} fill className={`object-cover ${blurred ? "photo-blur" : ""}`} />
                   </div>
                 ))}
               </div>

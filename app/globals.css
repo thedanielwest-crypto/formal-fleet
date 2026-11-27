@@ -229,3 +229,25 @@ body {
 }
 .ff-dark select option { background: #0a1d33; color: #fff; }
 .ff-dark input::placeholder { color: rgba(255, 255, 255, 0.4); }
+
+/* ---------------- Unconfirmed car photos ----------------
+   Blurred until the owner confirms their listing (lib/photoPrivacy.ts). */
+.photo-blur {
+  filter: blur(14px) saturate(1.05);
+  transform: scale(1.15) !important;
+}
+.photo-soon {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  white-space: nowrap;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(1, 19, 38, 0.72);
+  color: #fff;
+  font: 600 11.5px/1 "Poppins", sans-serif;
+  letter-spacing: 0.02em;
+  backdrop-filter: blur(4px);
+  pointer-events: none;
+}

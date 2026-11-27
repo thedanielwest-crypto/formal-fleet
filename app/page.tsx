@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { isPhotoBlurred } from "@/lib/photoPrivacy";
 import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -179,10 +180,11 @@ export default function HomePage() {
                 <img
                   src={car.heroImage}
                   alt={car.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${isPhotoBlurred(car.slug) ? "photo-blur" : ""}`}
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,19,38,0)_40%,rgba(1,19,38,0.95)_100%)]" />
+                {isPhotoBlurred(car.slug) && <span className="photo-soon">Photos coming soon</span>}
                 <span
                   className={`absolute top-3.5 left-3.5 rounded-full px-3 py-1 text-[11px] font-bold uppercase tracking-wide ${
                     car.badge === "pending"

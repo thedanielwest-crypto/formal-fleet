@@ -11,6 +11,7 @@ import { photoUrl } from "@/lib/carPhoto";
 import { isHiddenSubmission } from "@/lib/hiddenListings";
 import CarBookingStatus from "@/components/CarBookingStatus";
 import { InviteToEventControl, PrivateEventControl } from "@/components/LiveListings";
+import { isPhotoBlurred } from "@/lib/photoPrivacy";
 
 /**
  * Public detail page for any live car_submissions row (the 25 seeded demo
@@ -123,6 +124,7 @@ function CarDetailInner() {
       : `$${Number(car.total_price).toFixed(2).replace(/\.00$/, "")} / hour`;
 
   const isVerified = car.status === "verified";
+  const blurred = isPhotoBlurred(car.car, car.model);
   const specParts = [car.make, car.model, car.year ? String(car.year) : null]
     .filter(Boolean)
     .join(" ");
@@ -146,9 +148,10 @@ function CarDetailInner() {
                 gallery.length > 1 ? "grid-cols-[2fr_1fr]" : "grid-cols-1"
               }`}
             >
-              <div className="relative">
+              <div className="relative overflow-hidden">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={gallery[0]} alt={car.car} className="w-full h-full object-cover" />
+                <img src={gallery[0]} alt={car.car} className={`w-full h-full object-cover ${blurred ? "photo-blur" : ""}`} />
+                {blurred && <span className="photo-soon">Photos coming soon</span>}
               </div>
               {gallery.length > 1 && (
                 <div
@@ -156,12 +159,12 @@ function CarDetailInner() {
                   style={{ gridTemplateRows: `repeat(${gallery.length - 1}, 1fr)` }}
                 >
                   {gallery.slice(1).map((img, i) => (
-                    <div key={i} className="relative">
+                    <div key={i} className="relative overflow-hidden">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={img}
                         alt={`${car.car} photo ${i + 2}`}
-                        className="w-full h-full object-cover"
+                        className={`w-full h-full object-cover ${blurred ? "photo-blur" : ""}`}
                       />
                     </div>
                   ))}
